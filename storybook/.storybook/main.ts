@@ -1,6 +1,6 @@
 import type { StorybookConfig } from "@storybook/nextjs";
 
-import { dirnameamjoin } from "node:path";
+import { dirname, join } from "node:path";
 
 function getAbsolutePath(value: string): string {
   return dirname(require.resolve(join(value, "package.json")));
@@ -8,8 +8,8 @@ function getAbsolutePath(value: string): string {
 
 const config: StorybookConfig = {
   stories: [
-    "../apps/client/**/*.stories.@(js|jsx|mjs|ts|tsx)",
-    "../packages/ui-kit/**/*.stories.@(js|jsx|mjs|ts|tsx)",
+    "../../apps/client/**/*.stories.@(js|jsx|mjs|ts|tsx)",
+    "../../packages/ui-kit/**/*.stories.@(js|jsx|mjs|ts|tsx)",
   ],
   addons: [getAbsolutePath("@storybook/addon-essentials")],
   framework: {
