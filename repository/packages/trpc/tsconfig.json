@@ -1,8 +1,5 @@
 {
   "compilerOptions": {
-    "composite": true,
-    "outDir": "dist",
-
     // Enable latest features
     "lib": ["ESNext", "DOM"],
     "target": "ESNext",
@@ -25,9 +22,6 @@
     // Some stricter flags (disabled by default)
     "noUnusedLocals": false,
     "noUnusedParameters": false,
-    "noPropertyAccessFromIndexSignature": false,
-
-    // Absolute path settings
-    "baseUrl": "./"
+    "noPropertyAccessFromIndexSignature": false
   }
 }
