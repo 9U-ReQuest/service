@@ -21,7 +21,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["@request/ui-kit"]
+    "types": ["@request/ui-kit", "@request/gasi"]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
