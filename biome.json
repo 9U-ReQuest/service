@@ -32,5 +32,8 @@
     }
   },
   "overrides": [
+    {
+      "include": ["repository/apps/request-client/**"]
+    }
   ]
 }
