@@ -12,7 +12,7 @@ const QueryProvider = ({ children }: { children: ReactNode }) => {
     trpc.createClient({
       links: [
         httpBatchLink({
-          url: "http://localhost:8080/trpc",
+          url: '/trpc',
           // You can pass any HTTP headers you wish here
         }),
       ],

@@ -3,9 +3,8 @@ import { trpc } from "@/shared/api/trpc";
 import { useEffect } from "react";
 
 const Page = () => {
-  const { data, isLoading, error } = trpc.test.useQuery();
-  // trpc.mutation.useMutation({ name: "test" });
-  const { mutate } = trpc.mutation.useMutation();
+  const { data, isLoading, error } = trpc.v1.test.useQuery();
+  const { mutate } = trpc.v1.mutation.useMutation();
 
   // call mutation
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
