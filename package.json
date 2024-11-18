@@ -38,5 +38,10 @@
     "apps/*",
     "packages/*",
     "storybook"
+  ],
+  "trustedDependencies": [
+    "@biomejs/biome",
+    "@sentry/cli",
+    "core-js-pure"
   ]
 }
