@@ -3,11 +3,11 @@
   "module": "index.ts",
   "type": "module",
   "scripts": {
-    "init": "scripts/init.sh",
-    "dev:repository": "bun --filter '*' dev",
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "lint": "turbo lint",
     "format": "biome format --write ."
   },
-  "workspaces": ["repository/apps/*", "repository/packages/*"],
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@commitlint/cli": "^19.5.0",
@@ -16,7 +16,8 @@
     "commitizen": "^4.3.1",
     "cz-conventional-changelog": "^3.3.0",
     "cz-customizable": "^7.2.1",
-    "husky": "^9.1.6"
+    "husky": "^9.1.6",
+    "turbo": "^2.3.0"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
@@ -28,5 +29,14 @@
     "cz-customizable": {
       "config": "cz-config.cjs"
     }
-  }
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "packageManager": "bun@1.1.33",
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "storybook"
+  ]
 }
