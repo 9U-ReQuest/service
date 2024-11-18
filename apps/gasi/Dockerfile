@@ -30,6 +30,6 @@ RUN bunx turbo build --filter="gasi..."
 FROM bun-alpine AS release
 USER bun
 COPY --from=builder /app .
-EXPOSE 80/tcp
+EXPOSE 3000/tcp
 WORKDIR /app/apps/gasi
 ENTRYPOINT [ "bun", "dist/index.js" ]
