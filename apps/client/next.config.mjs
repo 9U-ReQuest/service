@@ -4,11 +4,11 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/trpc',
-        destination: `${process.env.PRIVATE_GASI_API_URL ?? 'http://localhost:8080'}/trpc`
-      }
-    ]
-  }
+        source: "/trpc",
+        destination: `${process.env.PRIVATE_GASI_API_URL ?? "http://localhost:8080"}/trpc`,
+      },
+    ];
+  },
 };
 
 export default withSentryConfig(nextConfig, {

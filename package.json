@@ -6,7 +6,8 @@
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
-    "format": "biome format --write ."
+    "format": "biome format --write .",
+    "init": "scripts/init.sh"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
@@ -34,14 +35,6 @@
     "node": ">=18"
   },
   "packageManager": "bun@1.1.33",
-  "workspaces": [
-    "apps/*",
-    "packages/*",
-    "storybook"
-  ],
-  "trustedDependencies": [
-    "@biomejs/biome",
-    "@sentry/cli",
-    "core-js-pure"
-  ]
+  "workspaces": ["apps/*", "packages/*", "storybook"],
+  "trustedDependencies": ["@biomejs/biome", "@sentry/cli", "core-js-pure"]
 }
