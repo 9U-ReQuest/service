@@ -10,7 +10,7 @@ module.exports = {
     { value: "build", name: "build:    빌드 관련 변경" },
     { value: "chore", name: "chore:    기타 변경" },
   ],
-  scopes: [{ name: "workspace" }, { name: "request-client" }, { name: "ui-kit" }, { name: "gasi" }],
+  scopes: [{ name: "workspace" }, { name: "client" }, { name: "ui-kit" }, { name: "gasi" }],
   messages: {
     type: "수정 종류를 선택하세요:",
     scope: "영향받은 서비스를 선택하세요 (optional):",
