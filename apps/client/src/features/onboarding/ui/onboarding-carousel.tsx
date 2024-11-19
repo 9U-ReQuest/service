@@ -82,7 +82,7 @@ export default function OnboardingCarousel() {
               index === current ? "bg-[#787878]" : "bg-[#D9D9D9]",
             )}
             // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-            key={index}
+            key={`dot-${index}`}
           />
         ))}
       </div>
