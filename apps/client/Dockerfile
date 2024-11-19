@@ -11,7 +11,6 @@ ARG BUN_PKG_MANAGER
 COPY . .
 
 RUN bun install
-RUN bunx clean-modules -y "**/*.ts" "**/@types/**"
 RUN bunx turbo build --filter="@request/client"
 
 # ================== RELEASE ======================
