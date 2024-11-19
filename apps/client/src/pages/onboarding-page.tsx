@@ -2,7 +2,7 @@ import Auth from "@/features/onboarding/ui/auth";
 import OnboardingCarousel from "@/features/onboarding/ui/onboarding-carousel";
 import Image from "next/image";
 
-function OnboardingPage() {
+export default function OnboardingPage() {
   return (
     <section className="flex justify-center gap-24 h-screen">
       <div className="flex font-bold justify-center items-center leading-[91px]">
@@ -22,5 +22,3 @@ function OnboardingPage() {
     </section>
   );
 }
-
-export default OnboardingPage;

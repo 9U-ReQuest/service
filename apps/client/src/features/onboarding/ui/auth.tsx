@@ -4,7 +4,7 @@ import { Button } from "@request/ui-kit";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-function Auth() {
+export default function Auth() {
   const navigate = useRouter();
   const onClickNavigate = () => {
     navigate.push("/");
@@ -31,5 +31,3 @@ function Auth() {
     </div>
   );
 }
-
-export default Auth;

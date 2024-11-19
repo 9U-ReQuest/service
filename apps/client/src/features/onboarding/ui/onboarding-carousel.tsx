@@ -10,7 +10,7 @@ import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import { ONBOARDINGS } from "../constants";
 
-function OnboardingCarousel() {
+export default function OnboardingCarousel() {
   const [current, setCurrent] = useState(0);
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [Autoplay({ delay: 3000 })]);
 
@@ -89,5 +89,3 @@ function OnboardingCarousel() {
     </>
   );
 }
-
-export default OnboardingCarousel;
