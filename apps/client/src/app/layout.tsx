@@ -2,6 +2,7 @@ import { Provider } from "@/widgets/provider";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import KakaoScript from "@/features/onboarding/lib/kakao-script";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -26,6 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <KakaoScript />
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Provider>{children}</Provider>
       </body>
