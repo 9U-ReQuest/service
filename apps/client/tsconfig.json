@@ -30,7 +30,6 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    // "../gasi/src/routers",
     "../../packages/trpc/src"
   ],
   "exclude": ["node_modules"]

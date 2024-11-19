@@ -1,7 +1,7 @@
+import type { BuildConfig } from "bun";
 import { exec } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
-import type { BuildConfig } from "bun";
 
 const BUILD_CONFIG = {
   PACKAGE_NAME: "@request/ui-kit",
@@ -47,6 +47,24 @@ const execPromise = (command: string, options: object): Promise<void> => {
   });
 };
 
+const removeUseClientDirectives = (dir: string) => {
+  const files = fs.readdirSync(dir);
+
+  // biome-ignore lint/complexity/noForEach: <explanation>
+  files.forEach((file) => {
+    const fullPath = path.join(dir, file);
+
+    if (fs.statSync(fullPath).isDirectory()) {
+      removeUseClientDirectives(fullPath);
+    } else if (file.endsWith(".js") || file.endsWith(".jsx")) {
+      const content = fs.readFileSync(fullPath, "utf-8");
+      const updatedContent = content.replace(/^["']use client["'];\n?/gm, "");
+      fs.writeFileSync(fullPath, updatedContent, "utf-8");
+      console.log(`Removed 'use client' from: ${fullPath}`);
+    }
+  });
+};
+
 const buildProject = async (srcDir: string, distDir: string, packageRoot: string) => {
   console.log("Building project...");
 
@@ -70,6 +88,9 @@ const buildProject = async (srcDir: string, distDir: string, packageRoot: string
       cwd: packageRoot,
     });
     console.log("Tailwind CSS compiled");
+
+    removeUseClientDirectives(distDir);
+    console.log("Removed 'use client' directives from build output");
   } catch (error) {
     console.error("Build failed:", error);
     throw error;

@@ -10,7 +10,7 @@
     "./styles.css": "./dist/styles.css"
   },
   "nodemonConfig": {
-    "watch": ["src/"],
+    "watch": ["src/", "components/"],
     "ext": "ts,tsx",
     "exec": "bun build.ts"
   },
@@ -32,6 +32,7 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "@radix-ui/react-menubar": "^1.1.2",
     "@radix-ui/react-slot": "^1.1.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",

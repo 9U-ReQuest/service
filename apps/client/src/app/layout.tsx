@@ -1,3 +1,5 @@
+import DefaultHeader from "@/widgets/layout/header/default-header";
+import FullWidthAndCenter from "@/widgets/layout/wrapper/full-width";
 import { Provider } from "@/widgets/provider";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
@@ -27,7 +29,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <Provider>{children}</Provider>
+        <Provider>
+          <FullWidthAndCenter>
+            <DefaultHeader />
+            {children}
+          </FullWidthAndCenter>
+        </Provider>
       </body>
     </html>
   );
