@@ -10,6 +10,9 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        kakao: "#FEE500",
+        selected: "#787878",
+        "not-selected": "#D9D9D9",
       },
     },
   },
