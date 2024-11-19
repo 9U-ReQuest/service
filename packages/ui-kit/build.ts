@@ -1,7 +1,7 @@
+import { exec } from "node:child_process";
+import fs from "node:fs";
+import path from "node:path";
 import type { BuildConfig } from "bun";
-import { exec } from "child_process";
-import fs from "fs";
-import path from "path";
 
 const BUILD_CONFIG = {
   PACKAGE_NAME: "@request/ui-kit",
@@ -54,6 +54,7 @@ const buildProject = async (srcDir: string, distDir: string, packageRoot: string
     await Bun.build({
       entrypoints: [path.join(srcDir, "index.ts")],
       outdir: distDir,
+      external: ["react", "react-dom"],
       ...BUILD_CONFIG.BUN_BUILD,
     });
     console.log("Bun build completed");
