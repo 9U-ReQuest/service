@@ -43,7 +43,7 @@ export default function OnboardingCarousel() {
           className="p-0 aspect-square rounded-full bg-[#EAEAEA] self-end"
           onClick={scrollPrev}
         >
-          <Image src="/icons/arrow-left.svg" alt="이전 온보딩" width={24} height={24} />
+          <Image src="/icons/arrow-left.svg" alt="이전 온보딩" width={40} height={40} />
         </Button>
         <Carousel className="w-[565px]">
           <CarouselContent ref={emblaRef}>
@@ -71,7 +71,7 @@ export default function OnboardingCarousel() {
           className="p-0 aspect-square rounded-full bg-[#EAEAEA] self-end"
           onClick={scrollNext}
         >
-          <Image src="/icons/arrow-right.svg" alt="다음 온보딩" width={24} height={24} />
+          <Image src="/icons/arrow-right.svg" alt="다음 온보딩" width={40} height={40} />
         </Button>
       </div>
       <div className="flex gap-3">
