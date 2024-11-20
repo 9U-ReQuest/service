@@ -11,3 +11,24 @@ body {
     --radius: 0.5rem;
   }
 }
+
+.pending {
+  border-radius: 20px;
+  position: relative;
+  border: none;
+  filter: brightness(0.9);
+}
+.pending:before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 2.5px; /* border length  */
+  background: linear-gradient(
+    45deg,
+    rgba(138, 27, 34, 1) 0%,
+    rgba(255, 255, 255, 1) 50%,
+    rgba(138, 27, 34, 1) 100%
+  );
+  border-radius: inherit;
+  mask: conic-gradient(#000 0 0) content-box exclude, conic-gradient(#000 0 0);
+}
