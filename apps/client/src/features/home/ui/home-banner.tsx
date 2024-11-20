@@ -1,13 +1,11 @@
 import banner from "@/assets/images/banner.png";
 import { ROUTES } from "@/shared/constant/url";
+import Banner from "@/widgets/ui/banner";
 import Link from "next/link";
 
-export default function Banner() {
+export default function HomeBanner() {
   return (
-    <div
-      className="relative h-[456px] w-full bg-cover bg-center flex flex-col items-center justify-center text-center"
-      style={{ backgroundImage: `url(${banner.src})` }}
-    >
+    <Banner backgroundImage={banner.src}>
       <h1 className="mb-4 text-4xl font-extrabold text-white">
         완벽한 ReQuest와 함께 기업 과제를 준비해보세요!
       </h1>
@@ -20,6 +18,6 @@ export default function Banner() {
       >
         AI 과제 생성하러 가기
       </Link>
-    </div>
+    </Banner>
   );
 }

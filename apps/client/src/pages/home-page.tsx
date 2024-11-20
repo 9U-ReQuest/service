@@ -1,5 +1,5 @@
 import AllAssignment from "@/features/home/ui/all-assignment";
-import Banner from "@/features/home/ui/banner";
+import Banner from "@/features/home/ui/home-banner";
 import PopularAssignment from "@/features/home/ui/popular-assignment";
 
 export default function HomePage() {
