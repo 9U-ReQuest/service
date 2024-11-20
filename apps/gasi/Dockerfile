@@ -1,23 +1,37 @@
-FROM oven/bun AS bun
+FROM node:20-alpine AS base
+
+FROM base AS builder
+RUN apk update
+RUN apk add --no-cache libc6-compat
+# Set working directory
 WORKDIR /app
 
-FROM oven/bun:distroless AS bun-distroless
-WORKDIR /app
-
-# =============== INSTALL & BUILD =================
-
-FROM bun AS builder
-ARG BUN_PKG_MANAGER
+RUN corepack enable
+RUN pnpm add --save-dev turbo@^2
 COPY . .
 
-RUN bun install --production
-RUN bunx clean-modules -y "**/*.ts" "**/@types/**"
-RUN bunx turbo build --filter="@request/gasi"
+RUN pnpx turbo prune "@request/gasi" --docker
 
-# ================== RELEASE ======================
+# Add lockfile and package.json's of isolated subworkspace
+FROM base AS installer
+RUN apk update
+RUN apk add --no-cache libc6-compat
+WORKDIR /app
 
-FROM bun-distroless AS release
-COPY --from=builder /app .
+# First install the dependencies (as they change less often)
+COPY --from=builder /app/out/json/ .
+RUN corepack enable
+RUN pnpm install
+
+# Build the project
+COPY --from=builder /app/out/full/ .
+RUN pnpm build --filter="@request/gasi"
+
+FROM gcr.io/distroless/nodejs20-debian12
+WORKDIR /app
+
+COPY --from=installer /app ./
+
 EXPOSE 8080/tcp
 WORKDIR /app/apps/gasi
-ENTRYPOINT [ "bun", "dist/index.js" ]
+CMD ["./dist/index.js"]
