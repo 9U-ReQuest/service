@@ -34,7 +34,6 @@
   "engines": {
     "node": ">=18"
   },
-  "packageManager": "bun@1.1.33",
-  "workspaces": ["apps/*", "packages/*", "storybook"],
+  "packageManager": "pnpm@8.15.6",
   "trustedDependencies": ["@biomejs/biome", "@sentry/cli", "core-js-pure"]
 }
