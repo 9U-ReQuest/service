@@ -1,3 +1,4 @@
+import Footer from "@/widgets/layout/footer/footer";
 import DefaultHeader from "@/widgets/layout/header/default-header";
 import FullWidthAndCenter from "@/widgets/layout/wrapper/full-width";
 import { Provider } from "@/widgets/provider";
@@ -33,6 +34,7 @@ export default function RootLayout({
           <FullWidthAndCenter>
             <DefaultHeader />
             {children}
+            <Footer />
           </FullWidthAndCenter>
         </Provider>
       </body>
