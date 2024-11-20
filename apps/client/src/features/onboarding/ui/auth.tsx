@@ -1,7 +1,7 @@
 "use client";
 
 import kakaoSvg from "@/assets/icons/kakao-logo.svg";
-import { Button } from "@request/ui-kit";
+import { Button } from "@/shared/ui/button";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 

@@ -3,7 +3,13 @@
 import logo from "@/assets/icons/logo.svg";
 import mypage from "@/assets/icons/mypage.svg";
 import pencil from "@/assets/icons/pencil.svg";
-import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarTrigger } from "@request/ui-kit";
+import {
+  Menubar,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarTrigger,
+} from "@/shared/ui/menubar";
 import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";

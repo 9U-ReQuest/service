@@ -1,8 +1,10 @@
+"use client";
+
 import useEmblaCarousel, { type UseEmblaCarouselType } from "embla-carousel-react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import * as React from "react";
 
-import { cn } from "@/src/lib/utils";
+import { cn } from "@/shared/lib/utils";
 import { Button } from "./button";
 
 type CarouselApi = UseEmblaCarouselType[1];
@@ -163,7 +165,7 @@ const CarouselItem = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLD
         role="group"
         aria-roledescription="slide"
         className={cn(
-          "min-w-0 flex-[0_0_100%]",
+          "min-w-0 shrink-0 grow-0 basis-full",
           orientation === "horizontal" ? "pl-4" : "pt-4",
           className,
         )}

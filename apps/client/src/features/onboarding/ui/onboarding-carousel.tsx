@@ -3,8 +3,8 @@
 import arrowLeftSvg from "@/assets/icons/arrow-left.svg";
 import arrowRightSvg from "@/assets/icons/arrow-right.svg";
 import { cn } from "@/shared/lib/utils";
-import { Carousel, CarouselContent, CarouselItem } from "@request/ui-kit";
-import { Button } from "@request/ui-kit";
+import { Button } from "@/shared/ui/button";
+import { Carousel, CarouselContent, CarouselItem } from "@/shared/ui/carousel";
 import type { EmblaCarouselType } from "embla-carousel";
 import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
@@ -14,7 +14,8 @@ import { ONBOARDINGS } from "../constants";
 
 export default function OnboardingCarousel() {
   const [current, setCurrent] = useState(0);
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [Autoplay({ delay: 3000 })]);
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [Autoplay({ delay: 3000 })] as any);
 
   const scrollPrev = () => {
     if (!emblaApi) return;
