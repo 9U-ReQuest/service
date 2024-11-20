@@ -40,7 +40,7 @@ const assignments: Assignment[] = [
   },
 ];
 
-export default function Component() {
+export default function PopularAssignment() {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
     align: "start",

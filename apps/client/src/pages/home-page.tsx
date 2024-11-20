@@ -1,11 +1,11 @@
 import AllAssignment from "@/features/home/ui/all-assignment";
-import Banner from "@/features/home/ui/home-banner";
+import HomeBanner from "@/features/home/ui/home-banner";
 import PopularAssignment from "@/features/home/ui/popular-assignment";
 
 export default function HomePage() {
   return (
     <div className="w-full">
-      <Banner />
+      <HomeBanner />
       <div className="px-24">
         <PopularAssignment />
       </div>

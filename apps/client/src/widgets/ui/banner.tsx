@@ -15,7 +15,7 @@ export default function Banner({
   return (
     <div
       ref={ref}
-      className={`relative h-[456px] w-full bg-cover bg-center flex flex-col items-center justify-center text-center ${className}`}
+      className={`relative h-[456px] w-full bg-cover bg-center flex flex-col ${className}`}
       style={{ backgroundImage: `url(${backgroundImage})` }}
       {...props}
     >
