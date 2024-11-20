@@ -10,6 +10,7 @@ export default function AssignmentPage() {
       <AssignmentBanner />
       <div className="w-full px-24 mb-24">
         <AssignmentList
+          headerTitle="생성한 과제"
           cards={mockListings}
           extraControls={
             <Button
@@ -22,7 +23,6 @@ export default function AssignmentPage() {
               과제 생성하기
             </Button>
           }
-          headerTitle="전체 과제"
         />
       </div>
     </div>
