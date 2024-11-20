@@ -7,7 +7,7 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "ignore": ["dist/**"]
+    "ignore": ["dist/**", ".next/**", ".turbo/**"]
   },
   "formatter": {
     "enabled": true,
@@ -15,7 +15,7 @@
     "indentWidth": 2,
     "lineEnding": "lf",
     "lineWidth": 100,
-    "ignore": [".next"]
+    "ignore": ["dist/**", ".next/**", ".turbo/**"]
   },
   "organizeImports": {
     "enabled": true
@@ -33,7 +33,7 @@
   },
   "overrides": [
     {
-      "include": ["repository/apps/request-client/**"]
+      "include": ["apps/client/**", "apps/gasi/**", "packages/ui-kit/**"]
     }
   ]
 }
