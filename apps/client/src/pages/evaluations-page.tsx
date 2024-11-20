@@ -39,21 +39,23 @@ const EVALUATIONS = [
 export default function EvaluationsPage() {
   return (
     <main className="flex flex-col w-full p-24">
-      <section className="space-y-12">
-        <section className="space-y-2">
-          <p className="font-extrabold text-2xl">AI 과제 평가</p>
-          <p className="font-medium text-sm leading-6">
-            Re_Quest의 AI는 개발자가 작성한 코드에 대해 실시간으로 평가와 피드백을 제공합니다.
-            <br />
-            단순히 정답 여부를 확인하는 것을 넘어, 작성된 코드의 완성도와 효율성을
-            <br />
-            다각도로 분석하여 개발자가 더 나은 코드를 작성할 수 있도록 돕습니다.
-          </p>
-        </section>
-        <section className="space-y-3">
-          <p className="font-semibold text-lg">진행중인 과제</p>
-          <OngoingAssignment />
-        </section>
+      <section className="flex flex-col items-center">
+        <div className="space-y-12">
+          <section className="space-y-2">
+            <p className="font-extrabold text-2xl">AI 과제 평가</p>
+            <p className="font-medium text-sm leading-6">
+              Re_Quest의 AI는 개발자가 작성한 코드에 대해 실시간으로 평가와 피드백을 제공합니다.
+              <br />
+              단순히 정답 여부를 확인하는 것을 넘어, 작성된 코드의 완성도와 효율성을
+              <br />
+              다각도로 분석하여 개발자가 더 나은 코드를 작성할 수 있도록 돕습니다.
+            </p>
+          </section>
+          <section className="space-y-3">
+            <p className="font-semibold text-lg">진행중인 과제</p>
+            <OngoingAssignment />
+          </section>
+        </div>
       </section>
       <hr className="-mx-24 border-[#C6C6C6] my-20" />
       <section className="space-y-3">

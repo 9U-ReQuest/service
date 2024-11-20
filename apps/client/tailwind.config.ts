@@ -11,6 +11,7 @@ const config: Config = {
         kakao: "#FEE500",
         selected: "#787878",
         "not-selected": "#D9D9D9",
+        primary: "#8A1B22",
       },
       fontSize: {
         caption: "8px",

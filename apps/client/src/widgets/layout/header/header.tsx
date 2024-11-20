@@ -12,6 +12,7 @@ import {
 } from "@/shared/ui/menubar";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { useState } from "react";
 import { HeaderContext } from "./header-context";
@@ -42,6 +43,7 @@ function Logo(): JSX.Element {
 }
 
 function Nav(): JSX.Element {
+  const pathname = usePathname();
   const navItems = [
     { title: "AI 과제 생성", href: "/assignment" },
     { title: "과제 평가", href: "/evaluations" },
@@ -54,7 +56,7 @@ function Nav(): JSX.Element {
         <Link
           key={item.href}
           href={item.href}
-          className="text-base font-bold transition-colors hover:text-primary"
+          className={`text-base font-bold transition-colors hover:text-primary ${pathname?.startsWith(item.href) && "text-primary"} `}
         >
           {item.title}
         </Link>

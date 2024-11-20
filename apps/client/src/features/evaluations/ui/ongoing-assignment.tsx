@@ -10,7 +10,7 @@ export default function OngoingAssignment() {
   };
   return (
     <div className="relative">
-      <div className="absolute flex justify-between p-2 xl:p-8 lg:p-4 sm:p-2 max-w-[1298px] w-full h-full">
+      <div className="absolute flex justify-between p-2 xl:p-8 lg:p-4 sm:p-2 w-full h-full">
         <div className="flex flex-col justify-between">
           <div className="space-y-1">
             <p className="text-xs xl:text-base lg:text-sm sm:text-xs">결제/배달의민족/FE</p>
