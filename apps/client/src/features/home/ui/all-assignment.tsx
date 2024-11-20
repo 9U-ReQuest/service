@@ -1,6 +1,6 @@
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { ROUTES } from "@/shared/constant/url";
 import { Button } from "@/shared/ui/button";
+import { Card, CardContent, CardHeader } from "@/shared/ui/card";
 import { Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
