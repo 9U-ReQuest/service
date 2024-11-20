@@ -23,7 +23,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["@request/gasi"]
+    "types": ["@request/gasi", "mdx"]
   },
   "include": [
     "next-env.d.ts",
