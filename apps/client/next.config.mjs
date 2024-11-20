@@ -13,6 +13,7 @@ const baseNextConfig = {
   },
   pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
   output: "standalone",
+  pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
 };
 
 // MDX 설정
