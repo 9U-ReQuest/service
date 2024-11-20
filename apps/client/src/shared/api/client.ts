@@ -27,11 +27,11 @@ type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1];
  * @summary Get a list of users
  */
 export const getUsers = (options?: SecondParameter<typeof http>, signal?: AbortSignal) => {
-  return http<User[]>({ url: `/users`, method: "GET", signal }, options);
+  return http<User[]>({ url: "/users", method: "GET", signal }, options);
 };
 
 export const getGetUsersQueryKey = () => {
-  return [`/users`] as const;
+  return ["/users"] as const;
 };
 
 export const getGetUsersQueryOptions = <
