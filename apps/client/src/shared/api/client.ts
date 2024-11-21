@@ -21,6 +21,7 @@ export interface User {
   name?: string;
 }
 
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1];
 
 /**

@@ -1,7 +1,7 @@
 "use client";
 
-import Head from "next/head";
 import * as Sentry from "@sentry/nextjs";
+import Head from "next/head";
 
 export default function Page() {
   return (
@@ -21,6 +21,7 @@ export default function Page() {
         }}
       >
         <h1 style={{ fontSize: "4rem", margin: "14px 0" }}>
+          {/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
           <svg
             style={{
               height: "1em",

@@ -107,6 +107,7 @@ export default function PopularAssignment() {
                       <h3 className="text-sm font-semibold text-white">{assignment.company}</h3>
                       <div className="space-y-1">
                         {assignment.position.map((line, i) => (
+                          // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
                           <p key={i} className="text-2xl font-semibold text-white">
                             {line}
                           </p>
@@ -144,6 +145,7 @@ export default function PopularAssignment() {
           {assignments.map((_, index) => (
             <button
               type="button"
+              // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
               key={index}
               className={cn(
                 "w-2 h-2 rounded-full transition-all",
