@@ -1,8 +1,12 @@
+import {
+  AssignmentFilterSchema,
+  AssignmentPromptSchema,
+  RegisterUserRequestSchema,
+  ReviewFilterSchema,
+  SubmissionFileRequestSchema,
+  SubmissionInitSchema,
+} from "@request/specs";
 import z from "zod";
-import { AssignmentFilterSchema, AssignmentPromptSchema } from "./schema/assignment";
-import { ReviewFilterSchema } from "./schema/review";
-import { SubmissionFileRequestSchema, SubmissionInitSchema } from "./schema/submission";
-import { RegisterUserRequestSchema } from "./schema/user";
 import { p, t } from "./trpc";
 
 export const appRouter = t.router({

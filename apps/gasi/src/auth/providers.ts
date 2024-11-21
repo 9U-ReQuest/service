@@ -1,7 +1,7 @@
+import type { AuthorizationResult } from "@request/specs";
 import jwt from "jsonwebtoken";
 import z from "zod";
 import { createError } from "../common";
-import type { AuthorizeResult } from "../schema/user";
 import { authorizeWith } from "./token";
 
 const KAKAO_TOKEN_ENDPOINT = "https://kauth.kakao.com/oauth/token" as const;
@@ -21,7 +21,10 @@ const KakaoTokenResponse = z.object({
  * @param redirectUri - redirectUri of client
  * @param code - authorization code
  */
-export async function kakaoAuthorize(redirectUri: string, code: string): Promise<AuthorizeResult> {
+export async function kakaoAuthorize(
+  redirectUri: string,
+  code: string,
+): Promise<AuthorizationResult> {
   const apiKey = process.env.KAKAO_REST_API_KEY;
   if (!apiKey) throw createError(401, "API Key not provided: provider 'kakao'");
   const result = await fetch(KAKAO_TOKEN_ENDPOINT, {

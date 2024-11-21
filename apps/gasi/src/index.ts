@@ -26,5 +26,3 @@ const start = async () => {
 };
 
 start();
-
-export type AppRouter = typeof appRouter;
