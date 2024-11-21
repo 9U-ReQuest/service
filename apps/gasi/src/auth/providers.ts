@@ -1,8 +1,8 @@
 import type { AuthorizationResult } from "@request/specs";
 import jwt from "jsonwebtoken";
 import z from "zod";
-import { createError } from "../common";
-import { authorizeWith } from "./token";
+import { createError } from "../common.js";
+import { authorizeWith } from "./token.js";
 
 const KAKAO_TOKEN_ENDPOINT = "https://kauth.kakao.com/oauth/token" as const;
 

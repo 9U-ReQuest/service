@@ -1,18 +1,15 @@
-import * as dotenvx from "@dotenvx/dotenvx";
 import fastifyCors from "@fastify/cors";
 import { fastifyTRPCPlugin } from "@trpc/server/adapters/fastify";
 import Fastify from "fastify";
-import { appRouter } from "./router";
-
-dotenvx.config();
+import { appRouter } from "./router.js";
 
 const server = Fastify({
   logger: true,
 });
 
-await server.register(fastifyCors);
+server.register(fastifyCors);
 
-await server.register(fastifyTRPCPlugin, {
+server.register(fastifyTRPCPlugin, {
   prefix: "/trpc",
   trpcOptions: { router: appRouter },
 });

@@ -16,9 +16,9 @@ import {
   type User,
 } from "@request/specs";
 import { TRPCError } from "@trpc/server";
-import humanId from "human-id";
+import { humanId } from "human-id";
 import z from "zod";
-import { p, t } from "./trpc";
+import { p, t } from "./trpc.js";
 
 const createMockAssignment = (id: string, name: string) => ({
   id,
