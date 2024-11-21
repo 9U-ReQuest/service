@@ -3,6 +3,7 @@
 import logo from "@/assets/icons/logo.svg";
 import mypage from "@/assets/icons/mypage.svg";
 import pencil from "@/assets/icons/pencil.svg";
+import { cn } from "@/shared/lib/utils";
 import {
   Menubar,
   MenubarContent,
@@ -56,7 +57,10 @@ function Nav(): JSX.Element {
         <Link
           key={item.href}
           href={item.href}
-          className={`text-base font-bold transition-colors hover:text-primary ${pathname?.startsWith(item.href) && "text-primary"} `}
+          className={cn(
+            "text-base font-bold transition-colors hover:text-primary",
+            pathname?.startsWith(item.href) && "text-primary",
+          )}
         >
           {item.title}
         </Link>
@@ -142,9 +146,10 @@ function NotificationMenu(): JSX.Element {
                 onClick={() => handleNotificationClick(notification.id)}
               >
                 <div
-                  className={`mt-2 h-2 w-2 shrink-0 rounded-full ${
-                    notification.isRead ? "bg-gray-300" : "bg-[#8A1B22]"
-                  }`}
+                  className={cn(
+                    "mt-2 h-2 w-2 shrink-0 rounded-full",
+                    notification.isRead ? "bg-gray-300" : "bg-[#8A1B22]",
+                  )}
                 />
                 <div className="space-y-1">
                   <div className="text-xs font-semibold line-clamp-2">{notification.title}</div>

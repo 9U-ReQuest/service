@@ -1,7 +1,7 @@
 import { mockListings } from "@/entities/assignment/mocks";
 import AssignmentList from "@/entities/assignment/ui/card/assignment-list";
 import AssignmentBanner from "@/features/assignment/assignment-banner";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
 
 export default function AssignmentPage() {
