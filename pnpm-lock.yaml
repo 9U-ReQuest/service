@@ -130,9 +130,9 @@ importers:
         specifier: ^3.23.8
         version: 3.23.8
     devDependencies:
-      '@request/gasi':
-        specifier: workspace:*
-        version: link:../gasi
+      '@request/specs':
+        specifier: workspace:^
+        version: link:../../packages/specs
       '@types/node':
         specifier: ^20
         version: 20.17.6
