@@ -1,4 +1,6 @@
-import type { AuthorizationResult } from "@request/specs";
+import type { AuthorizationResult, User } from "@request/specs";
+import { Model } from "mongoose";
+import { mUser } from "../schema.js";
 
 const JWT_SECRET =
   process.env.JWT_SECRET ??
@@ -8,7 +10,8 @@ export const authorizeWith = async (
   provider: string,
   uid: string,
 ): Promise<AuthorizationResult> => {
-  // TODO: Find provider and uid from database. And if user not exist, create an unregistered user. then issue accessToken for an user.
+  const User: Model<User & { token: string }> = new Model("User", mUser);
+  User.findOne({});
   return {
     registered: true,
     accessToken: "example",
