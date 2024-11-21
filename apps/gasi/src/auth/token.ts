@@ -8,6 +8,6 @@ export const authorizeWith = async (provider: string, uid: string): Promise<Auth
   // TODO: Find provider and uid from database. And if user not exist, create an unregistered user. then issue accessToken for an user.
   return {
     registered: true,
-    accessToken: token,
+    accessToken: "example",
   };
 };
