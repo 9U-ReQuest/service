@@ -1,13 +1,13 @@
 name: request-service-prod
 services:
   client:
-    image: ${ECR_REGISTRY}/${ECR_REPOSITORY}:${CLIENT_IMAGE_TAG}
+    image: ${ECR_REPOSITORY_URL}:${CLIENT_IMAGE_TAG}
     ports:
       - "80:3000"
     environment:
       PRIVATE_GASI_API_URL: gasi.request.internal
   gasi:
-    image: ${ECR_REGISTRY}/${ECR_REPOSITORY}:${GASI_IMAGE_TAG}
+    image: ${ECR_REPOSITORY_URL}:${GASI_IMAGE_TAG}
     expose:
       - "80:8080"
     container_name: gasi.request.internal
