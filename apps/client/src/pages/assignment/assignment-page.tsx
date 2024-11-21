@@ -1,6 +1,6 @@
 import { mockListings } from "@/entities/assignment/mocks";
 import AssignmentList from "@/entities/assignment/ui/card/assignment-list";
-import AssignmentBanner from "@/features/assignment/assignment-banner";
+import AssignmentBanner from "@/features/assignment/ui/assignment-banner";
 import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
 

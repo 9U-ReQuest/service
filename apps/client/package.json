@@ -13,6 +13,7 @@
     "@mdx-js/loader": "^3.1.0",
     "@mdx-js/react": "^3.1.0",
     "@next/mdx": "^15.0.3",
+    "@next/third-parties": "^15.0.3",
     "@radix-ui/react-menubar": "^1.1.2",
     "@radix-ui/react-slot": "^1.1.0",
     "@sentry/nextjs": "^8",
@@ -52,6 +53,8 @@
     "typescript": "^5"
   },
   "msw": {
-    "workerDirectory": ["public"]
+    "workerDirectory": [
+      "public"
+    ]
   }
 }
