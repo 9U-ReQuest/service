@@ -43,9 +43,6 @@ jobs:
     if: github.repository == '9U-ReQuest/service'
     needs: docker-build
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        app: [ "client", "gasi" ]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -54,18 +51,23 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-region: ap-northeast-2
-      - name: Create deployment archive
+      - name: Create dotenv
+        working-directory: ./codedeploy/$CHANNEL
         run: |
-          cd ./codedeploy/$CHANNEL
+          touch .env
+          echo "ECR_REGISTRY=${{ fromJson(env.ECR_OUTPUTS).registry_id.value }}" >> .env
+          echo "ECR_REPOSITORY=$ECR_REPOSITORY" >> .env
+          echo "CLIENT_IMAGE_TAG=client-${{ github.sha }}" >> .env
+          echo "GASI_IMAGE_TAG=client-${{ github.sha }}" >> .env
+      - name: Create deployment archive
+        working-directory: ./codedeploy/$CHANNEL
+        run: |
           mkdir scripts
           touch scripts/deploy.sh
           echo "aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin ${{ fromJson(env.ECR_OUTPUTS).registry_id.value }}" >> scripts/deploy.sh
-          echo "export ECR_REGISTRY=${{ fromJson(env.ECR_OUTPUTS).registry_id.value }}" >> scripts/deploy.sh
-          echo "export ECR_REPOSITORY=$ECR_REPOSITORY" >> scripts/deploy.sh
-          echo "export IMAGE_TAG=${{ github.sha }}" >> scripts/deploy.sh
           echo "docker-compose -f /var/deployment/docker-compose.yml up -d" >> scripts/deploy.sh
           zip -r ${{ github.sha }}.zip .
-          aws s3 cp ${{ github.sha }}.zip s3://${{ fromJson(env.CODEDEPLOY_OUTPUTS).bucket.value }}/${{ matrix.app }}-${{ github.sha }}.zip
+          aws s3 cp ${{ github.sha }}.zip s3://${{ fromJson(env.CODEDEPLOY_OUTPUTS).bucket.value }}/${{ github.sha }}.zip
 
 
       - name: Deploy to CodeDeploy
@@ -74,4 +76,4 @@ jobs:
             --application-name ${{ fromJson(env.CODEDEPLOY_OUTPUTS).name.value }} \
             --deployment-group-name ${{ fromJson(env.CODEDEPLOY_OUTPUTS).gasi_group_name.value }} \
             --deployment-config-name CodeDeployDefault.OneAtATime \
-            --s3-location bucket=${{ fromJson(env.CODEDEPLOY_OUTPUTS).bucket.value }},bundleType=zip,key=${{ matrix.app }}-${{ github.sha }}.zip
+            --s3-location bucket=${{ fromJson(env.CODEDEPLOY_OUTPUTS).bucket.value }},bundleType=zip,key=${{ github.sha }}.zip
