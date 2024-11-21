@@ -10,7 +10,6 @@ env:
   AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
   ECR_OUTPUTS: ${{ secrets.container_registry_outputs_dev }}
   CODEDEPLOY_OUTPUTS: ${{ secrets.codedeploy_outputs_dev }}
-  ECR_REPOSITORY: request-dev
 jobs:
   docker-build:
     name: Build Docker images
@@ -29,6 +28,8 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-northeast-2
 
       - name: Login to Amazon ECR
@@ -37,8 +38,8 @@ jobs:
 
       - name: Push images
         run: |
-          docker tag ${{ matrix.app }}:${{ github.sha }} ${{ fromJson(env.ECR_OUTPUTS).registry_id.value }}/$ECR_REPOSITORY:${{ matrix.app }}-${{ github.sha }}
-          docker push ${{ fromJson(env.ECR_OUTPUTS).registry_id.value }}/$ECR_REPOSITORY:${{ matrix.app }}-${{ github.sha }}
+          docker tag ${{ matrix.app }}:${{ github.sha }} ${{ fromJson(env.ECR_OUTPUTS).repository_url.value }}:${{ matrix.app }}-${{ github.sha }}
+          docker push ${{ fromJson(env.ECR_OUTPUTS).repository_url.value }}:${{ matrix.app }}-${{ github.sha }}
 
   codedeploy:
     name: Deploy to CodeDeploy
@@ -52,21 +53,23 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-northeast-2
       - name: Create dotenv
-        working-directory: ./codedeploy/$CHANNEL
+        working-directory: ./codedeploy/${{ env.CHANNEL }}
         run: |
           touch .env
-          echo "ECR_REGISTRY=${{ fromJson(env.ECR_OUTPUTS).registry_id.value }}" >> .env
-          echo "ECR_REPOSITORY=$ECR_REPOSITORY" >> .env
+          echo "ECR_REPOSITORY_URL=${{ fromJson(env.ECR_OUTPUTS).repository_url.value }}" >> .env
           echo "CLIENT_IMAGE_TAG=client-${{ github.sha }}" >> .env
           echo "GASI_IMAGE_TAG=client-${{ github.sha }}" >> .env
+
       - name: Create deployment archive
-        working-directory: ./codedeploy/$CHANNEL
+        working-directory: ./codedeploy/${{ env.CHANNEL }}
         run: |
           mkdir scripts
           touch scripts/deploy.sh
-          echo "aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin ${{ fromJson(env.ECR_OUTPUTS).registry_id.value }}" >> scripts/deploy.sh
+          echo "aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin ${{ fromJson(env.ECR_OUTPUTS).repository_url.value }}" >> scripts/deploy.sh
           echo "docker-compose -f /var/deployment/docker-compose.yml up -d" >> scripts/deploy.sh
           zip -r ${{ github.sha }}.zip .
           aws s3 cp ${{ github.sha }}.zip s3://${{ fromJson(env.CODEDEPLOY_OUTPUTS).bucket.value }}/${{ github.sha }}.zip

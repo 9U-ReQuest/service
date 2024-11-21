@@ -32,8 +32,7 @@
     }
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
-  "packageManager": "pnpm@9.14.2",
-  "trustedDependencies": ["@biomejs/biome", "@sentry/cli", "core-js-pure"]
+  "packageManager": "pnpm@9.14.2"
 }
