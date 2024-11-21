@@ -35,7 +35,7 @@ const Typography: TypographyComponent = <C extends ElementType = "p">({
   align = "left",
   weight = "normal",
   size = "base",
-  color = "primary",
+  color = "black",
   transform = "none",
   /**
    * whitespace: 텍스트의 공백 처리 방식을 지정합니다.

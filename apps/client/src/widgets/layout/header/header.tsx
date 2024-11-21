@@ -3,7 +3,9 @@
 import logo from "@/assets/icons/logo.svg";
 import mypage from "@/assets/icons/mypage.svg";
 import pencil from "@/assets/icons/pencil.svg";
+import { ROUTES } from "@/shared/constant/url";
 import { cn } from "@/shared/lib/utils";
+import Typography from "@/shared/ui/common/typography/typography";
 import {
   Menubar,
   MenubarContent,
@@ -11,6 +13,7 @@ import {
   MenubarMenu,
   MenubarTrigger,
 } from "@/shared/ui/menubar";
+import Flex from "@/shared/ui/wrapper/flex/flex";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -46,10 +49,14 @@ function Logo(): JSX.Element {
 function Nav(): JSX.Element {
   const pathname = usePathname();
   const navItems = [
-    { title: "AI 과제 생성", href: "/assignment" },
-    { title: "과제 평가", href: "/evaluations" },
-    { title: "기업과제", href: "/business-assignment" },
+    { title: "AI 과제 생성", href: ROUTES.ASSIGNMENT },
+    { title: "과제 평가", href: ROUTES.EVALUATOIN },
+    { title: "기업과제", href: ROUTES.ASSIGNMENT_BUSINESS },
   ];
+
+  const isActive = (href: string): boolean => {
+    return pathname === href;
+  };
 
   return (
     <nav className="self-end space-x-10">
@@ -59,7 +66,7 @@ function Nav(): JSX.Element {
           href={item.href}
           className={cn(
             "text-base font-bold transition-colors hover:text-primary",
-            pathname?.startsWith(item.href) && "text-primary",
+            isActive(item.href) && "text-primary",
           )}
         >
           {item.title}
@@ -71,11 +78,13 @@ function Nav(): JSX.Element {
 
 function LoginAndSignup(): JSX.Element {
   return (
-    <div className="flex flex-1 justify-end">
-      <Link href="/login" className="font-semibold text-base">
-        로그인/회원가입
+    <Flex justifyContent="end" className="flex-1">
+      <Link href="/login" passHref legacyBehavior>
+        <Typography as="a" size="base" weight="semibold">
+          로그인/회원가입
+        </Typography>
       </Link>
-    </div>
+    </Flex>
   );
 }
 
