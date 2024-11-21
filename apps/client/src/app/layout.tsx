@@ -1,6 +1,6 @@
+import FullWidthAndCenter from "@/shared/ui/wrapper/full-width";
 import Footer from "@/widgets/layout/footer/footer";
 import DefaultHeader from "@/widgets/layout/header/default-header";
-import FullWidthAndCenter from "@/widgets/layout/wrapper/full-width";
 import { Provider } from "@/widgets/provider";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
