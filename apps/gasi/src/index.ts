@@ -1,26 +1,7 @@
 import fastifyCors from "@fastify/cors";
-import { initTRPC } from "@trpc/server";
 import { fastifyTRPCPlugin } from "@trpc/server/adapters/fastify";
 import Fastify from "fastify";
-import z from "zod";
-
-const t = initTRPC.create();
-const p = t.procedure;
-
-const appRouter = t.router({
-  v1: {
-    test: p.query(() => "test"),
-    mutation: p
-      .input(
-        z.object({
-          name: z.string(),
-        }),
-      )
-      .mutation((opts) => opts.input.name),
-  },
-});
-
-export type AppRouter = typeof appRouter;
+import { appRouter } from "./router";
 
 const server = Fastify({
   logger: true,
@@ -44,3 +25,5 @@ const start = async () => {
 };
 
 start();
+
+export type AppRouter = typeof appRouter;
