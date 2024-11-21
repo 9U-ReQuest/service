@@ -56,6 +56,7 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-northeast-2
+
       - name: Create dotenv
         working-directory: ./codedeploy/${{ env.CHANNEL }}
         run: |
@@ -63,6 +64,12 @@ jobs:
           echo "ECR_REPOSITORY_URL=${{ fromJson(env.ECR_OUTPUTS).repository_url.value }}" >> .env
           echo "CLIENT_IMAGE_TAG=client-${{ github.sha }}" >> .env
           echo "GASI_IMAGE_TAG=client-${{ github.sha }}" >> .env
+
+      - name: Generate SSL Cetificate
+        working-directory: ./codedeploy/${{ env.CHANNEL }}/cert
+        run: |
+          echo "${{ secrets.SSL_CERTIFICATE }}" > fullchain.pem
+          echo "${{ secrets.SSL_PRIVATE_KEY }}" > privkey.pem
 
       - name: Create deployment archive
         working-directory: ./codedeploy/${{ env.CHANNEL }}
