@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { AssignmentPromptSchema } from "./assignment";
-import { SubmissionSchema } from "./submission";
+import { AssignmentPromptSchema } from "./assignment.js";
+import { SubmissionSchema } from "./submission.js";
 
 export type User = z.infer<typeof UserSchema>;
 export type RegisteredUser = z.infer<typeof RegisteredUserSchema>;

@@ -1,7 +1,7 @@
 import { TRPCError } from "@trpc/server";
-import humanId from "human-id";
+import { humanId } from "human-id";
 import z from "zod";
-import { AssignmentFilterSchema, AssignmentPromptSchema } from "./schema/assignment";
+import { AssignmentFilterSchema, AssignmentPromptSchema } from "./schema/assignment.js";
 import {
   type Review,
   type ReviewEntry,
@@ -9,14 +9,14 @@ import {
   type ReviewFileTree,
   ReviewFilterSchema,
   type ReviewResult,
-} from "./schema/review";
+} from "./schema/review.js";
 import {
   type Submission,
   SubmissionFileRequestSchema,
   SubmissionInitSchema,
-} from "./schema/submission";
-import { type AuthorizationResult, RegisterUserRequestSchema, type User } from "./schema/user";
-import { p, t } from "./trpc";
+} from "./schema/submission.js";
+import { type AuthorizationResult, RegisterUserRequestSchema, type User } from "./schema/user.js";
+import { p, t } from "./trpc.js";
 
 const createMockAssignment = (id: string, name: string) => ({
   id,
@@ -216,12 +216,13 @@ export const TestSchema = z.object({ name: z.string(), });`,
 });
 
 export type AppRouter = typeof appRouter;
+
+export * from "./schema/assignment.js";
+export * from "./schema/review.js";
+export * from "./schema/submission.js";
+export * from "./schema/user.js";
+
 export type * from "./schema/assignment.ts";
 export type * from "./schema/review.ts";
 export type * from "./schema/submission.ts";
 export type * from "./schema/user.ts";
-
-export * from "./schema/assignment";
-export * from "./schema/review";
-export * from "./schema/submission";
-export * from "./schema/user";
