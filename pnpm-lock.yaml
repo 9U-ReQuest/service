@@ -59,7 +59,7 @@ importers:
         version: 1.1.0(@types/react@18.3.12)(react@19.0.0-rc-66855b96-20241106)
       '@sentry/nextjs':
         specifier: ^8
-        version: 8.39.0(@opentelemetry/core@1.28.0)(@opentelemetry/instrumentation@0.54.2)(@opentelemetry/sdk-trace-base@1.28.0)(next@15.0.3)(react@19.0.0-rc-66855b96-20241106)(webpack@5.96.1)
+        version: 8.39.0(@opentelemetry/core@1.28.0(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.54.2(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.28.0(@opentelemetry/api@1.9.0))(next@15.0.3(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106)(webpack@5.96.1)
       '@sentry/utils':
         specifier: ^8.39.0
         version: 8.39.0
@@ -108,8 +108,7 @@ importers:
       next-mdx-remote:
         specifier: ^5.0.0
         version: 5.0.0(@types/react@18.3.12)(acorn@8.14.0)(react@19.0.0-rc-66855b96-20241106)
-      react:
-        specifier: 19.0.0-rc-66855b96-20241106
+      react        specifier: 19.0.0-rc-66855b96-20241106
         version: 19.0.0-rc-66855b96-20241106
       react-dom:
         specifier: 19.0.0-rc-66855b96-20241106
@@ -169,6 +168,9 @@ importers:
       fastify:
         specifier: ^5.1.0
         version: 5.1.0
+      jsonwebtoken:
+        specifier: ^9.0.2
+        version: 9.0.2
       zod:
         specifier: ^3.23.8
         version: 3.23.8
@@ -176,6 +178,9 @@ importers:
       '@types/node':
         specifier: ^20.17.6
         version: 20.17.6
+      prisma:
+        specifier: ^5.22.0
+        version: 5.22.0
       tsx:
         specifier: ^4.19.2
         version: 4.19.2
@@ -701,34 +706,18 @@ packages:
 
   '@fastify/ajv-compiler@4.0.1':
     resolution: {integrity: sha512-DxrBdgsjNLP0YM6W5Hd6/Fmj43S8zMKiFJYgi+Ri3htTGAowPVG/tG1wpnWLMjufEnehRivUCKZ1pLDIoZdTuw==}
-    requiresBuild: true
-    dependencies:
-      ajv: 8.17.1
-      ajv-formats: 3.0.1(ajv@8.17.1)
-      fast-uri: 3.0.3
-    dev: false
 
   '@fastify/cors@10.0.1':
     resolution: {integrity: sha512-O8JIf6448uQbOgzSkCqhClw6gFTAqrdfeA6R3fc/3gwTJGUp7gl8/3tbNB+6INuu4RmgVOq99BmvdGbtu5pgOA==}
 
   '@fastify/error@4.0.0':
     resolution: {integrity: sha512-OO/SA8As24JtT1usTUTKgGH7uLvhfwZPwlptRi2Dp5P4KKmJI3gvsZ8MIHnNwDs4sLf/aai5LzTyl66xr7qMxA==}
-    requiresBuild: true
-    dev: false
 
   '@fastify/fast-json-stringify-compiler@5.0.1':
     resolution: {integrity: sha512-f2d3JExJgFE3UbdFcpPwqNUEoHWmt8pAKf8f+9YuLESdefA0WgqxeT6DrGL4Yrf/9ihXNSKOqpjEmurV405meA==}
-    requiresBuild: true
-    dependencies:
-      fast-json-stringify: 6.0.0
-    dev: false
 
   '@fastify/merge-json-schemas@0.1.1':
     resolution: {integrity: sha512-fERDVz7topgNjtXsJTTW1JKLy0rhuLRcquYqNR9rF7OcVpCa2OVW49ZPDIhaRRCaUuvVxI+N416xUoF76HNSXA==}
-    requiresBuild: true
-    dependencies:
-      fast-deep-equal: 3.1.3
-    dev: false
 
   '@floating-ui/core@1.6.8':
     resolution: {integrity: sha512-7XJ9cPU+yI2QeLS+FCSlqNFZJq8arvswefkZrYI1yQBbftw6FyrZOxYSh+9S7z7TpeWlRt9zJ5IhM1WIL334jA==}
@@ -6831,26 +6820,6 @@ snapshots:
       react: 19.0.0-rc-66855b96-20241106
       react-dom: 19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106)
 
-  '@trpc/server@11.0.0-rc.638(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106)':
-    optionalDependencies:
-      '@types/aws-lambda': 8.10.145
-      express: 4.21.1
-      fastify: 5.1.0
-      next: 15.0.3(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106)
-      ws: 8.18.0
-    transitivePeerDependencies:
-      - '@babel/core'
-      - '@opentelemetry/api'
-      - '@playwright/test'
-      - babel-plugin-macros
-      - babel-plugin-react-compiler
-      - bufferutil
-      - react
-      - react-dom
-      - sass
-      - supports-color
-      - utf-8-validate
-
   '@types/acorn@4.0.6':
     dependencies:
       '@types/estree': 1.0.6
@@ -7247,6 +7216,8 @@ snapshots:
       node-releases: 2.0.18
       update-browserslist-db: 1.1.1(browserslist@4.24.2)
 
+  buffer-equal-constant-time@1.0.1: {}
+
   buffer-from@1.1.2: {}
 
   buffer@5.7.1:
@@ -7605,6 +7576,10 @@ snapshots:
   dotenv@16.4.5: {}
 
   eastasianwidth@0.2.0: {}
+
+  ecdsa-sig-formatter@1.0.11:
+    dependencies:
+      safe-buffer: 5.2.1
 
   editor@1.0.0: {}
 
@@ -8575,6 +8550,30 @@ snapshots:
 
   jsonpointer@5.0.1: {}
 
+  jsonwebtoken@9.0.2:
+    dependencies:
+      jws: 3.2.2
+      lodash.includes: 4.3.0
+      lodash.isboolean: 3.0.3
+      lodash.isinteger: 4.0.4
+      lodash.isnumber: 3.0.3
+      lodash.isplainobject: 4.0.6
+      lodash.isstring: 4.0.1
+      lodash.once: 4.1.1
+      ms: 2.1.3
+      semver: 7.6.3
+
+  jwa@1.4.1:
+    dependencies:
+      buffer-equal-constant-time: 1.0.1
+      ecdsa-sig-formatter: 1.0.11
+      safe-buffer: 5.2.1
+
+  jws@3.2.2:
+    dependencies:
+      jwa: 1.4.1
+      safe-buffer: 5.2.1
+
   ky@1.7.2: {}
 
   leven@3.1.0: {}
@@ -9217,11 +9216,7 @@ snapshots:
 
   obliterator@2.0.4: {}
 
-  /on-exit-leak-free@2.1.2:
-    resolution: {integrity: sha512-0eJJY6hXLGf1udHwfNftBqH+g73EU4B504nZeKpz1sYRKafAghwxEJunB2O7rDZkL4PGfsMVnTXZ2EjibbqcsA==}
-    engines: {node: '>=14.0.0'}
-    requiresBuild: true
-    dev: false
+  on-exit-leak-free@2.1.2: {}
 
   on-finished@2.4.1:
     dependencies:
@@ -9385,21 +9380,13 @@ snapshots:
 
   pify@2.3.0: {}
 
-  /pino-abstract-transport@2.0.0:
-    resolution: {integrity: sha512-F63x5tizV6WCh4R6RHyi2Ml+M70DNRXt/+HANowMflpgGFMAym/VKm6G7ZOQRjqN7XbGxK1Lg9t6ZrtzOaivMw==}
-    requiresBuild: true
+  pino-abstract-transport@2.0.0:
     dependencies:
       split2: 4.2.0
 
-  /pino-std-serializers@7.0.0:
-    resolution: {integrity: sha512-e906FRY0+tV27iq4juKzSYPbUj2do2X2JX4EzSca1631EB2QJQUqGbDuERal7LCtOpxl6x3+nvo9NPZcmjkiFA==}
-    requiresBuild: true
-    dev: false
+  pino-std-serializers@7.0.0: {}
 
-  /pino@9.5.0:
-    resolution: {integrity: sha512-xSEmD4pLnV54t0NOUN16yCl7RIB1c5UUOse5HSyEXtBp+FgFQyPeDutc+Q2ZO7/22vImV7VfEjH/1zV2QuqvYw==}
-    hasBin: true
-    requiresBuild: true
+  pino@9.5.0:
     dependencies:
       atomic-sleep: 1.0.0
       fast-redact: 3.5.0
@@ -9472,17 +9459,17 @@ snapshots:
     dependencies:
       xtend: 4.0.2
 
-  /process-warning@4.0.0:
-    resolution: {integrity: sha512-/MyYDxttz7DfGMMHiysAsFE4qF+pQYAA8ziO/3NcRVrQ5fSk+Mns4QZA/oRPFzvcqNoVJXQNWNAsdwBXLUkQKw==}
-    requiresBuild: true
-    dev: false
+  prisma@5.22.0:
+    dependencies:
+      '@prisma/engines': 5.22.0
+    optionalDependencies:
+      fsevents: 2.3.3
+
+  process-warning@4.0.0: {}
 
   progress@2.0.3: {}
 
-  /proxy-addr@2.0.7:
-    resolution: {integrity: sha512-llQsMLSUDUPT44jdrU/O37qlnifitDP+ZwrmmZcoSKyLKvtZxpyV0n2/bD/N4tBAAZ/gJEdZU7KMraoK1+XYAg==}
-    engines: {node: '>= 0.10'}
-    requiresBuild: true
+  proxy-addr@2.0.7:
     dependencies:
       forwarded: 0.2.0
       ipaddr.js: 1.9.1
@@ -9504,10 +9491,7 @@ snapshots:
 
   queue-microtask@1.2.3: {}
 
-  /quick-format-unescaped@4.0.4:
-    resolution: {integrity: sha512-tYC1Q1hgyRuHgloV/YXs2w15unPVh8qfu/qCTfhTYamaw7fyhumKa2yGpdSo87vY32rIclj+4fWYQXUMs9EHvg==}
-    requiresBuild: true
-    dev: false
+  quick-format-unescaped@4.0.4: {}
 
   randombytes@2.1.0:
     dependencies:
@@ -9695,18 +9679,11 @@ snapshots:
       onetime: 5.1.2
       signal-exit: 3.0.7
 
-  /ret@0.5.0:
-    resolution: {integrity: sha512-I1XxrZSQ+oErkRR4jYbAyEEu2I0avBvvMM5JN+6EBprOGRCs63ENqZ3vjavq8fBw2+62G5LF5XelKwuJpcvcxw==}
-    engines: {node: '>=10'}
-    requiresBuild: true
-    dev: false
+  ret@0.5.0: {}
 
   reusify@1.0.4: {}
 
-  /rfdc@1.4.1:
-    resolution: {integrity: sha512-q1b3N5QkRUWUl7iyylaaj3kOpIT0N2i9MqIEQXP73GVsN9cw3fdx8X63cEmWhJGi2PPCF23Ijp7ktmd39rawIA==}
-    requiresBuild: true
-    dev: false
+  rfdc@1.4.1: {}
 
   rimraf@2.6.3:
     dependencies:
@@ -9745,19 +9722,13 @@ snapshots:
       es-errors: 1.3.0
       is-regex: 1.1.4
 
-  /safe-regex2@4.0.0:
-    resolution: {integrity: sha512-Hvjfv25jPDVr3U+4LDzBuZPPOymELG3PYcSk5hcevooo1yxxamQL/bHs/GrEPGmMoMEwRrHVGiCA1pXi97B8Ew==}
-    requiresBuild: true
+  safe-regex2@4.0.0:
     dependencies:
       ret: 0.5.0
 
   safe-stable-stringify@1.1.1: {}
 
-  /safe-stable-stringify@2.5.0:
-    resolution: {integrity: sha512-b3rppTKm9T+PsVCBEOUR46GWI7fdOs00VKZ1+9c1EWDaDMvjQc6tUwuFyIprgGgTcWoVHSKrU8H31ZHA2e0RHA==}
-    engines: {node: '>=10'}
-    requiresBuild: true
-    dev: false
+  safe-stable-stringify@2.5.0: {}
 
   safer-buffer@2.1.2: {}
 
@@ -9769,10 +9740,7 @@ snapshots:
       ajv: 6.12.6
       ajv-keywords: 3.5.2(ajv@6.12.6)
 
-  /secure-json-parse@2.7.0:
-    resolution: {integrity: sha512-6aU+Rwsezw7VR8/nyvKTx8QpWH9FrcYiXXlqC4z5d5XQBDRqtbfsRjnwGyqbi3gddNtWHuEk9OANUotL26qKUw==}
-    requiresBuild: true
-    dev: false
+  secure-json-parse@2.7.0: {}
 
   semver@6.3.1: {}
 
@@ -9811,10 +9779,7 @@ snapshots:
       - supports-color
     optional: true
 
-  /set-cookie-parser@2.7.1:
-    resolution: {integrity: sha512-IOc8uWeOZgnb3ptbCURJWNjWUPcO3ZnTTdzsurqERrP6nPyv+paC55vJM0LpOlT2ne+Ix+9+CRG1MNLlyZ4GjQ==}
-    requiresBuild: true
-    dev: false
+  set-cookie-parser@2.7.1: {}
 
   set-function-length@1.2.2:
     dependencies:
@@ -9860,7 +9825,6 @@ snapshots:
       '@img/sharp-wasm32': 0.33.5
       '@img/sharp-win32-ia32': 0.33.5
       '@img/sharp-win32-x64': 0.33.5
-    dev: false
 
   shebang-command@2.0.0:
     dependencies:
@@ -9914,13 +9878,10 @@ snapshots:
   simple-swizzle@0.2.2:
     dependencies:
       is-arrayish: 0.3.2
-    dev: false
 
   slash@3.0.0: {}
 
-  /sonic-boom@4.2.0:
-    resolution: {integrity: sha512-INb7TM37/mAcsGmc9hyyI6+QR3rR1zVRu36B0NeGXKnOOLiZOfER5SA+N7X7k3yUYRzLWafduTDvJAfDswwEww==}
-    requiresBuild: true
+  sonic-boom@4.2.0:
     dependencies:
       atomic-sleep: 1.0.0
 
@@ -10141,9 +10102,7 @@ snapshots:
     dependencies:
       any-promise: 1.3.0
 
-  /thread-stream@3.1.0:
-    resolution: {integrity: sha512-OqyPZ9u96VohAyMfJykzmivOrY2wfMSf3C5TtFJVgN+Hm6aj+voFhlK+kZEIv2FBh1X6Xp3DlnCOfEQ3B2J86A==}
-    requiresBuild: true
+  thread-stream@3.1.0:
     dependencies:
       real-require: 0.2.0
 
@@ -10159,11 +10118,7 @@ snapshots:
     dependencies:
       is-number: 7.0.0
 
-  /toad-cache@3.7.0:
-    resolution: {integrity: sha512-/m8M+2BJUpoJdgAHoG+baCwBT+tf2VraSfkBgl0Y00qIWt41DJ8R5B8nsEw0I58YwF5IZH6z24/2TobDKnqSWw==}
-    engines: {node: '>=12'}
-    requiresBuild: true
-    dev: false
+  toad-cache@3.7.0: {}
 
   toidentifier@1.0.1:
     optional: true
