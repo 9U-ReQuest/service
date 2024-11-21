@@ -56,7 +56,7 @@ jobs:
           aws-region: ap-northeast-2
 
       - name: Create dotenv
-        working-directory: ./codedeploy/${{ env.CHANNEL }}
+        working-directory: ./codedeploy
         run: |
           touch .env
           echo "CHANNEL=${{ env.CHANNEL }}" >> .env
@@ -67,8 +67,24 @@ jobs:
           echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
           echo "KAKAO_REST_API_KEY=${{ secrets.KAKAO_REST_API_KEY }}" >> .env
 
+      - name: Create client dotenv
+        working-directory: ./codedeploy
+        run: |
+          touch client.env
+          echo "CHANNEL=${{ env.CHANNEL }}" >> client.env
+          echo "PRIVATE_GASI_API_URL=gasi.request.internal:8080" >> client.env
+
+      - name: Create gasi dotenv
+        working-directory: ./codedeploy
+        run: |
+          touch gasi.env
+          echo "CHANNEL=${{ env.CHANNEL }}" >> gasi.env
+          echo "DATABASE_URI=${{ secrets.DATABASE_URI }}" >> gasi.env
+          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> gasi.env
+          echo "KAKAO_REST_API_KEY=${{ secrets.KAKAO_REST_API_KEY }}" >> gasi.env
+
       - name: Create deployment archive
-        working-directory: ./codedeploy/${{ env.CHANNEL }}
+        working-directory: ./codedeploy
         run: |
           mkdir scripts
           touch scripts/deploy.sh
