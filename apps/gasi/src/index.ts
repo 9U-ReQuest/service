@@ -1,15 +1,18 @@
 import fastifyCors from "@fastify/cors";
 import { fastifyTRPCPlugin } from "@trpc/server/adapters/fastify";
 import Fastify from "fastify";
+import mongoose from "mongoose";
 import { appRouter } from "./router.js";
 
 const server = Fastify({
   logger: true,
 });
 
-server.register(fastifyCors);
+await mongoose.connect(process.env.DATABASE_URI ?? "");
 
-server.register(fastifyTRPCPlugin, {
+await server.register(fastifyCors);
+
+await server.register(fastifyTRPCPlugin, {
   prefix: "/trpc",
   trpcOptions: { router: appRouter },
 });
