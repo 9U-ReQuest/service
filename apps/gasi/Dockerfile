@@ -25,7 +25,7 @@ RUN pnpm install
 
 # Build the project
 COPY --from=builder /app/out/full/ .
-RUN pnpm build --filter="@request/gasi"
+RUN pnpm build
 
 FROM gcr.io/distroless/nodejs20-debian12
 WORKDIR /app

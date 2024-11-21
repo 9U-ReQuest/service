@@ -7,7 +7,7 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "ignore": ["dist/**", ".next/**", ".turbo/**"]
+    "ignore": ["dist/**", ".next/**", ".turbo/**", "**/*.d.ts"]
   },
   "formatter": {
     "enabled": true,

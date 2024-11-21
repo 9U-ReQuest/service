@@ -6,8 +6,8 @@ env:
   CHANNEL: prod
   AWS_ACCESS_KEY_ID: ${{ secrets.aws_access_key_id }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
-  ECR_OUTPUTS: ${{ secrets.container_registry_outputs_dev }}
-  CODEDEPLOY_OUTPUTS: ${{ secrets.codedeploy_outputs_dev }}
+  ECR_OUTPUTS: ${{ secrets.container_registry_outputs_prod }}
+  CODEDEPLOY_OUTPUTS: ${{ secrets.codedeploy_outputs_prod }}
 jobs:
   docker-build:
     name: Build Docker images
@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        app: ["client", "gasi"]
+        app: [ "client", "gasi" ]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -56,15 +56,35 @@ jobs:
           aws-region: ap-northeast-2
 
       - name: Create dotenv
-        working-directory: ./codedeploy/${{ env.CHANNEL }}
+        working-directory: ./codedeploy
         run: |
           touch .env
+          echo "CHANNEL=${{ env.CHANNEL }}" >> .env
           echo "ECR_REPOSITORY_URL=${{ fromJson(env.ECR_OUTPUTS).repository_url.value }}" >> .env
           echo "CLIENT_IMAGE_TAG=client-${{ github.sha }}" >> .env
           echo "GASI_IMAGE_TAG=client-${{ github.sha }}" >> .env
-      
+          echo "DATABASE_URI=${{ secrets.DATABASE_URI }}" >> .env
+          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
+          echo "KAKAO_REST_API_KEY=${{ secrets.KAKAO_REST_API_KEY }}" >> .env
+
+      - name: Create client dotenv
+        working-directory: ./codedeploy
+        run: |
+          touch client.env
+          echo "CHANNEL=${{ env.CHANNEL }}" >> client.env
+          echo "PRIVATE_GASI_API_URL=gasi.request.internal:8080" >> client.env
+
+      - name: Create gasi dotenv
+        working-directory: ./codedeploy
+        run: |
+          touch gasi.env
+          echo "CHANNEL=${{ env.CHANNEL }}" >> gasi.env
+          echo "DATABASE_URI=${{ secrets.DATABASE_URI }}" >> gasi.env
+          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> gasi.env
+          echo "KAKAO_REST_API_KEY=${{ secrets.KAKAO_REST_API_KEY }}" >> gasi.env
+
       - name: Create deployment archive
-        working-directory: ./codedeploy/${{ env.CHANNEL }}
+        working-directory: ./codedeploy
         run: |
           mkdir scripts
           touch scripts/deploy.sh
