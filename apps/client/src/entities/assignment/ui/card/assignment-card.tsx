@@ -8,7 +8,7 @@ export default function AssignmentCard({ card }: { card: AssignmentCardType }) {
   return (
     <Card className="group justify-center relative overflow-hidden shadow-none border-none">
       <CardHeader className="p-0">
-        <div className="relative overflow-hidden">
+        <div className="w-fit relative overflow-hidden">
           <Image
             src={card.company.logo}
             alt={`${card.company.name} logo`}
@@ -28,7 +28,7 @@ export default function AssignmentCard({ card }: { card: AssignmentCardType }) {
       </CardHeader>
       <CardContent className="px-0 py-4">
         <div className="space-y-2 font-medium">
-          <div className="text-sm font-medium">
+          <div className="text-sm">
             {card.company.category} / {card.company.name}
           </div>
           <h3 className="text-lg line-clamp-1">{card.title}</h3>
