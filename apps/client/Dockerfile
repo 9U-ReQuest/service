@@ -22,11 +22,10 @@ WORKDIR /app
 COPY --from=builder /app/out/json/ .
 RUN corepack enable
 RUN pnpm install
-RUN pnpm --filter="@request/specs" build
 
 # Build the project
 COPY --from=builder /app/out/full/ .
-RUN pnpm build --filter="@request/client"
+RUN pnpm build
 
 FROM gcr.io/distroless/nodejs20-debian12
 WORKDIR /app
