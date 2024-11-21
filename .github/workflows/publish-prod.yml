@@ -27,6 +27,8 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-northeast-2
 
       - name: Login to Amazon ECR
@@ -50,7 +52,10 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-northeast-2
+
       - name: Create dotenv
         working-directory: ./codedeploy/$CHANNEL
         run: |
@@ -59,6 +64,7 @@ jobs:
           echo "ECR_REPOSITORY=$ECR_REPOSITORY" >> .env
           echo "CLIENT_IMAGE_TAG=client-${{ github.sha }}" >> .env
           echo "GASI_IMAGE_TAG=client-${{ github.sha }}" >> .env
+      
       - name: Create deployment archive
         working-directory: ./codedeploy/$CHANNEL
         run: |
