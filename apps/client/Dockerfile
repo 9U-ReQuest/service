@@ -22,7 +22,7 @@ WORKDIR /app
 COPY --from=builder /app/out/json/ .
 RUN corepack enable
 RUN pnpm install
-RUN pnpm build --filter="@request/specs"
+RUN pnpm --filter="@request/specs" build
 
 # Build the project
 COPY --from=builder /app/out/full/ .
