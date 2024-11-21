@@ -1,7 +1,8 @@
 import z from "zod";
-import { Assignment, AssignmentFilterSchema, AssignmentPromptSchema } from "./schema/assignment";
+import { AssignmentFilterSchema, AssignmentPromptSchema } from "./schema/assignment";
 import { ReviewFilterSchema } from "./schema/review";
 import { SubmissionFileRequestSchema, SubmissionInitSchema } from "./schema/submission";
+import { RegisterUserRequestSchema } from "./schema/user";
 import { p, t } from "./trpc";
 
 export const appRouter = t.router({
@@ -9,7 +10,9 @@ export const appRouter = t.router({
     v1: {
       auth: {
         // Kakao 로그인 code를 받고 accessToken을 리턴합니다.
-        callback: p.input(z.string()).query(() => {}),
+        kakao: p.input(z.string()).query(() => {}),
+        // 최초 로그인 유저의 정보를 받습니다.
+        register: p.input(RegisterUserRequestSchema).mutation(() => {}),
       },
       user: {
         // 자신의 정보를 반환합니다.
