@@ -1,0 +1,19 @@
+{
+  "name": "@request/specs",
+  "version": "1.0.0",
+  "description": "shared types and schema",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc --project tsconfig.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@trpc/server": "^11.0.0-rc.638",
+    "human-id": "^4.1.1",
+    "zod": "^3.23.8"
+  }
+}

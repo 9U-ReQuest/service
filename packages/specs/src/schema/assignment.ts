@@ -4,6 +4,7 @@ export type Assignment = z.infer<typeof AssignmentSchema>;
 export type AssignmentIndex = z.infer<typeof AssignmentIndexSchema>;
 export type AssignmentStatus = z.infer<typeof AssignmentStatusSchema>;
 export type AssignmentPromptSchema = z.infer<typeof AssignmentPromptSchema>;
+export type AssignmentListResponse = z.infer<typeof AssignmentListResponseSchema>;
 
 // 현재 과제의 상태
 export const AssignmentStatusSchema = z.enum(["GENERATING", "FAILED", "READY", "DELETED"]);
@@ -34,3 +35,10 @@ export const AssignmentSchema = z.object({
 });
 
 export const AssignmentIndexSchema = AssignmentSchema.omit({ readme: true });
+
+export const AssignmentListResponseSchema = z.object({
+  skip: z.number().default(0),
+  limit: z.number().default(25),
+  total: z.number(),
+  data: z.array(AssignmentSchema),
+});

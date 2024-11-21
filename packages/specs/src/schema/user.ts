@@ -4,7 +4,7 @@ import { SubmissionSchema } from "./submission";
 
 export type User = z.infer<typeof UserSchema>;
 export type RegisteredUser = z.infer<typeof RegisteredUserSchema>;
-export type AuthorizeResult = z.infer<typeof AuthorizeResultSchema>;
+export type AuthorizationResult = z.infer<typeof AuthorizeResultSchema>;
 export type RegisterUserRequest = z.infer<typeof RegisterUserRequestSchema>;
 
 export const AuthorizeResultSchema = z.object({
