@@ -11,13 +11,13 @@ services:
     
   client:
     image: ${ECR_REPOSITORY_URL}:${CLIENT_IMAGE_TAG}
-    ports:
-      - "80:3000"
+    expose:
+      - "3000:3000"
     container_name: client.request.internal
     environment:
-      PRIVATE_GASI_API_URL: gasi.request.internal
+      PRIVATE_GASI_API_URL: gasi.request.internal:8080
   gasi:
     image: ${ECR_REPOSITORY_URL}:${GASI_IMAGE_TAG}
     expose:
-      - "80:8080"
+      - "8080:8080"
     container_name: gasi.request.internal
