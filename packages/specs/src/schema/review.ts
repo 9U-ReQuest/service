@@ -41,7 +41,7 @@ export const ReviewSchema = z.object({
 
 export const ReviewFilterSchema = z.object({
   id: z.string(),
-  scenario: z.string().default("summary"),
+  scenario: z.string().optional().default("summary"),
   path: z.string().optional(),
 });
 
