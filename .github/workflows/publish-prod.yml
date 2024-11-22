@@ -70,18 +70,18 @@ jobs:
       - name: Create client dotenv
         working-directory: ./codedeploy
         run: |
-          touch client.env
-          echo "CHANNEL=${{ env.CHANNEL }}" >> client.env
-          echo "PRIVATE_GASI_API_URL=gasi.request.internal:8080" >> client.env
+          touch .env.client
+          echo "CHANNEL=${{ env.CHANNEL }}" >> .env.client
+          echo "PRIVATE_GASI_API_URL=gasi.request.internal:8080" >> .env.client
 
       - name: Create gasi dotenv
         working-directory: ./codedeploy
         run: |
-          touch gasi.env
-          echo "CHANNEL=${{ env.CHANNEL }}" >> gasi.env
-          echo "DATABASE_URI=${{ secrets.DATABASE_URI }}" >> gasi.env
-          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> gasi.env
-          echo "KAKAO_REST_API_KEY=${{ secrets.KAKAO_REST_API_KEY }}" >> gasi.env
+          touch .env.gasi
+          echo "CHANNEL=${{ env.CHANNEL }}" >> .env.gasi
+          echo "DATABASE_URI=${{ secrets.DATABASE_URI }}" >> .env.gasi
+          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env.gasi
+          echo "KAKAO_REST_API_KEY=${{ secrets.KAKAO_REST_API_KEY }}" >> .env.gasi
 
       - name: Create deployment archive
         working-directory: ./codedeploy

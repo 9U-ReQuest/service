@@ -13,10 +13,10 @@ services:
     expose:
       - "3000:3000"
     container_name: client.request.internal
-    environment:
-      PRIVATE_GASI_API_URL: gasi.request.internal:8080
+    env_file: ./.env.client
   gasi:
     image: ${ECR_REPOSITORY_URL}:${GASI_IMAGE_TAG}
     expose:
       - "8080:8080"
     container_name: gasi.request.internal
+    env_file: ./.env.gasi
