@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 import { renderTrpcPanel } from "trpc-ui";
 import { createContext } from "./context.js";
 import { appRouter } from "./router.js";
+import {ReviewService} from "./service/review.js";
 
 dotenvx.config();
 
@@ -40,3 +41,7 @@ const start = async () => {
 };
 
 start();
+
+
+const rs = new ReviewService();
+rs.generateReview({assignmentId: "assignment"});
