@@ -1,29 +1,9 @@
-import {
-  type AppRouter,
-  AssignmentFilterSchema,
-  AssignmentPromptSchema,
-  type AuthorizationResult,
-  RegisterUserRequestSchema,
-  type Review,
-  type ReviewEntry,
-  type ReviewFile,
-  type ReviewFileTree,
-  ReviewFilterSchema,
-  type ReviewResult,
-  type Submission,
-  SubmissionFileRequestSchema,
-  SubmissionInitSchema,
-  type User,
-} from "@request/specs";
-import { TRPCError } from "@trpc/server";
-import { humanId } from "human-id";
-import z from "zod";
-import { createMockAssignment, createMockReviewEntry } from "./mockUtils.js";
+import type { ReviewFileTree, User } from "@request/specs";
 import { generate, get, list } from "./routes/asgmt.js";
 import { kakao, register } from "./routes/auth.js";
 import { cancel, file, files, init, review, reviewEntries } from "./routes/submission.js";
 import { me } from "./routes/user.js";
-import { p, t } from "./trpc.js";
+import { t } from "./trpc.js";
 
 // https://trpc.io/docs/server/server-side-calls 참고하세용
 export const appRouter = t.router({

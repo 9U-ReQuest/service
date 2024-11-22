@@ -35,5 +35,10 @@
   "engines": {
     "node": ">=20"
   },
-  "packageManager": "pnpm@9.14.2"
+  "packageManager": "pnpm@9.14.2",
+  "pnpm": {
+    "patchedDependencies": {
+      "trpc-ui": "patches/trpc-ui.patch"
+    }
+  }
 }
