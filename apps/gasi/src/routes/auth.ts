@@ -18,4 +18,20 @@ export const register = p.input(RegisterUserRequestSchema).mutation(async ({ inp
     });
   if (ctx.user.registered)
     throw new TRPCError({ code: "CONFLICT", message: "이미 가입을 진행한 사용자입니다." });
+
+  const res = await ctx.user.updateOne({
+    name: input.name,
+    email: input.email,
+    registered: true,
+    prompt: {
+      fields: input.prompt.fields,
+      techs: input.prompt.techs,
+      companies: input.prompt.companies,
+    },
+  });
+  if (res.modifiedCount !== 1)
+    throw new TRPCError({
+      code: "INTERNAL_SERVER_ERROR",
+      message: "데이터베이스 등록 작업에 실패했습니다.",
+    });
 });
