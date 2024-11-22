@@ -1,10 +1,3 @@
-import { appRouter } from "@request/specs";
-import { initTRPC } from "@trpc/server";
+import { appRouter, createCaller } from "@request/specs";
 
-const t = initTRPC.context().create();
-
-const { createCallerFactory } = t;
-
-const createCaller = createCallerFactory(appRouter);
-
-export const caller = createCaller(appRouter);
+export const caller = createCaller({ baseUrl: "http://localhost:3000", user: null });
