@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 import { renderTrpcPanel } from "trpc-ui";
 import { createContext } from "./context.js";
 import { appRouter } from "./router.js";
+
 dotenvx.config();
 
 export const server = Fastify({
@@ -22,10 +23,11 @@ await server.register(fastifyTRPCPlugin, {
   prefix: "/trpc",
   trpcOptions: { router: appRouter, createContext },
 });
-
-server.get("/trpc-ui", async (_, res) => {
-  return res.type("text/html").send(renderTrpcPanel(appRouter, { url: "/trpc" }));
-});
+if (process.env.CHANNEL === "local") {
+  server.get("/trpc-ui", async (_, res) => {
+    return res.type("text/html").send(renderTrpcPanel(appRouter, { url: "/trpc" }));
+  });
+}
 
 const start = async () => {
   try {
