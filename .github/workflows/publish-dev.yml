@@ -100,7 +100,7 @@ jobs:
           mkdir scripts
           touch scripts/deploy.sh
           echo "aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin ${{ fromJson(env.ECR_OUTPUTS).repository_url.value }}" >> scripts/deploy.sh
-          echo "docker image prune -a" >> scripts/deploy.sh
+          echo "docker image prune -a -f" >> scripts/deploy.sh
           echo "docker-compose -f /var/deployment/docker-compose.yml up -d" >> scripts/deploy.sh
           zip -r ${{ github.sha }}.zip .
           aws s3 cp ${{ github.sha }}.zip s3://${{ fromJson(env.CODEDEPLOY_OUTPUTS).bucket.value }}/${{ github.sha }}.zip
