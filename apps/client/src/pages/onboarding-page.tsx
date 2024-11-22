@@ -7,7 +7,13 @@ import Image from "next/image";
 
 export default function OnboardingPage() {
   return (
-    <Flex as="section" justifyContent="center" gap="24" className="h-screen">
+    <Flex
+      as="section"
+      justifyContent="center"
+      gap="24"
+      className="h-fit-height
+    "
+    >
       <Flex className="font-bold justify-center items-center">
         <div className="space-y-6">
           <Image src={logoSvg} width={250} height={76} alt="ReQuest 로고 이미지" />

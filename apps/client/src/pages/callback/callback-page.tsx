@@ -41,21 +41,21 @@ export default function CallbackPage() {
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    if (!isLoading) {
-      if (isSuccess) {
-        setCookie("accessToken", data?.accessToken);
-      }
-      setTimeout(() => {
-        if (isError || data?.registered) {
-          return handleRedirectToHome();
-        }
-        handleRedirectToOnboardingProfile();
-      }, 2000);
-    }
+    // if (!isLoading) {
+    //   if (isSuccess) {
+    //     setCookie("accessToken", data?.accessToken);
+    //   }
+    //   setTimeout(() => {
+    //     if (isError || data?.registered) {
+    //       return handleRedirectToHome();
+    //     }
+    //     handleRedirectToOnboardingProfile();
+    //   }, 2000);
+    // }
   }, [isLoading]);
 
   return (
-    <Flex as="main" direction="col" className="h-screen justify-center items-center gap-10">
+    <Flex as="main" direction="col" className="h-fit-height justify-center items-center gap-10">
       <Typography as="p" className="text-primary text-5xl font-bold">
         {textByLoading}
       </Typography>
