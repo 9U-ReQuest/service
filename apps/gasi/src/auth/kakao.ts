@@ -3,8 +3,7 @@ import { z } from "zod";
 import { server } from "../index.js";
 
 const KAKAO_TOKEN_ENDPOINT = "https://kauth.kakao.com/oauth/token" as const;
-const KAKAO_ACCESS_TOKEN_INFO_ENDPOINT =
-  "https://kapi.kakao.com/v1/user/access_token_info" as const;
+const KAKAO_TOKEN_INFO_ENDPOINT = "https://kapi.kakao.com/v1/user/access_token_info" as const;
 
 const KakaoTokenResponse = z.object({
   token_type: z.literal("bearer"),
@@ -43,7 +42,7 @@ export async function kakaoToken(
   }
   const rawResult = await result.json();
   const parsedResult = KakaoTokenResponse.safeParse(rawResult);
-  if (parsedResult.error)
+  if (!parsedResult.success)
     throw new TRPCError({
       code: "INTERNAL_SERVER_ERROR",
       message: `Authentication provider 'kakao' returns an wrong response: ${rawResult}`,
@@ -60,7 +59,7 @@ const KakaoTokenInfoResponse = z.object({
 export async function kakaoTokenInfo(
   token: string,
 ): Promise<z.infer<typeof KakaoTokenInfoResponse>> {
-  const result = await fetch(KAKAO_TOKEN_ENDPOINT, {
+  const result = await fetch(KAKAO_TOKEN_INFO_ENDPOINT, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,

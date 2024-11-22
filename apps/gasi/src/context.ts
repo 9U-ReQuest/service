@@ -9,7 +9,6 @@ const defaultBaseUrl = process.env.CLIENT_BASE_URL ?? "http://localhost:3000";
 export const createContext = async (
   opts: CreateFastifyContextOptions,
 ): Promise<{ baseUrl: string; user: User | null }> => {
-  server.log.info(opts.req.headers);
   const referer = opts.req.headers.referer;
   let user = null;
   let baseUrl = defaultBaseUrl;
