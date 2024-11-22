@@ -197,7 +197,7 @@ importers:
         version: 8.8.2
       trpc-ui:
         specifier: ^1.0.3
-        version: 1.0.3(@emotion/react@11.13.5)(@emotion/styled@11.13.5)(@mui/material@5.16.7)(@trpc/server@11.0.0-rc.638)(react-dom@18.3.1)(react@18.3.1)(zod@3.23.8)
+        version: 1.0.3(patch_hash=sgp3snzqodwyh4yrp4lhijj3gi)(@emotion/react@11.13.5(@types/react@18.3.12)(react@19.0.0-rc-66855b96-20241106))(@emotion/styled@11.13.5(@emotion/react@11.13.5(@types/react@18.3.12)(react@19.0.0-rc-66855b96-20241106))(@types/react@18.3.12)(react@19.0.0-rc-66855b96-20241106))(@mui/material@5.16.7(@emotion/react@11.13.5(@types/react@18.3.12)(react@19.0.0-rc-66855b96-20241106))(@emotion/styled@11.13.5(@emotion/react@11.13.5(@types/react@18.3.12)(react@19.0.0-rc-66855b96-20241106))(@types/react@18.3.12)(react@19.0.0-rc-66855b96-20241106))(@types/react@18.3.12)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106))(@trpc/server@11.0.0-rc.638(@opentelemetry/api@1.9.0)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106))(@types/react@18.3.12)(immer@9.0.21)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106)(zod@3.23.8)
       zod:
         specifier: ^3.23.8
         version: 3.23.8
@@ -10929,21 +10929,12 @@ snapshots:
   tr46@4.1.1:
     dependencies:
       punycode: 2.3.1
-    dev: false
 
-  /trim-lines@3.0.1:
-    resolution: {integrity: sha512-kRj8B+YHZCc9kQYdWfJB2/oUl9rA99qbowYYBtr4ui4mZyAQ2JpvVBd/6U2YloATfqBhBTSMhTpgBHtU0Mf3Rg==}
-    dev: false
+  trim-lines@3.0.1: {}
 
-  /trough@2.2.0:
-    resolution: {integrity: sha512-tmMpK00BjZiUyVyvrBK7knerNgmgvcV/KLVyuma/SC+TQN167GrMRciANTz09+k3zW8L8t60jWO1GpfkZdjTaw==}
-    dev: false
+  trough@2.2.0: {}
 
-  /trpc-ui@1.0.3(@emotion/react@11.13.5)(@emotion/styled@11.13.5)(@mui/material@5.16.7)(@trpc/server@11.0.0-rc.638)(react-dom@18.3.1)(react@18.3.1)(zod@3.23.8):
-    resolution: {integrity: sha512-EhRou54G7/BYqSP00m6/qfTapxzmi2NosIdHXP3W3wKmC9/Nx8tLrGZ+PBxo9LG6t7aqNQGQtf0VjveJIAfCOQ==}
-    peerDependencies:
-      '@trpc/server': ^11.0.0-next-beta.264
-      zod: ^3.19.1
+  trpc-ui@1.0.3(patch_hash=sgp3snzqodwyh4yrp4lhijj3gi)(@emotion/react@11.13.5(@types/react@18.3.12)(react@19.0.0-rc-66855b96-20241106))(@emotion/styled@11.13.5(@emotion/react@11.13.5(@types/react@18.3.12)(react@19.0.0-rc-66855b96-20241106))(@types/react@18.3.12)(react@19.0.0-rc-66855b96-20241106))(@mui/material@5.16.7(@emotion/react@11.13.5(@types/react@18.3.12)(react@19.0.0-rc-66855b96-20241106))(@emotion/styled@11.13.5(@emotion/react@11.13.5(@types/react@18.3.12)(react@19.0.0-rc-66855b96-20241106))(@types/react@18.3.12)(react@19.0.0-rc-66855b96-20241106))(@types/react@18.3.12)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106))(@trpc/server@11.0.0-rc.638(@opentelemetry/api@1.9.0)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106))(@types/react@18.3.12)(immer@9.0.21)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106)(zod@3.23.8):
     dependencies:
       '@textea/json-viewer': 3.5.0(@emotion/react@11.13.5(@types/react@18.3.12)(react@19.0.0-rc-66855b96-20241106))(@emotion/styled@11.13.5(@emotion/react@11.13.5(@types/react@18.3.12)(react@19.0.0-rc-66855b96-20241106))(@types/react@18.3.12)(react@19.0.0-rc-66855b96-20241106))(@mui/material@5.16.7(@emotion/react@11.13.5(@types/react@18.3.12)(react@19.0.0-rc-66855b96-20241106))(@emotion/styled@11.13.5(@emotion/react@11.13.5(@types/react@18.3.12)(react@19.0.0-rc-66855b96-20241106))(@types/react@18.3.12)(react@19.0.0-rc-66855b96-20241106))(@types/react@18.3.12)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106))(@types/react@18.3.12)(immer@9.0.21)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106)
       '@trpc/server': 11.0.0-rc.638(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(react-dom@19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106))(react@19.0.0-rc-66855b96-20241106)
