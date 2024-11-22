@@ -54,9 +54,9 @@ function Nav(): JSX.Element {
     { title: "기업과제", href: ROUTES.ASSIGNMENT_BUSINESS },
   ];
 
-  const isActive = (href: string): boolean => {
-    return pathname === href;
-  };
+  const activeHref = [...navItems]
+    .sort((a, b) => b.href.length - a.href.length)
+    .find((item) => pathname === item.href || pathname?.startsWith(`${item.href}/`))?.href;
 
   return (
     <nav className="self-end space-x-10">
@@ -66,7 +66,7 @@ function Nav(): JSX.Element {
           href={item.href}
           className={cn(
             "text-base font-bold transition-colors hover:text-primary",
-            isActive(item.href) && "text-primary",
+            item.href === activeHref && "text-primary",
           )}
         >
           {item.title}
