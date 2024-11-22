@@ -19,7 +19,7 @@ export const authorizeWith = async (
     {
       $setOnInsert: {
         providers: {
-          [provider]: { uid, connectedAt: Date.now },
+          [provider]: { uid, connectedAt: Date.now() },
         },
       },
     },
