@@ -57,11 +57,17 @@ export class ReviewService {
             const prompt = promptFactory("accuracy", [args])
 
             const res = await llmService.query(prompt)
+            res["filePath"] = filePath;
             accuracyList.push(res)
         }
 
         console.log(accuracyList)
+        
+        // 나머지 3개는 각각 함수로 병렬처리.
 
+        // 정렬 로직 flag true -> false
+        
+        // 최종 평가 + 점수 로직
 
         return `This is an AI-generated review for assignment ${assignmentId}`;
     }
