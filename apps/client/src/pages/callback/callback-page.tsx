@@ -41,17 +41,17 @@ export default function CallbackPage() {
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    // if (!isLoading) {
-    //   if (isSuccess) {
-    //     setCookie("accessToken", data?.accessToken);
-    //   }
-    //   setTimeout(() => {
-    //     if (isError || data?.registered) {
-    //       return handleRedirectToHome();
-    //     }
-    //     handleRedirectToOnboardingProfile();
-    //   }, 2000);
-    // }
+    if (!isLoading) {
+      if (isSuccess) {
+        setCookie("accessToken", data?.accessToken);
+      }
+      setTimeout(() => {
+        if (isError || data?.registered) {
+          return handleRedirectToHome();
+        }
+        handleRedirectToOnboardingProfile();
+      }, 2000);
+    }
   }, [isLoading]);
 
   return (
