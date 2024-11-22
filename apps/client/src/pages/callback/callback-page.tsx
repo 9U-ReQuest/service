@@ -8,7 +8,7 @@ import { Loader2 } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
-export default function CallbackPage() {
+const CallbackPage = () => {
   const searchParams = useSearchParams();
   const code = searchParams?.get("code") || "";
   const router = useRouter();
@@ -68,4 +68,6 @@ export default function CallbackPage() {
       )}
     </Flex>
   );
-}
+};
+
+export default trpc.withTRPC(CallbackPage);
