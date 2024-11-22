@@ -8,6 +8,7 @@ services:
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
       - ./cert:/etc/nginx/cert
+    restart: always
   client:
     image: ${ECR_REPOSITORY_URL}:${CLIENT_IMAGE_TAG}
     expose:
