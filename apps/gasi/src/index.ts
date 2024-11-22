@@ -1,17 +1,30 @@
+import dotenvx from "@dotenvx/dotenvx";
 import fastifyCors from "@fastify/cors";
 import { fastifyTRPCPlugin } from "@trpc/server/adapters/fastify";
 import Fastify from "fastify";
+import mongoose from "mongoose";
+import { renderTrpcPanel } from "trpc-ui";
+import { createContext } from "./context.js";
 import { appRouter } from "./router.js";
+dotenvx.config();
 
 const server = Fastify({
   logger: true,
 });
 
-server.register(fastifyCors);
+await mongoose.connect(process.env.DATABASE_URI ?? "");
 
-server.register(fastifyTRPCPlugin, {
+await server.register(fastifyCors, {
+  origin: process.env.CHANNEL === "local",
+});
+
+await server.register(fastifyTRPCPlugin, {
   prefix: "/trpc",
-  trpcOptions: { router: appRouter },
+  trpcOptions: { router: appRouter, createContext },
+});
+
+server.get("/trpc-ui", async (_, res) => {
+  return res.type("text/html").send(renderTrpcPanel(appRouter, { url: "/trpc" }));
 });
 
 const start = async () => {

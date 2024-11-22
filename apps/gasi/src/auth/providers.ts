@@ -1,7 +1,7 @@
 import type { AuthorizationResult } from "@request/specs";
+import { TRPCError } from "@trpc/server";
 import jwt from "jsonwebtoken";
 import z from "zod";
-import { createError } from "../common.js";
 import { authorizeWith } from "./token.js";
 
 const KAKAO_TOKEN_ENDPOINT = "https://kauth.kakao.com/oauth/token" as const;
@@ -26,7 +26,11 @@ export async function kakaoAuthorize(
   code: string,
 ): Promise<AuthorizationResult> {
   const apiKey = process.env.KAKAO_REST_API_KEY;
-  if (!apiKey) throw createError(401, "API Key not provided: provider 'kakao'");
+  if (!apiKey)
+    throw new TRPCError({
+      code: "INTERNAL_SERVER_ERROR",
+      message: "API Key not provided: provider 'kakao'",
+    });
   const result = await fetch(KAKAO_TOKEN_ENDPOINT, {
     method: "POST",
     headers: {
@@ -41,17 +45,17 @@ export async function kakaoAuthorize(
     }),
   });
   if (!result.ok)
-    throw createError(
-      result.status,
-      `${result.status} ${result.statusText} - Authentication provider 'kakao' returned an error: ${await result.text()}`,
-    );
+    throw new TRPCError({
+      code: "INTERNAL_SERVER_ERROR",
+      message: `${result.status} ${result.statusText} - Authentication provider 'kakao' returned an error: ${await result.text()}`,
+    });
 
   const parsedResult = KakaoTokenResponse.safeParse(await result.json());
   if (parsedResult.error)
-    throw createError(
-      500,
-      `Authentication provider 'kakao' returns an wrong response: ${parsedResult.error.message}`,
-    );
+    throw new TRPCError({
+      code: "INTERNAL_SERVER_ERROR",
+      message: `Authentication provider 'kakao' returns an wrong response: ${parsedResult.error.message}`,
+    });
 
   const data = parsedResult.data;
   const token = data.access_token;
@@ -64,10 +68,10 @@ export async function kakaoAuthorize(
     payload.iss !== "https://kauth.kakao.com" ||
     payload.sub === undefined
   )
-    throw createError(
-      500,
-      `Authentication provider 'kakao' returned an malformed token with payload: ${payload}`,
-    );
+    throw new TRPCError({
+      code: "INTERNAL_SERVER_ERROR",
+      message: `Authentication provider 'kakao' returned an malformed token with payload: ${payload}`,
+    });
 
   return authorizeWith("kakao", payload.sub);
 }
