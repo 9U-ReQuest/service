@@ -1,12 +1,13 @@
 import { type User, UserSchema } from "@request/specs";
 import type { CreateFastifyContextOptions } from "@trpc/server/adapters/fastify";
+import type { FastifyBaseLogger } from "fastify";
 import { mUser } from "./model/index.js";
 
 const defaultBaseUrl = process.env.CLIENT_BASE_URL ?? "http://localhost:3000";
 
 export const createContext = async (
   opts: CreateFastifyContextOptions,
-): Promise<{ baseUrl: string; user: User | null }> => {
+): Promise<{ baseUrl: string; user: User | null; log: FastifyBaseLogger }> => {
   const log = opts.req.log;
   log.info(opts.req.headers);
   const referer = opts.req.headers.referer;
@@ -28,5 +29,6 @@ export const createContext = async (
   return {
     baseUrl,
     user,
+    log,
   };
 };
