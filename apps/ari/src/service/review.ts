@@ -3,6 +3,8 @@ import * as fs from "node:fs";
 import { fileURLToPath } from "node:url";
 import Parser from "tree-sitter";
 import JavaScript from "tree-sitter-javascript";
+import LLMService from "./llmService.js";
+import {promptFactory} from "./promptFactory.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -12,6 +14,28 @@ type FileTree = {
     isDirectory: boolean; // 디렉터리 여부
     children?: FileTree[]; // 디렉터리인 경우 자식 노드
 };
+
+const requirements = 
+`
+# 과제 요구사항
+
+다음 과제 요구사항에 맞춰 코드를 구현해합니다.
+
+RAG를 활용하여 LLM 시맨틱 검색 기능을 구현합니다.
+
+## RAG
+- RAG 시스템을 구축합니다.
+- retrive는 vector 를 통한 검색을 사용합니다.
+- PDF 및 외부 파일도 읽을 수 있어야합니다
+
+## Chat
+- LLM에게 제시하는 대화는 멀티턴을 구현할 수 있어야합니다.
+- LLM이 이전 대화를 기억할 수 있도록 구현하세요
+
+## Convention
+- 타입스크립트를 사용합니다.
+- MVC 패턴을 사용합니다.
+`
 
 export class ReviewService {
     // AI 리뷰 생성 메서드 (public)
@@ -24,15 +48,17 @@ export class ReviewService {
         const extractFileTree = this.extractFilePaths(fileTree);
         console.log(JSON.stringify(extractFileTree, null, 2));
 
-        // AST로 분해
-        const asts: { [filePath: string]: any } = {};
-        for (const filePath of extractFileTree) {
-            const ast = await this.parseFileToAst(filePath);
-            if (ast) {
-                asts[filePath] = ast.toString(); // AST를 문자열 형태로 저장 (디버깅용)
-            }
-        }
-        console.log(asts);
+        const filePath = extractFileTree[5]!;
+        const codeFile = fs.readFileSync(filePath, "utf-8");
+
+        const fileTreeStr = extractFileTree.join("\n");
+
+        const llmService = new LLMService();
+        const args = { filePath, codeFile, requirements, fileTreeStr};
+        const prompt = promptFactory("accuracy", [args])
+        console.log(JSON.stringify(prompt));
+
+        await llmService.query(prompt)
 
         return `This is an AI-generated review for assignment ${assignmentId}`;
     }

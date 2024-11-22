@@ -1,12 +1,14 @@
 import type { CreateFastifyContextOptions } from "@trpc/server/adapters/fastify";
 import { server } from "./index.js";
 import { ReviewService } from "./service/review.js";
+import LLMService from "./service/llmService.js";
 
 const defaultBaseUrl = process.env.CLIENT_BASE_URL ?? "http://localhost:3000";
 
 export type Context = {
   baseUrl: string;
   reviewService: ReviewService;
+  llmService: LLMService;
 };
 
 export const createContext = async (
@@ -24,5 +26,6 @@ export const createContext = async (
   return {
     baseUrl,
     reviewService: new ReviewService(),
+    llmService: new LLMService()
   };
 };
