@@ -65,7 +65,7 @@ const createMockReviewEntry = (
 };
 
 // https://trpc.io/docs/server/server-side-calls 참고하세용
-export const appRouter: AppRouter = t.router({
+export const appRouter = t.router({
   v1: {
     auth: {
       // Kakao 로그인 code를 받고 accessToken을 리턴합니다.
