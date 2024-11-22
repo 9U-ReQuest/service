@@ -1,6 +1,5 @@
-import { type User, UserSchema } from "@request/specs";
 import type { CreateFastifyContextOptions } from "@trpc/server/adapters/fastify";
-import type { FastifyBaseLogger } from "fastify";
+import type { HydratedDocument } from "mongoose";
 import { server } from "./index.js";
 import { mUser } from "./model/index.js";
 
@@ -8,7 +7,7 @@ const defaultBaseUrl = process.env.CLIENT_BASE_URL ?? "http://localhost:3000";
 
 export const createContext = async (
   opts: CreateFastifyContextOptions,
-): Promise<{ baseUrl: string; user: User | null }> => {
+): Promise<{ baseUrl: string; user: HydratedDocument<typeof mUser.schema.obj> | null }> => {
   const referer = opts.req.headers.referer;
   let user = null;
   let baseUrl = defaultBaseUrl;
@@ -17,7 +16,7 @@ export const createContext = async (
     server.log.info(token);
     const doc = await mUser.findOne({ token });
     if (doc) {
-      user = UserSchema.parse(doc.toObject());
+      user = doc;
     }
   }
   if (referer) {
