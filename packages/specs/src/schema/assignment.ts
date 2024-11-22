@@ -26,9 +26,9 @@ export const AssignmentFilterSchema = z.object({
 // 과제 정보
 export const AssignmentSchema = z.object({
   id: z.string(),
-  name: z.string(),
-  description: z.string(),
-  readme: z.string(),
+  name: z.string().optional(),
+  description: z.string().optional(),
+  readme: z.string().optional(),
   prompt: AssignmentPromptSchema,
   status: AssignmentStatusSchema,
   lastUpdated: z.string().datetime(),
