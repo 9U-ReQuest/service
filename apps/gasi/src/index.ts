@@ -1,8 +1,10 @@
+import dotenvx from "@dotenvx/dotenvx";
 import fastifyCors from "@fastify/cors";
 import { fastifyTRPCPlugin } from "@trpc/server/adapters/fastify";
 import Fastify from "fastify";
 import mongoose from "mongoose";
 import { appRouter } from "./router.js";
+dotenvx.config();
 
 const server = Fastify({
   logger: true,
