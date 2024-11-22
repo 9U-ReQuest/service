@@ -23,9 +23,9 @@ export const mAssignmentPromptSchema = new Schema<AssignmentPromptSchema>({
 // biome-ignore lint/suspicious/noExplicitAny: no support native date type in mongoose
 export const mAssignmentSchema = new Schema<Assignment & { lastUpdated: any }>({
   id: { type: String, unique: true, required: true, index: true },
-  name: { type: String, required: true },
-  description: { type: String, required: true },
-  readme: { type: String, required: true },
+  name: { type: String },
+  description: { type: String },
+  readme: { type: String },
   prompt: { type: mAssignmentPromptSchema, required: true },
   status: { type: String, required: true, default: "GENERATING" },
   lastUpdated: { type: Date, required: true, default: Date.now },
