@@ -23,7 +23,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["@request/specs", "mdx"]
+    "types": ["@request/specs", "mdx", "@use-funnel/browser"]
   },
   "include": [
     "next-env.d.ts",
