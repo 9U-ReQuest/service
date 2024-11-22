@@ -16,10 +16,14 @@ import { p } from "../trpc.js";
 export const list = p
   .input(AssignmentFilterSchema)
   .query(async ({ input }): Promise<AssignmentListResponse> => {
-    const assignments = await mAssignment.find().limit(input.limit).skip(input.skip).sort({
-      lastUpdated: "asc",
-    });
-    const count = await mAssignment.countDocuments({});
+    const assignments = await mAssignment
+      .find({ status: "READY" })
+      .limit(input.limit)
+      .skip(input.skip)
+      .sort({
+        lastUpdated: "asc",
+      });
+    const count = await mAssignment.countDocuments({ status: "READY" });
     const result: AssignmentListResponse = {
       skip: input.skip,
       limit: input.limit,
