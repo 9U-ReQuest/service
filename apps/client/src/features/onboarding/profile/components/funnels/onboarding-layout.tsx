@@ -1,4 +1,3 @@
-import logo from "@/assets/icons/logo.svg";
 import InputImage from "@/assets/images/input-1.png";
 import Typography from "@/shared/ui/common/typography/typography";
 import Flex from "@/shared/ui/wrapper/flex/flex";
@@ -7,15 +6,16 @@ import type { PropsWithChildren } from "react";
 
 export default function OnboardingLayout({ children }: PropsWithChildren) {
   return (
-    <Flex className="w-full justify-center">
-      <Flex direction="col" className="max-w-[1200px] w-full">
-        <Flex justifyContent="center" className="py-4">
-          <Image src={logo} alt="ReQuest Logo" width={200} height={50} />
-        </Flex>
-
+    <Flex direction="col" className="w-full justify-center">
+      <Flex direction="col" className="max-w-[1200px] w-full h-fit-height" justifyContent="center">
         <main className="w-full">
-          <Flex direction="row" className="container mx-auto px-4 py-8">
-            <Flex direction="col" alignItems="center" className="flex-[0_0_60%]">
+          <Flex direction="row" className="container mx-auto px-4 py-8" justifyContent="center">
+            <Flex
+              direction="col"
+              justifyContent="center"
+              alignItems="center"
+              className="flex-[0_0_60%]"
+            >
               <Image
                 src={InputImage}
                 alt="Illustration"
@@ -32,7 +32,7 @@ export default function OnboardingLayout({ children }: PropsWithChildren) {
                 </Typography>
               </Flex>
             </Flex>
-            <Flex direction="col" className="flex-[0_0_50%] space-y-4" gap="2">
+            <Flex direction="col" className="flex-[0_0_40%] space-y-4" gap="2">
               <hr />
               {children}
               <hr />

@@ -11,7 +11,6 @@ export default function OnboardingSuccess() {
     <Flex justifyContent="center" className="w-full py-24">
       <Flex direction="col" alignItems="center" className="text-center max-w-[676px]">
         <Flex direction="col" alignItems="center" gap="4">
-          {/* LOGO */}
           <Image src={logo} alt="ReQuest Logo" width={300} height={100} />
           <Typography size="4xl" weight="semibold" align="center" whitespace="pre-line">
             {"이제 ReQuest와 함께 \n기업 과제를 완벽하게 준비해보세요!"}
@@ -25,7 +24,9 @@ export default function OnboardingSuccess() {
           />
         </Flex>
         <Link href="/" className="w-full">
-          <Button className="w-full bg-primary hover:bg-primary/90 text-white">메인화면으로</Button>
+          <Button className="w-full bg-primary hover:bg-primary/90 text-white mt-4">
+            메인화면으로
+          </Button>
         </Link>
       </Flex>
     </Flex>

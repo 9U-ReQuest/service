@@ -1,10 +1,10 @@
 "use client";
-import OnboardingSuccess from "@/features/create-assignment/components/funnels/components/onboarding-success";
-import InputField from "@/features/create-assignment/components/funnels/input-field";
-import InputGithub from "@/features/create-assignment/components/funnels/input-github";
-import InputName from "@/features/create-assignment/components/funnels/input-name";
-import InputTechAndCompany from "@/features/create-assignment/components/funnels/input-tech-and-company";
-import useCreateAssignmentFunnel from "@/features/create-assignment/hooks/use-create-assignment-funnel";
+import OnboardingSuccess from "@/features/onboarding/profile/components/funnels/components/onboarding-success";
+import InputField from "@/features/onboarding/profile/components/funnels/input-field";
+import InputGithub from "@/features/onboarding/profile/components/funnels/input-github";
+import InputName from "@/features/onboarding/profile/components/funnels/input-name";
+import InputTechAndCompany from "@/features/onboarding/profile/components/funnels/input-tech-and-company";
+import useCreateAssignmentFunnel from "@/features/onboarding/profile/hooks/use-create-assignment-funnel";
 
 export default function CreateAssignmentPage() {
   const funnel = useCreateAssignmentFunnel();
