@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import { Schema } from "mongoose";
 
 const mAuthProviderSchema = new Schema({
   uid: { type: String, unique: true, required: true },
@@ -23,7 +23,7 @@ export const mAssignmentSchema = new Schema({
 
 export const mSubmissionSchema = new Schema({
   id: { type: String, unique: true, required: true, index: true },
-  assignmentId: { type: String, unique: true, required: true, index: true },
+  assignmentId: { type: String, required: true, index: true },
   status: { type: String, default: "PREPARING" },
   lastUpdated: { type: Date, required: true, default: Date.now },
   expiredAt: { type: Date },
@@ -60,6 +60,6 @@ export const mUserSchema = new Schema({
   registered: { type: Boolean, default: false },
   providers: { type: Map, of: mAuthProviderSchema },
   lastGeneratedAssignment: { type: String },
-  submissions: { type: [mSubmissionSchema] },
+  submissions: { type: [{ type: Schema.Types.ObjectId, ref: "Submission" }] },
   prompt: { type: mAssignmentPromptSchema },
 });
