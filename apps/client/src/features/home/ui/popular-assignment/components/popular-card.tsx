@@ -1,5 +1,7 @@
 import { cn } from "@/shared/lib/utils";
 import { Card } from "@/shared/ui/card";
+import Typography from "@/shared/ui/common/typography/typography";
+import Flex from "@/shared/ui/wrapper/flex/flex";
 import type { Assignment } from "@request/specs";
 import Link from "next/link";
 
@@ -16,23 +18,25 @@ const PopularCard = ({ assignment, isSelected }: PopularCardProps) => {
         isSelected ? "flex-[0_0_60%]" : "flex-[0_0_20%]",
       )}
     >
-      <div
-        className={cn(
-          "h-[400px] p-8 relative flex flex-col justify-between rounded-lg bg-[#1a237e]",
-        )}
-        style={{
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
+      <Flex
+        direction="col"
+        justifyContent="between"
+        className={cn("h-[400px] p-8 relative rounded-lg bg-[#1a237e]")}
       >
         <div className="space-y-2">
-          <h3 className="text-sm font-semibold text-white">{assignment.name}</h3>
-          <p className="text-base font-semibold text-white">{assignment.description}</p>
+          <Typography as="h3" size="sm" weight="semibold" color="white">
+            {assignment.name}
+          </Typography>
+          <Typography as="p" size="base" color="white">
+            {assignment.description}
+          </Typography>
         </div>
-        <Link href={`/assignment/${assignment.id}`} className="text-base text-white font-semibold">
-          자세히보기
+        <Link href={`/assignment/${assignment.id}`}>
+          <Typography size="base" weight="semibold" color="white">
+            자세히보기
+          </Typography>
         </Link>
-      </div>
+      </Flex>
     </Card>
   );
 };

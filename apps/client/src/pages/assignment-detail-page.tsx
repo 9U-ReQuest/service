@@ -1,6 +1,8 @@
 import AssignmentInfo from "@/features/business-assignment/ui/assignment-info";
 import type { PromiseParams } from "@/shared/types";
+import Typography from "@/shared/ui/common/typography/typography";
 import RenderMarkdown from "@/shared/ui/mdx/render-markdown";
+import Flex from "@/shared/ui/wrapper/flex/flex";
 
 const ASSIGNMENT_DETAIL = {
   id: "1",
@@ -13,19 +15,33 @@ const ASSIGNMENT_DETAIL = {
 
 export default async function AssignmentDetailPage({ params }: PromiseParams<{ id: string }>) {
   const { id } = await params;
+
   return (
-    <main className="flex flex-col w-full">
+    <Flex as="main" direction="col" className="w-full">
       <AssignmentInfo />
       <hr className="border-[#D9D9D9]" />
-      <section className="px-[100px] py-[60px] max-w-screen-2xl flex flex-col self-center w-full gap-10">
-        <div className="font-extrabold space-y-10">
-          <p className="text-3xl">과제 개요 및 설명</p>
-          <p className="bg-primary rounded-3xl py-7 pl-6 text-xl text-white">
+      <Flex
+        as="section"
+        direction="col"
+        gap="10"
+        className="px-[100px] py-[60px] max-w-screen-2xl self-center w-full"
+      >
+        <div className="space-y-10">
+          <Typography as="p" size="3xl" weight="extrabold">
+            과제 개요 및 설명
+          </Typography>
+          <Typography
+            as="p"
+            size="xl"
+            weight="extrabold"
+            color="white"
+            className="bg-primary rounded-3xl py-7 pl-6"
+          >
             설명 : {ASSIGNMENT_DETAIL.description}
-          </p>
+          </Typography>
         </div>
         <RenderMarkdown source={"```markdown```"} />
-      </section>
-    </main>
+      </Flex>
+    </Flex>
   );
 }

@@ -1,8 +1,8 @@
 type TextAlign = "left" | "center" | "right" | "justify";
 
-type FontWeight = "normal" | "medium" | "semibold" | "bold";
+type FontWeight = "normal" | "medium" | "semibold" | "bold" | "extrabold";
 
-type FontSize = "xs" | "sm" | "base" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl" | "6xl";
+type FontSize = "xs" | "sm" | "base" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl" | "6xl" | "7xl";
 
 type TextColor = "primary" | "secondary" | "muted" | "accent" | "white" | "black";
 

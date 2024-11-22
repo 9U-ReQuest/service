@@ -4,6 +4,7 @@
 import { companyInfoMap } from "@/shared/constant/company";
 import { Button } from "@/shared/ui/button";
 import { Card, CardContent, CardHeader } from "@/shared/ui/card";
+import Typography from "@/shared/ui/common/typography/typography";
 import type { Assignment } from "@request/specs";
 import { Star } from "lucide-react";
 import Image from "next/image";
@@ -45,12 +46,16 @@ export default function AssignmentCard({ assignment }: AssignmentCardProps) {
         </div>
       </CardHeader>
       <CardContent className="px-0 py-4">
-        <div className="space-y-2 font-medium">
-          <div className="text-sm">
+        <div className="space-y-2">
+          <Typography as="p" size="sm" weight="medium">
             {companyInfo.category} / {companyName.charAt(0).toUpperCase() + companyName.slice(1)}
-          </div>
-          <h3 className="text-lg line-clamp-1">{assignment.name}</h3>
-          <div className="text-base">{new Date(assignment.lastUpdated).toLocaleDateString()}</div>
+          </Typography>
+          <Typography as="h3" size="lg" weight="medium" lineClamp="1">
+            {assignment.name}
+          </Typography>
+          <Typography as="p" size="base" weight="medium">
+            {new Date(assignment.lastUpdated).toLocaleDateString()}
+          </Typography>
         </div>
       </CardContent>
     </Card>

@@ -1,5 +1,7 @@
 import EvaluationItem from "@/features/evaluations/ui/evaluation-item";
 import OngoingAssignment from "@/features/evaluations/ui/ongoing-assignment";
+import Typography from "@/shared/ui/common/typography/typography";
+import Flex from "@/shared/ui/wrapper/flex/flex";
 
 const EVALUATIONS = [
   {
@@ -38,36 +40,44 @@ const EVALUATIONS = [
 
 export default function EvaluationsPage() {
   return (
-    <main className="flex flex-col w-full p-24">
-      <section className="flex flex-col items-center">
-        <div className="space-y-12">
+    <Flex as="main" direction="col" className="w-full p-24">
+      <Flex as="section" direction="col" alignItems="center">
+        <Flex direction="col" gap="12">
           <section className="space-y-2">
-            <p className="font-extrabold text-2xl">AI 과제 평가</p>
-            <p className="font-medium text-sm leading-6">
+            <Typography as="p" size="2xl" weight="extrabold">
+              AI 과제 평가
+            </Typography>
+            <Typography as="p" size="sm" weight="medium" whitespace="pre-line">
               Re_Quest의 AI는 개발자가 작성한 코드에 대해 실시간으로 평가와 피드백을 제공합니다.
-              <br />
-              단순히 정답 여부를 확인하는 것을 넘어, 작성된 코드의 완성도와 효율성을
-              <br />
-              다각도로 분석하여 개발자가 더 나은 코드를 작성할 수 있도록 돕습니다.
-            </p>
+              단순히 정답 여부를 확인하는 것을 넘어, 작성된 코드의 완성도와 효율성을 다각도로
+              분석하여 개발자가 더 나은 코드를 작성할 수 있도록 돕습니다.
+            </Typography>
           </section>
           <section className="space-y-3">
-            <p className="font-semibold text-lg">진행중인 과제</p>
+            <Typography as="p" size="lg" weight="semibold">
+              진행중인 과제
+            </Typography>
             <OngoingAssignment />
           </section>
-        </div>
-      </section>
+        </Flex>
+      </Flex>
       <hr className="-mx-24 border-[#C6C6C6] my-20" />
       <section className="space-y-3">
-        <p className="text-lg font-semibold">
-          평가중 <span className="font-bold text-[#8A1B22]">(6)</span>
-        </p>
-        <div className="grid gap-8 grid-cols-1 xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2">
+        <Typography as="p" size="lg" weight="semibold">
+          평가중{" "}
+          <Typography as="span" size="lg" weight="bold" color="primary">
+            &#40;{EVALUATIONS.length}&#41;
+          </Typography>
+        </Typography>
+        <Flex
+          className="grid gap-8"
+          style={{ gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))" }}
+        >
           {EVALUATIONS.map((evaluation) => (
             <EvaluationItem key={evaluation.id} {...evaluation} />
           ))}
-        </div>
+        </Flex>
       </section>
-    </main>
+    </Flex>
   );
 }

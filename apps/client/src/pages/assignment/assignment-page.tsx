@@ -3,12 +3,14 @@ import AssignmentBanner from "@/features/assignment/ui/assignment-banner";
 import { cn } from "@/shared/lib/utils";
 import { mockAssignments } from "@/shared/mocks/constant/assignment.mock";
 import { Button } from "@/shared/ui/button";
+import Typography from "@/shared/ui/common/typography/typography";
+import Flex from "@/shared/ui/wrapper/flex/flex";
 
 export default function AssignmentPage() {
   return (
-    <div className="w-full flex flex-col">
+    <Flex direction="col" className="w-full">
       <AssignmentBanner />
-      <div className="w-full px-24 mb-24">
+      <Flex direction="col" className="w-full px-24 mb-24">
         <AssignmentList
           headerTitle="생성한 과제"
           assignments={mockAssignments}
@@ -19,12 +21,16 @@ export default function AssignmentPage() {
                 "w-[162px] h-[44px] px-4 box-border",
               )}
             >
-              <span className="mr-2">+</span>
-              과제 생성하기
+              <Typography as="span" size="lg" weight="medium" color="white" className="mr-2">
+                +
+              </Typography>
+              <Typography as="span" size="lg" weight="medium" color="white">
+                과제 생성하기
+              </Typography>
             </Button>
           }
         />
-      </div>
-    </div>
+      </Flex>
+    </Flex>
   );
 }

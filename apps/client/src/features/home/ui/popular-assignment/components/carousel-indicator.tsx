@@ -3,7 +3,7 @@ import { cn } from "@/shared/lib/utils";
 type CarouselIndicatorsProps = {
   total: number;
   selectedIndex: number;
-  onSelect: (index: number) => void;
+  onSelect?: (index: number) => void;
 };
 
 const CarouselIndicators = ({ total, selectedIndex, onSelect }: CarouselIndicatorsProps) => (
@@ -17,7 +17,7 @@ const CarouselIndicators = ({ total, selectedIndex, onSelect }: CarouselIndicato
           "w-2 h-2 rounded-full transition-all",
           index === selectedIndex ? "bg-[#787878]" : "bg-gray-300",
         )}
-        onClick={() => onSelect(index)}
+        onClick={() => onSelect?.(index)}
       />
     ))}
   </div>

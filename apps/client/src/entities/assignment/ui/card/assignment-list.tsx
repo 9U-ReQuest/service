@@ -1,6 +1,8 @@
 "use client";
 
 import usePagination from "@/shared/hooks/use-pagination";
+import Typography from "@/shared/ui/common/typography/typography";
+import Flex from "@/shared/ui/wrapper/flex/flex";
 import Pagination from "@/widgets/ui/pagination-impl";
 import type { Assignment } from "@request/specs";
 import type { ReactNode } from "react";
@@ -37,12 +39,15 @@ const AssignmentList: React.FC<AssignmentListProps> = ({
 
   return (
     <section className="w-full py-12">
-      <div className="w-full flex items-center justify-between mb-16 text-xl">
-        <h2 className="font-semibold">
-          {headerTitle} <span className="text-primary font-bold">({total})</span>
-        </h2>
+      <Flex alignItems="center" justifyContent="between" className="w-full mb-16">
+        <Typography as="h2" size="xl" weight="semibold">
+          {headerTitle}{" "}
+          <Typography as="span" size="xl" weight="bold" color="primary">
+            ({total})
+          </Typography>
+        </Typography>
         {extraControls && <div>{extraControls}</div>}
-      </div>
+      </Flex>
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {paginatedCards.map((card: Assignment) => (

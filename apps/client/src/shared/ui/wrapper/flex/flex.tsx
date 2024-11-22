@@ -8,7 +8,7 @@ interface FlexProps {
   justifyContent?: JustifyContent;
   alignItems?: AlignItems;
   wrap?: FlexWrap;
-  gap?: Gap;
+  gap?: Gap<24>;
   className?: string;
 }
 
@@ -24,7 +24,7 @@ const Flex: FlexComponent = <C extends ElementType = "div">({
   justifyContent = "start",
   alignItems = "stretch",
   wrap = "nowrap",
-  gap = "gap-0",
+  gap = "0",
   className,
   children,
   ...props
@@ -33,11 +33,11 @@ const Flex: FlexComponent = <C extends ElementType = "div">({
 
   const flexClasses = [
     "flex",
-    `flex-${direction}`,
+    `flex-${direction}`, // flex-row, flex-col
     `justify-${justifyContent}`,
     `items-${alignItems}`,
     `flex-${wrap}`,
-    gap,
+    `gap-${gap}`,
     className,
   ];
 

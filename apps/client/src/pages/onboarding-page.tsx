@@ -1,24 +1,30 @@
 import logoSvg from "@/assets/icons/logo.svg";
 import Auth from "@/features/onboarding/ui/auth";
 import OnboardingCarousel from "@/features/onboarding/ui/onboarding-carousel";
+import Typography from "@/shared/ui/common/typography/typography";
+import Flex from "@/shared/ui/wrapper/flex/flex";
 import Image from "next/image";
 
 export default function OnboardingPage() {
   return (
-    <section className="flex justify-center gap-24 h-screen">
-      <div className="flex font-bold justify-center items-center">
+    <Flex as="section" justifyContent="center" gap="24" className="h-screen">
+      <Flex className="font-bold justify-center items-center">
         <div className="space-y-6">
           <Image src={logoSvg} width={250} height={76} alt="ReQuest 로고 이미지" />
           <div className="space-y-5">
-            <p className="text-5xl min-w-max">IT업계 취업을 위한</p>
-            <p className="text-7xl min-w-max">AI과제 전형 도우미</p>
+            <Typography as="p" size="5xl">
+              IT업계 취업을 위한
+            </Typography>
+            <Typography as="p" size="7xl">
+              AI과제 전형 도우미
+            </Typography>
           </div>
         </div>
-      </div>
-      <div className="flex flex-col gap-9 items-center justify-center">
+      </Flex>
+      <Flex direction="col" justifyContent="center" alignItems="center" gap="9">
         <OnboardingCarousel />
         <Auth />
-      </div>
-    </section>
+      </Flex>
+    </Flex>
   );
 }

@@ -2,7 +2,7 @@
 
 import arrowLeftSvg from "@/assets/icons/arrow-left.svg";
 import arrowRightSvg from "@/assets/icons/arrow-right.svg";
-import { cn } from "@/shared/lib/utils";
+import CarouselIndicators from "@/features/home/ui/popular-assignment/components/carousel-indicator";
 import { Button } from "@/shared/ui/button";
 import { Carousel, CarouselContent, CarouselItem } from "@/shared/ui/carousel";
 import type { EmblaCarouselType } from "embla-carousel";
@@ -78,18 +78,7 @@ export default function OnboardingCarousel() {
           <Image src={arrowRightSvg} alt="다음 온보딩" width={40} height={40} />
         </Button>
       </div>
-      <div className="flex gap-3">
-        {Array.from({ length: 4 }).map((_, index) => (
-          <div
-            className={cn(
-              "w-2.5 h-2.5 rounded-full",
-              index === current ? "bg-selected" : "bg-not-selected",
-            )}
-            // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-            key={`dot-${index}`}
-          />
-        ))}
-      </div>
+      <CarouselIndicators total={4} selectedIndex={current} />
     </>
   );
 }
