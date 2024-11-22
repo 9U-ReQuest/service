@@ -1,4 +1,5 @@
 import { TRPCError } from "@trpc/server";
+import { createCallerFactory } from "@trpc/server/unstable-core-do-not-import";
 import { humanId } from "human-id";
 import z from "zod";
 import { AssignmentFilterSchema, AssignmentPromptSchema } from "./schema/assignment.js";
@@ -217,6 +218,8 @@ export const TestSchema = z.object({ name: z.string(), });`,
 // https://trpc.io/docs/server/server-side-calls 참고하세용
 
 export type AppRouter = typeof appRouter;
+
+export const createCaller = t.createCallerFactory(appRouter);
 
 export * from "./schema/assignment.js";
 export * from "./schema/review.js";
