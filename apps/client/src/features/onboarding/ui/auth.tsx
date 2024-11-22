@@ -13,7 +13,11 @@ export default function Auth() {
     navigate.push("/");
   };
 
-  const onClickKakaoLogin = () => {};
+  const onClickKakaoLogin = () => {
+    window.Kakao.Auth.authorize({
+      redirectUri: process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI as string,
+    });
+  };
   return (
     <Flex direction="col" gap="2" alignItems="center" className="mt-5">
       <Button
