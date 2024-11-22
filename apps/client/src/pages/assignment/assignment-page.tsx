@@ -1,7 +1,7 @@
-import { mockListings } from "@/entities/assignment/mocks";
 import AssignmentList from "@/entities/assignment/ui/card/assignment-list";
 import AssignmentBanner from "@/features/assignment/ui/assignment-banner";
 import { cn } from "@/shared/lib/utils";
+import { mockAssignments } from "@/shared/mocks/constant/assignment.mock";
 import { Button } from "@/shared/ui/button";
 
 export default function AssignmentPage() {
@@ -11,7 +11,7 @@ export default function AssignmentPage() {
       <div className="w-full px-24 mb-24">
         <AssignmentList
           headerTitle="생성한 과제"
-          cards={mockListings}
+          assignments={mockAssignments}
           extraControls={
             <Button
               className={cn(

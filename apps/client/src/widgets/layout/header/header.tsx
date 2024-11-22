@@ -31,7 +31,7 @@ function Header({ children }: HeaderProps): JSX.Element {
 
   return (
     <HeaderContext.Provider value={{ isMobileMenuOpen, setIsMobileMenuOpen }}>
-      <header className="min-w-2xl max-w-2xl w-full flex items-end border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 mt-5">
+      <header className="min-w-[600px] max-w-[1375px] w-full flex items-end border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 mt-5">
         <div className="w-full flex py-6 items-end">{children}</div>
       </header>
     </HeaderContext.Provider>
@@ -137,7 +137,7 @@ function NotificationMenu(): JSX.Element {
   };
 
   return (
-    <Menubar className="border-none">
+    <Menubar className="border-none shadow-none">
       <MenubarMenu>
         <MenubarTrigger className="relative cursor-pointer">
           <NotificationIcon count={unreadCount} />
@@ -196,7 +196,7 @@ const MENUBAR_ITEMS = [
 
 function MyPageMenu({ name, githubId, profileImageUrl }: MyPageMenuProps): JSX.Element {
   return (
-    <Menubar className="border-none">
+    <Menubar className="border-none shadow-none">
       <MenubarMenu>
         <MenubarTrigger className="cursor-pointer">
           <Image src={mypage} alt="마이페이지" width={44} height={44} />

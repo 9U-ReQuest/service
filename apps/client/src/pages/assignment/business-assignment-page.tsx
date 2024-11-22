@@ -1,8 +1,8 @@
 "use client";
 
-import { mockListings } from "@/entities/assignment/mocks";
 import AssignmentList from "@/entities/assignment/ui/card/assignment-list";
 import TaskFilter from "@/entities/assignment/ui/filter/assignment-filter";
+import { mockAssignments } from "@/shared/mocks/constant/assignment.mock";
 import { useState } from "react";
 
 export default function BusinessAssignmentPage() {
@@ -25,7 +25,11 @@ export default function BusinessAssignmentPage() {
         onFilterRemove={handleFilterRemove}
       />
       <div className="w-full px-24 mb-24">
-        <AssignmentList cards={mockListings} headerTitle="기업 과제" extraControls={undefined} />
+        <AssignmentList
+          assignments={mockAssignments}
+          headerTitle="기업 과제"
+          extraControls={undefined}
+        />
       </div>
     </div>
   );

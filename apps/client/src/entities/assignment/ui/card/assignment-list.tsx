@@ -1,47 +1,39 @@
 "use client";
 
+import usePagination from "@/shared/hooks/use-pagination";
 import Pagination from "@/widgets/ui/pagination-impl";
+import type { Assignment } from "@request/specs";
 import type { ReactNode } from "react";
-import { useState } from "react";
-import type { AssignmentCardType, AssingmentCardList } from "../../types/assignment.type";
 import AssignmentCard from "./assignment-card";
 
 const ITEMS_PER_PAGE = 12;
 
 interface AssignmentListProps {
-  cards: AssingmentCardList;
+  assignments: Assignment[];
   headerTitle?: string;
   extraControls?: ReactNode;
   isPagination?: boolean;
 }
 
 const AssignmentList: React.FC<AssignmentListProps> = ({
-  cards,
+  assignments,
   headerTitle = "전체 과제",
   extraControls,
   isPagination = true,
 }) => {
-  const [currentPage, setCurrentPage] = useState(1);
+  const {
+    currentPage,
+    totalPages,
+    paginatedItems: paginatedCards,
+    goToPage,
+    goToPrev,
+    goToNext,
+  } = usePagination<Assignment>({
+    items: assignments,
+    itemsPerPage: ITEMS_PER_PAGE,
+  });
 
-  const total = cards.length;
-  const totalPages = Math.ceil(total / ITEMS_PER_PAGE);
-
-  const paginatedCards = cards.slice(
-    (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE,
-  );
-
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
-
-  const handlePrevious = () => {
-    setCurrentPage((prev) => Math.max(prev - 1, 1));
-  };
-
-  const handleNext = () => {
-    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
-  };
+  const total = assignments.length;
 
   return (
     <section className="w-full py-12">
@@ -53,8 +45,8 @@ const AssignmentList: React.FC<AssignmentListProps> = ({
       </div>
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {paginatedCards.map((card: AssignmentCardType) => (
-          <AssignmentCard key={card.id} card={card} />
+        {paginatedCards.map((card: Assignment) => (
+          <AssignmentCard key={card.id} assignment={card} />
         ))}
       </div>
 
@@ -63,9 +55,9 @@ const AssignmentList: React.FC<AssignmentListProps> = ({
           className="mt-8"
           currentPage={currentPage}
           totalPages={totalPages}
-          onPageChange={handlePageChange}
-          onPrevious={handlePrevious}
-          onNext={handleNext}
+          onPageChange={goToPage}
+          onPrevious={goToPrev}
+          onNext={goToNext}
         />
       )}
     </section>

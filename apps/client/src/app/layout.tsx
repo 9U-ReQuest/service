@@ -1,4 +1,5 @@
-import FullWidthAndCenter from "@/shared/ui/wrapper/full-width";
+import FullWidthAndCenter from "@/shared/ui/wrapper/full-width-center";
+import MaxWidth from "@/shared/ui/wrapper/max-width";
 import Footer from "@/widgets/layout/footer/footer";
 import DefaultHeader from "@/widgets/layout/header/default-header";
 import { Provider } from "@/widgets/provider";
@@ -72,8 +73,10 @@ export default function RootLayout({
         <Provider>
           <FullWidthAndCenter>
             <DefaultHeader />
-            {children}
-            <Footer />
+            <MaxWidth>
+              {children}
+              <Footer />
+            </MaxWidth>
           </FullWidthAndCenter>
         </Provider>
       </body>

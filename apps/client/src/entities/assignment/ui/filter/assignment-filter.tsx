@@ -3,7 +3,7 @@
 import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
 import { ChevronDown, ChevronUp, X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 
 const allFilters = [
   "서버/백엔드",
@@ -53,8 +53,6 @@ export default function TaskFilter({
   onFilterRemove,
 }: TaskFilterProps) {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [showMoreButton, setShowMoreButton] = useState(false);
-  const filterContainerRef = useRef<HTMLDivElement>(null);
 
   const handleRemoveFilter = (event: React.MouseEvent, filter: string) => {
     event.stopPropagation();
@@ -62,21 +60,6 @@ export default function TaskFilter({
   };
 
   const initialVisibleCount = 10;
-  const visibleFilters = allFilters.slice(0, isExpanded ? allFilters.length : initialVisibleCount);
-
-  useEffect(() => {
-    const checkOverflow = () => {
-      if (filterContainerRef.current) {
-        const isOverflowing =
-          filterContainerRef.current.scrollHeight > filterContainerRef.current.clientHeight;
-        setShowMoreButton(isOverflowing);
-      }
-    };
-
-    checkOverflow();
-    window.addEventListener("resize", checkOverflow);
-    return () => window.removeEventListener("resize", checkOverflow);
-  }, []);
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 py-8">
@@ -104,7 +87,7 @@ export default function TaskFilter({
           ))}
         </div>
 
-        <div className="space-y-4">
+        <div className="flex">
           <div
             className={cn(
               "w-full flex gap-2 flex-wrap",
@@ -123,16 +106,14 @@ export default function TaskFilter({
             ))}
           </div>
 
-          {allFilters.length > initialVisibleCount && (
-            <Button
-              variant="outline"
-              className="rounded-full whitespace-nowrap gap-1"
-              onClick={() => setIsExpanded(!isExpanded)}
-            >
-              {isExpanded ? "접기" : "더보기"}
-              {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-            </Button>
-          )}
+          <Button
+            variant="outline"
+            className="rounded-full whitespace-nowrap gap-1"
+            onClick={() => setIsExpanded(!isExpanded)}
+          >
+            {isExpanded ? "접기" : "더보기"}
+            {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+          </Button>
         </div>
       </div>
     </div>

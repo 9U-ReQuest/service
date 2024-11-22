@@ -10,7 +10,7 @@ const MOCK_DEFAULT_USER = {
 };
 
 export default function DefaultHeader() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   return (
     <Header>
