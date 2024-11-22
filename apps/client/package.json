@@ -33,6 +33,7 @@
     "import-in-the-middle": "^1.11.2",
     "ky": "^1.7.2",
     "lucide-react": "^0.460.0",
+    "markdown-it": "^14.1.0",
     "next": "^15.0.3",
     "next-mdx-remote": "^5.0.0",
     "react": "19.0.0-rc-66855b96-20241106",
@@ -44,6 +45,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@types/markdown-it": "^14.1.2",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

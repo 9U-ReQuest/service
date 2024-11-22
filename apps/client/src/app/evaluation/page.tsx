@@ -1,5 +1,5 @@
-import EvaluationsPage from "@/pages/evaluations/evaluations-page";
+import EvaluationPage from "@/pages/evaluation/evaluation-page";
 
-export default function Evaluations() {
-  return <EvaluationsPage />;
+export default function Evaluation() {
+  return <EvaluationPage />;
 }

@@ -27,8 +27,9 @@ export default function EvaluationItem({
   const router = useRouter();
 
   const handleRouteToResult = () => {
-    router.push(`/evaluations/${id}`);
+    router.push(`/evaluation/${id}`);
   };
+
   return (
     <div
       className={`py-5 px-9 border-[2.5px] rounded-[20px] leading-6 flex flex-col justify-between w-[300px] h-[216px] bg-white ${isPending ? "pending" : "border-[#8A1B22]"} `}

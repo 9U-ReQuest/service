@@ -1,5 +1,5 @@
-import EvaluationItem from "@/features/evaluations/ui/evaluation-item";
-import OngoingAssignment from "@/features/evaluations/ui/ongoing-assignment";
+import EvaluationItem from "@/features/evaluation/ui/evaluation-item";
+import OngoingAssignment from "@/features/evaluation/ui/ongoing-assignment";
 import Typography from "@/shared/ui/common/typography/typography";
 import Flex from "@/shared/ui/wrapper/flex/flex";
 
@@ -38,7 +38,7 @@ const EVALUATIONS = [
   },
 ];
 
-export default function EvaluationsPage() {
+export default function EvaluationPage() {
   return (
     <Flex as="main" direction="col" className="w-full p-24">
       <Flex as="section" direction="col" alignItems="center">

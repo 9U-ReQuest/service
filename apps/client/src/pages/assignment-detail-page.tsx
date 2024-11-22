@@ -1,8 +1,8 @@
 import AssignmentInfo from "@/features/business-assignment/ui/assignment-info";
 import type { PromiseParams } from "@/shared/types";
 import Typography from "@/shared/ui/common/typography/typography";
-import RenderMarkdown from "@/shared/ui/mdx/render-markdown";
 import Flex from "@/shared/ui/wrapper/flex/flex";
+import Markdown from "./markdown";
 
 const ASSIGNMENT_DETAIL = {
   id: "1",
@@ -40,7 +40,7 @@ export default async function AssignmentDetailPage({ params }: PromiseParams<{ i
             설명 : {ASSIGNMENT_DETAIL.description}
           </Typography>
         </div>
-        <RenderMarkdown source={"```markdown```"} />
+        <Markdown source="# hello" />
       </Flex>
     </Flex>
   );
