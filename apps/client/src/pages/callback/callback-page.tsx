@@ -55,7 +55,7 @@ export default function CallbackPage() {
   }, [isLoading]);
 
   return (
-    <Flex as="main" direction="col" className="h-fit-height justify-center items-center gap-10">
+    <Flex as="main" direction="col" className="h-screen justify-center items-center gap-10">
       <Typography as="p" className="text-primary text-5xl font-bold">
         {textByLoading}
       </Typography>
