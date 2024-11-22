@@ -57,15 +57,15 @@ export const TestSchema = z.object({ name: z.string(), });`,
   }),
 );
 
-export const reviewEntries = p
-  .input(ReviewFilterSchema)
-  .query((): ReviewEntry[] => [
-    ...Array(5).map((_, i) =>
-      createMockReviewEntry(`${i}번 채점 항목`, "summary", undefined, undefined),
-    ),
+export const reviewEntries = p.input(ReviewFilterSchema).query((): ReviewEntry[] => {
+  return [
+    ...Array(5)
+      .fill(1)
+      .map((_, i) => createMockReviewEntry(`${i}번 채점 항목`, "summary", undefined, undefined)),
     createMockReviewEntry("파일 채점 항목", "lint", "src/index.js", undefined),
     createMockReviewEntry("라인 채점 항목", "lint", "src/index.js", [10, 13]),
-  ]);
+  ];
+});
 
 export const review = p.input(z.object({ id: z.string() })).query(
   ({ input }): Omit<Review, "entries"> => ({
