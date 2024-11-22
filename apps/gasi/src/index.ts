@@ -8,7 +8,7 @@ import { createContext } from "./context.js";
 import { appRouter } from "./router.js";
 dotenvx.config();
 
-const server = Fastify({
+export const server = Fastify({
   logger: true,
 });
 
