@@ -1,23 +1,11 @@
 "use client";
 
-import { trpc } from "@/shared/api/trpc";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { httpBatchLink } from "@trpc/client";
 import type { ReactNode } from "react";
 import { useEffect, useRef, useState } from "react";
 
 const QueryProvider = ({ children }: { children: ReactNode }) => {
   const [queryClient] = useState(() => new QueryClient());
-  const [trpcClient] = useState(() =>
-    trpc.createClient({
-      links: [
-        httpBatchLink({
-          url: "/trpc",
-          // You can pass any HTTP headers you wish here
-        }),
-      ],
-    }),
-  );
 
   const [isMocking, setIsMocking] = useState(false);
   const isWorkerStarted = useRef(false);
@@ -41,11 +29,7 @@ const QueryProvider = ({ children }: { children: ReactNode }) => {
     return null;
   }
 
-  return (
-    <trpc.Provider client={trpcClient} queryClient={queryClient}>
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>{" "}
-    </trpc.Provider>
-  );
+  return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
 };
 
 export default QueryProvider;
