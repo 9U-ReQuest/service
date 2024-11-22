@@ -3,6 +3,7 @@ import fastifyCors from "@fastify/cors";
 import { fastifyTRPCPlugin } from "@trpc/server/adapters/fastify";
 import Fastify from "fastify";
 import mongoose from "mongoose";
+import { renderTrpcPanel } from "trpc-ui";
 import { appRouter } from "./router.js";
 dotenvx.config();
 
@@ -16,7 +17,9 @@ await server.register(fastifyCors);
 
 await server.register(fastifyTRPCPlugin, {
   prefix: "/trpc",
-  trpcOptions: { router: appRouter },
+
+server.get("/trpc-ui", async (_, res) => {
+  return res.type("text/html").send(renderTrpcPanel(appRouter, { url: "/trpc" }));
 });
 
 const start = async () => {
