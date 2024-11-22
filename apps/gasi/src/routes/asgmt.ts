@@ -58,6 +58,11 @@ export const generate = p.input(AssignmentPromptSchema).mutation(async ({ input,
         message: `이미 생성중인 과제 '${lastGenerated.id}'가 있습니다. 동시에 하나의 과제만 생성할 수 있습니다.`,
       });
   }
+  if (!ctx.user)
+    throw new TRPCError({
+      code: "INTERNAL_SERVER_ERROR",
+      message: "lost access to user model. what is happening???",
+    });
   const assignmentId = humanId({ capitalize: false, separator: "-" });
   const doc = new mAssignment();
   doc.id = assignmentId;
@@ -69,6 +74,9 @@ export const generate = p.input(AssignmentPromptSchema).mutation(async ({ input,
     companies: input.companies,
   };
   const res = await doc.save();
+  // TODO: Make generation request to AGI
+  ctx.user.lastGeneratedAssignment = assignmentId;
+  await ctx.user.save();
   const result = { ...res.toObject(), lastUpdated: (res.lastUpdated as Date).toISOString() };
   return AssignmentSchema.parse(result);
 });
