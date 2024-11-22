@@ -1,5 +1,4 @@
 import { TRPCError } from "@trpc/server";
-import { createCallerFactory } from "@trpc/server/unstable-core-do-not-import";
 import { humanId } from "human-id";
 import z from "zod";
 import { AssignmentFilterSchema, AssignmentPromptSchema } from "./schema/assignment.js";
@@ -141,6 +140,7 @@ export const appRouter = t.router({
       init: p.input(SubmissionInitSchema).mutation(
         (): Submission => ({
           id: humanId({ separator: "-", capitalize: false }),
+          userId: "6740940e8e20d5e1b2231d72",
           assignmentId: humanId({ separator: "-", capitalize: false }),
           status: "PREPARING",
           lastUpdated: new Date().toISOString(),
