@@ -14,7 +14,9 @@ const server = Fastify({
 
 await mongoose.connect(process.env.DATABASE_URI ?? "");
 
-await server.register(fastifyCors);
+await server.register(fastifyCors, {
+  origin: process.env.CHANNEL === "local",
+});
 
 await server.register(fastifyTRPCPlugin, {
   prefix: "/trpc",
