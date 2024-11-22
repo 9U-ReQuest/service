@@ -40,25 +40,28 @@ RAG를 활용하여 LLM 시맨틱 검색 기능을 구현합니다.
 export class ReviewService {
     // AI 리뷰 생성 메서드 (public)
     public async generateReview({ assignmentId }: { assignmentId: string }): Promise<string> {
+        const llmService = new LLMService();
         console.log(`Generating review for assignmentId: ${assignmentId}`);
 
         // TODO: 실제로는 assignmentId 기반으로 불러와야 함
         const projectDirectory = path.join(process.cwd(), 'src/project');
         const fileTree = await this.getProjectFileTree(projectDirectory);
         const extractFileTree = this.extractFilePaths(fileTree);
-        console.log(JSON.stringify(extractFileTree, null, 2));
-
-        const filePath = extractFileTree[5]!;
-        const codeFile = fs.readFileSync(filePath, "utf-8");
-
         const fileTreeStr = extractFileTree.join("\n");
 
-        const llmService = new LLMService();
-        const args = { filePath, codeFile, requirements, fileTreeStr};
-        const prompt = promptFactory("accuracy", [args])
-        console.log(JSON.stringify(prompt));
+        const accuracyList = [];
+        for (const filePath of extractFileTree) {
+            const codeFile = fs.readFileSync(filePath, "utf-8");
 
-        await llmService.query(prompt)
+            const args = { filePath, codeFile, requirements, fileTreeStr};
+            const prompt = promptFactory("accuracy", [args])
+
+            const res = await llmService.query(prompt)
+            accuracyList.push(res)
+        }
+
+        console.log(accuracyList)
+
 
         return `This is an AI-generated review for assignment ${assignmentId}`;
     }

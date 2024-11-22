@@ -22,7 +22,24 @@ class LLMService {
         // }
 
         const chatCompletion = await stream.finalChatCompletion();
-        // console.log(chatCompletion); // {id: "…", choices: […], …}
+        return this.parseResponse(chatCompletion?.choices[0]?.message?.content ?? '');
+    }
+
+    parseResponse(content: string) {
+        try {
+            // 백틱과 ```json, ``` 제거
+            const jsonString = content
+                .replace(/```json\n/, '') // ```json 제거
+                .replace(/```$/, '')     // 마지막 ``` 제거
+                .trim();
+
+            // JSON 파싱
+            const parsedObject = JSON.parse(jsonString);
+            return parsedObject;
+        } catch (error) {
+            console.error('JSON 파싱 실패:', error);
+            return null; // 혹은 에러 처리 로직 추가
+        }
     }
 }
 
