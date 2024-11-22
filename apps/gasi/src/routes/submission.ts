@@ -10,12 +10,13 @@ import {
 } from "@request/specs";
 import { humanId } from "human-id";
 import { z } from "zod";
-import { createMockReviewEntry } from "../mockUtils.js";
+import { checkRegistered } from "../auth/token.js";
 import { p } from "../trpc.js";
 
 export const init = p.input(SubmissionInitSchema).mutation(
   (): Submission => ({
     id: humanId({ separator: "-", capitalize: false }),
+    userId: "6740940e8e20d5e1b2231d72",
     assignmentId: humanId({ separator: "-", capitalize: false }),
     status: "PREPARING",
     lastUpdated: new Date().toISOString(),
@@ -57,15 +58,12 @@ export const TestSchema = z.object({ name: z.string(), });`,
   }),
 );
 
-export const reviewEntries = p.input(ReviewFilterSchema).query((): ReviewEntry[] => {
-  return [
-    ...Array(5)
-      .fill(1)
-      .map((_, i) => createMockReviewEntry(`${i}번 채점 항목`, "summary", undefined, undefined)),
-    createMockReviewEntry("파일 채점 항목", "lint", "src/index.js", undefined),
-    createMockReviewEntry("라인 채점 항목", "lint", "src/index.js", [10, 13]),
-  ];
-});
+export const reviewEntries = p
+  .input(ReviewFilterSchema)
+  .query(async ({ input, ctx }): Promise<ReviewEntry[]> => {
+    const user = checkRegistered(ctx.user);
+    const submissions = ct;
+  });
 
 export const review = p.input(z.object({ id: z.string() })).query(
   ({ input }): Omit<Review, "entries"> => ({
