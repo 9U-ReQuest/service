@@ -1,4 +1,4 @@
-import type { AuthorizationResult } from "@request/specs";
+import { type AuthorizationResult, type User, UserSchema } from "@request/specs";
 import { TRPCError } from "@trpc/server";
 import jwt from "jsonwebtoken";
 import type { HydratedDocument } from "mongoose";
@@ -53,9 +53,7 @@ export const authorizeWith = async (
   });
 };
 
-export const checkRegistered = (
-  user: HydratedDocument<typeof mUser.schema.obj> | null,
-): boolean => {
+export const checkRegistered = (user: HydratedDocument<typeof mUser.schema.obj> | null): User => {
   if (!user)
     throw new TRPCError({
       code: "UNAUTHORIZED",
@@ -66,5 +64,23 @@ export const checkRegistered = (
       code: "FORBIDDEN",
       message: "가입되지 않은 사용자는 사용할 수 없습니다.",
     });
-  return true;
+
+  const userObj = user.toObject();
+  const providersOriginal = Object.fromEntries(
+    userObj.providers as Map<string, { uid: string; connectedAt: string }>,
+  ) as unknown as {
+    kakao: {
+      uid: string;
+      connectedAt: Date;
+    };
+  };
+
+  const providers = {
+    kakao: {
+      uid: providersOriginal.kakao.uid,
+      connectedAt: providersOriginal.kakao.connectedAt.toISOString(),
+    },
+  };
+
+  return UserSchema.parse({ ...userObj, id: user.id, providers } as User);
 };
