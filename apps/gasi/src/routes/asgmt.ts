@@ -45,12 +45,30 @@ export const get = p
     return AssignmentSchema.parse(result);
   });
 
-export const generate = p.input(AssignmentPromptSchema).mutation(({ input }) => ({
-  id: humanId({ separator: "-", capitalize: false }),
-  name: "",
-  description: "",
-  readme: "",
-  prompt: input,
-  status: "GENERATING",
-  lastUpdated: new Date().toISOString(),
-}));
+export const generate = p.input(AssignmentPromptSchema).mutation(async ({ input, ctx }) => {
+  const user = checkRegistered(ctx.user);
+  if (user.lastGeneratedAssignment) {
+    const lastGenerated = await mAssignment.findOne({
+      id: user.lastGeneratedAssignment,
+      status: "GENERATING",
+    });
+    if (lastGenerated)
+      throw new TRPCError({
+        code: "TOO_MANY_REQUESTS",
+        message: `이미 생성중인 과제 '${lastGenerated.id}'가 있습니다. 동시에 하나의 과제만 생성할 수 있습니다.`,
+      });
+  }
+  const assignmentId = humanId({ capitalize: false, separator: "-" });
+  const doc = new mAssignment();
+  doc.id = assignmentId;
+  doc.status = "GENERATING";
+  doc.lastUpdated = new Date();
+  doc.prompt = {
+    fields: input.fields,
+    techs: input.techs,
+    companies: input.companies,
+  };
+  const res = await doc.save();
+  const result = { ...res.toObject(), lastUpdated: (res.lastUpdated as Date).toISOString() };
+  return AssignmentSchema.parse(result);
+});
