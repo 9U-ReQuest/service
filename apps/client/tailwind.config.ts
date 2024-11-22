@@ -27,6 +27,9 @@ const config: Config = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      height: {
+        "fit-height": "calc(100vh - 233px)",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
