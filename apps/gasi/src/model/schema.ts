@@ -1,27 +1,27 @@
 import mongoose, { Schema } from "mongoose";
 
-const mAuthProvider = new Schema({
+const mAuthProviderSchema = new Schema({
   uid: { type: String, unique: true, required: true },
   connectedAt: { type: Date },
 });
 
-export const mAssignmentPrompt = new Schema({
+export const mAssignmentPromptSchema = new Schema({
   fields: { type: [String] },
   techs: { type: [String] },
   companies: { type: [String] },
 });
 
-export const mAssignment = new Schema({
+export const mAssignmentSchema = new Schema({
   id: { type: String, unique: true, required: true, index: true },
   name: { type: String, required: true },
   description: { type: String, required: true },
   readme: { type: String, required: true },
-  prompt: { type: mAssignmentPrompt, required: true },
+  prompt: { type: mAssignmentPromptSchema, required: true },
   status: { type: String, required: true, default: "GENERATING" },
   lastUpdated: { type: Date, required: true, default: Date.now },
 });
 
-export const mSubmission = new Schema({
+export const mSubmissionSchema = new Schema({
   id: { type: String, unique: true, required: true, index: true },
   assignmentId: { type: String, unique: true, required: true, index: true },
   status: { type: String, default: "PREPARING" },
@@ -29,21 +29,21 @@ export const mSubmission = new Schema({
   expiredAt: { type: Date },
 });
 
-export const mReviewScenario = new Schema({
+export const mReviewScenarioSchema = new Schema({
   id: { type: String, required: true },
   name: { type: String, required: true },
   result: { type: String, required: true },
   score: { type: Number },
 });
 
-export const mReview = new Schema({
+export const mReviewSchema = new Schema({
   id: { type: String, unique: true, required: true, index: true },
   status: { type: String, required: true },
-  scenarios: { type: [mReviewScenario] },
-  entries: { type: [{ type: mongoose.Types.ObjectId, ref: "ReviewEntry" }] },
+  scenarios: { type: [mReviewScenarioSchema] },
 });
 
-export const mReviewEntry = new Schema({
+export const mReviewEntrySchema = new Schema({
+  submissionId: { type: String, required: true, index: true },
   name: { type: String, required: true },
   result: { type: String, required: true },
   score: { type: Number },
@@ -53,13 +53,13 @@ export const mReviewEntry = new Schema({
   message: { type: String, required: true },
 });
 
-export const mUser = new Schema({
+export const mUserSchema = new Schema({
   token: { type: String, unique: true, required: true },
   name: { type: String },
   email: { type: String, unique: true, index: true, sparse: true },
   registered: { type: Boolean, default: false },
-  providers: { type: Map, of: mAuthProvider },
+  providers: { type: Map, of: mAuthProviderSchema },
   lastGeneratedAssignment: { type: String },
-  submissions: { type: [mSubmission] },
-  prompt: { type: mAssignmentPrompt },
+  submissions: { type: [mSubmissionSchema] },
+  prompt: { type: mAssignmentPromptSchema },
 });

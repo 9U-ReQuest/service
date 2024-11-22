@@ -1,4 +1,8 @@
+import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import { p } from "../trpc.js";
+import { kakaoAuthorize } from "../auth/providers.js";
+import { p, pBaseUrl } from "../trpc.js";
 
-export const callback = p.input(z.string()).query(async ({ input }) => {});
+export const kakao = pBaseUrl.input(z.string()).query(async ({ input, ctx }) => {
+  return await kakaoAuthorize(`${ctx.baseUrl}/callback`, input);
+});

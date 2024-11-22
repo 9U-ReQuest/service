@@ -18,6 +18,7 @@ import {
 import { TRPCError } from "@trpc/server";
 import { humanId } from "human-id";
 import z from "zod";
+import { kakao } from "./routes/auth.js";
 import { p, t } from "./trpc.js";
 
 const createMockAssignment = (id: string, name: string) => ({
@@ -68,12 +69,7 @@ export const appRouter: AppRouter = t.router({
   v1: {
     auth: {
       // Kakao 로그인 code를 받고 accessToken을 리턴합니다.
-      kakao: p.input(z.string()).query(
-        ({ input }): AuthorizationResult => ({
-          accessToken: "example",
-          registered: input === "registered",
-        }),
-      ),
+      kakao: kakao,
       // 최초 로그인 유저의 정보를 받습니다.
       register: p.input(RegisterUserRequestSchema).mutation(() => {}),
     },
