@@ -2,6 +2,7 @@
 
 import lotte from "@/assets/images/lotte.png";
 import { trpc } from "@/shared/api/trpc";
+import { type Company, companyImages } from "@/shared/constant/company";
 import { combinePrompt } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
 import Typography from "@/shared/ui/common/typography/typography";
@@ -49,7 +50,14 @@ const AssignmentDetailPage = () => {
         className="self-center w-full px-[100px] py-[60px] max-w-screen-2xl"
       >
         <Flex gap="10" className="w-full">
-          <Image src={lotte} alt="기업 이미지" width={360} height={240} />
+          <Image
+            src={
+              companyImages[combinePrompt(data?.prompt?.companies || ["롯데"]) as Company] || lotte
+            }
+            alt="기업 이미지"
+            width={360}
+            height={240}
+          />
           <Flex direction="col" justifyContent="between" className="w-full">
             <Flex direction="col" className="leading-10" gap="3">
               <Typography as="p" size="lg">

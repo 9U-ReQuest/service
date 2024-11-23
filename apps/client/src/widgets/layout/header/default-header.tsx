@@ -6,7 +6,7 @@ import Header from "./header";
 
 const DefaultHeader = () => {
   const user = useUserStore((state) => state.user);
-  const isLogin = user?.name || true;
+  const isLogin = user?.name || undefined;
 
   return (
     <Header>
