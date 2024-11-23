@@ -30,6 +30,10 @@ if (process.env.CHANNEL === "local") {
   });
 }
 
+server.get("/github/webhook", async (_, res) => {
+  server.log.info(res);
+});
+
 const start = async () => {
   try {
     await server.listen({ port: 8080 });
