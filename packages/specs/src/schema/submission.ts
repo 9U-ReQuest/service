@@ -24,7 +24,9 @@ export const SubmissionSchema = z.object({
   expiredAt: z.string().datetime().nullable(),
 });
 
-export const SubmissionInitSchema = z.object({});
+export const SubmissionInitSchema = z.object({
+  assignmentId: z.string(),
+});
 
 export const SubmissionFileRequestSchema = z.object({
   id: z.string(),

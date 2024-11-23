@@ -38,6 +38,7 @@ const createMockAssignment = (id: string, name: string) => ({
 });
 
 const createMockReviewEntry = (
+  submissionId: string,
   name: string,
   scenario: string,
   path: string | undefined,
@@ -46,6 +47,7 @@ const createMockReviewEntry = (
   const score = Math.floor(Math.random() * 100);
   const result = Math.floor(score / 50);
   return {
+    submissionId,
     name,
     scenario,
     result: ["FAIL", "NEUTRAL", "GOOD"][result] as ReviewResult,
@@ -184,12 +186,12 @@ export const TestSchema = z.object({ name: z.string(), });`,
       // 요청한 범위 내의 모든 리뷰 내용을 반환합니다.
       reviewEntries: p
         .input(ReviewFilterSchema)
-        .query((): ReviewEntry[] => [
+        .query(({ input }): ReviewEntry[] => [
           ...Array(5).map((_, i) =>
-            createMockReviewEntry(`${i}번 채점 항목`, "summary", undefined, undefined),
+            createMockReviewEntry(input.id, `${i}번 채점 항목`, "summary", undefined, undefined),
           ),
-          createMockReviewEntry("파일 채점 항목", "lint", "src/index.js", undefined),
-          createMockReviewEntry("라인 채점 항목", "lint", "src/index.js", [10, 13]),
+          createMockReviewEntry(input.id, "파일 채점 항목", "lint", "src/index.js", undefined),
+          createMockReviewEntry(input.id, "라인 채점 항목", "lint", "src/index.js", [10, 13]),
         ]),
       // 리뷰의 기본 정보를 반환합니다.
       review: p.input(z.object({ id: z.string() })).query(
