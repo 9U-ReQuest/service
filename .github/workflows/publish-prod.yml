@@ -19,9 +19,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Build docker image
-        run: |
-          docker buildx build -t ${{ matrix.app }}:${{ github.sha }} -f apps/${{ matrix.app }}/Dockerfile .
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -34,10 +34,16 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Push images
-        run: |
-          docker tag ${{ matrix.app }}:${{ github.sha }} ${{ fromJson(env.ECR_OUTPUTS).repository_url.value }}:${{ github.sha }}
-          docker push ${{ fromJson(env.ECR_OUTPUTS).repository_url.value }}:${{ github.sha }}
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: apps/${{ matrix.app }}/Dockerfile
+          push: true
+          tags: ${{ fromJson(env.ECR_OUTPUTS).repository_url.value }}:${{ matrix.app }}-${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          provenance: false
 
   codedeploy:
     name: Deploy to CodeDeploy
@@ -103,3 +109,50 @@ jobs:
             --deployment-group-name ${{ fromJson(env.CODEDEPLOY_OUTPUTS).gasi_group_name.value }} \
             --deployment-config-name CodeDeployDefault.OneAtATime \
             --s3-location bucket=${{ fromJson(env.CODEDEPLOY_OUTPUTS).bucket.value }},bundleType=zip,key=${{ github.sha }}.zip
+
+  docker-github-image:
+    name: Build Docker images for repository administration
+    if: github.repository == '9U-ReQuest/service'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        image: [ "make-repo", "submit-repo" ]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          filters: |
+            ${{ matrix.image }}:
+              - 'apps/gasi/${{ matrix.image }}.Dockerfile'
+              - 'apps/gasi/${{ matrix.image }}.sh'
+
+      - name: Set up Docker Buildx
+        if: steps.changes.outputs[matrix.image] == 'true'
+        uses: docker/setup-buildx-action@v3
+
+      - name: Configure AWS credentials
+        if: steps.changes.outputs[matrix.image] == 'true'
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
+
+      - name: Login to Amazon ECR
+        if: steps.changes.outputs[matrix.image] == 'true'
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build and push
+        if: steps.changes.outputs[matrix.image] == 'true'
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: apps/gasi/${{ matrix.image }}.Dockerfile
+          push: true
+          tags: ${{ fromJson(env.ECR_OUTPUTS).repository_url.value }}:${{ matrix.image }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          provenance: false
