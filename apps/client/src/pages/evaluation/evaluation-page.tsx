@@ -41,7 +41,6 @@ const EvaluationPage = () => {
     })
     .filter((assignment) => assignment !== null);
 
-
   return (
     <Flex as="main" direction="col" className="w-full px-24 py-14">
       <Flex as="section" direction="col" alignItems="center">

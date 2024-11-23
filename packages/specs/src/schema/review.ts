@@ -43,6 +43,8 @@ export const ReviewSchema = z.object({
     efficiency: z.number(),
     consistency: z.number(),
   }),
+  name: z.string().optional(),
+  description: z.string().optional(),
 });
 
 export const ReviewFilterSchema = z.object({

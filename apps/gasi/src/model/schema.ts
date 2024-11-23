@@ -61,6 +61,8 @@ export const mReviewSchema = new Schema<Review>({
   status: { type: String, required: true },
   summary: { type: String, required: true },
   scores: { type: mReviewScoresSchema, required: true },
+  name: { type: String },
+  description: { type: String },
 });
 
 export const mReviewEntrySchema = new Schema<ReviewEntry & { submissionId: string }>({
