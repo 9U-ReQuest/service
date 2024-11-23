@@ -184,15 +184,16 @@ export const TestSchema = z.object({ name: z.string(), });`,
         }),
       ),
       // 요청한 범위 내의 모든 리뷰 내용을 반환합니다.
-      reviewEntries: p.input(ReviewFilterSchema).query(({ input }): ReviewEntry[] => [
-        ...Array(5)
-          .fill(1)
-          .map((_, i) =>
+
+      reviewEntries: p
+        .input(ReviewFilterSchema)
+        .query(({ input }): ReviewEntry[] => [
+          ...Array(5).map((_, i) =>
             createMockReviewEntry(input.id, `${i}번 채점 항목`, "summary", undefined, undefined),
           ),
-        createMockReviewEntry(input.id, "파일 채점 항목", "lint", "src/index.js", undefined),
-        createMockReviewEntry(input.id, "라인 채점 항목", "lint", "src/index.js", [10, 13]),
-      ]),
+          createMockReviewEntry(input.id, "파일 채점 항목", "lint", "src/index.js", undefined),
+          createMockReviewEntry(input.id, "라인 채점 항목", "lint", "src/index.js", [10, 13]),
+        ]),
       // 리뷰의 기본 정보를 반환합니다.
       review: p.input(z.object({ id: z.string() })).query(
         ({ input }): Omit<Review, "entries"> => ({
