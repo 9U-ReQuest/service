@@ -85,7 +85,7 @@ export const list = p.query(async ({ ctx }): Promise<Submission[]> => {
   const submissions = await mSubmission.find({ userId: user.id });
   const result = submissions.map((doc) => ({
     ...doc.toObject(),
-    userId: doc.userId,
+    userId: user.id,
     lastUpdated: (doc.lastUpdated as Date).toISOString(),
     expiredAt: doc.expiredAt ? (doc.expiredAt as Date).toISOString() : null,
   }));
