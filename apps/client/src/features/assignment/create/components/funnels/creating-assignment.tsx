@@ -18,16 +18,12 @@ interface CreatingAssignmentProps {
   onNext: () => void;
 }
 
-export default trpc.withTRPC(function CreatingAssignment({
-  createProps,
-  onNext,
-}: CreatingAssignmentProps) {
+export default function CreatingAssignment({ createProps, onNext }: CreatingAssignmentProps) {
   const [pollingEnabled, setPollingEnabled] = useState(false);
 
   const generateMutation = trpc.v1.asgmt.generate.useMutation({
     onSuccess: (data) => {
       setPollingEnabled(true);
-      onNext();
     },
     onError: (error) => {
       console.error("과제 생성 중 오류 발생:", error);
@@ -47,13 +43,22 @@ export default trpc.withTRPC(function CreatingAssignment({
 
   const id = generateMutation.data?.id;
 
-  const { data, isLoading, error } = trpc.v1.asgmt.get.useQuery(
-    { id: id as string },
+  const { data: user } = trpc.v1.user.me.useQuery();
+
+  const { data: assignment } = trpc.v1.asgmt.get.useQuery(
+    { id: id || (user?.lastGeneratedAssignment as string) },
     {
-      enabled: pollingEnabled || !!id,
+      enabled: pollingEnabled || !!id || !!user?.lastGeneratedAssignment,
       refetchInterval: 3000,
     },
   );
+
+  // 과제 생성이 되면 다음 단계로 넘어가기
+  useEffect(() => {
+    if (assignment?.status === "READY") {
+      onNext();
+    }
+  }, [assignment?.status, onNext]);
 
   const entries = Object.entries(createProps).reduce<string[]>(
     // biome-ignore lint/performance/noAccumulatingSpread: <explanation>
@@ -93,4 +98,4 @@ export default trpc.withTRPC(function CreatingAssignment({
       </Flex>
     </CreateAssignmentLayout>
   );
-});
+}
