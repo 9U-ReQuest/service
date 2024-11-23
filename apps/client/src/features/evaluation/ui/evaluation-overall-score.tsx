@@ -30,7 +30,8 @@ const EvaluationOverallScore = () => {
     <>
       <div className="space-y-1">
         <Typography as="p" size="xl" weight="bold">
-          내 과제 종합 점수는 <span className="text-primary">{overallScore || 0}점</span> 이에요
+          내 과제 종합 점수는{" "}
+          <span className="text-primary">{Math.floor(overallScore) || 0}점</span> 이에요
         </Typography>
         <Typography as="p" weight="semibold" className="text-[#939393]">
           {commentByScore(overallScore || 0)}

@@ -26,16 +26,22 @@ const EvaluationPage = () => {
     name: assignmentData?.name,
     lastUpdated: assignmentData?.lastUpdated,
   };
-  const filteredRestAssignments = assignmentList?.data.filter((assignment, idx) => {
-    const find = restSubmissions?.find((rest) => rest.assignmentId === assignment.id);
-    if (find) {
-      return {
-        ...assignmentList.data[idx],
-        status: assignment.status,
-        submissionId: find.id,
-      };
-    }
-  });
+  const filteredRestAssignments = assignmentList?.data
+    .map((assignment, idx) => {
+      const find = restSubmissions?.find((rest) => rest.assignmentId === assignment.id);
+      console.log(find);
+      if (find) {
+        return {
+          ...assignmentList.data[idx],
+          status: assignment.status,
+          submissionId: find.id,
+        };
+      }
+      return null;
+    })
+    .filter((assignment) => assignment !== null);
+
+  console.log(filteredRestAssignments);
 
   return (
     <Flex as="main" direction="col" className="w-full px-24 py-14">

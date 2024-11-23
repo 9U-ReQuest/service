@@ -14,8 +14,6 @@ interface OngoingAssignmentProps
 }
 
 export default function OngoingAssignment(props: OngoingAssignmentProps) {
-  console.log(props);
-
   const isStarted = props?.status === "STARTED";
   const allPrompts = [
     ...(props?.prompt?.fields || []),

@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 
 export interface EvaluationItemProps extends Omit<Assignment, "status"> {
   status: SubmissionStatus;
+  submissionId: string;
 }
 
 export default function EvaluationItem(props: EvaluationItemProps) {
@@ -24,7 +25,7 @@ export default function EvaluationItem(props: EvaluationItemProps) {
   ];
 
   const handleRouteToResult = () => {
-    router.push(`/evaluation/${props?.id}`);
+    router.push(`/evaluation/${props?.submissionId}`);
   };
 
   return (
