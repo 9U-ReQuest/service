@@ -53,6 +53,7 @@ server.post("/submission/update", async (req, res) => {
     return;
   }
   doc.status = status;
+  if (status === "STARTED") doc.repoUrl = `https://github.com/ReQuest-members/${id}`;
   await doc.save();
   if (status === "SUBMITTED") {
     // TODO: Send request to CARI
