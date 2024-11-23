@@ -9,6 +9,7 @@ import {
 import { TRPCError } from "@trpc/server";
 import { humanId } from "human-id";
 import { z } from "zod";
+import { requestGeneration } from "../agi.js";
 import { checkRegistered } from "../auth/token.js";
 import { mAssignment } from "../model/index.js";
 import { p } from "../trpc.js";
@@ -79,6 +80,19 @@ export const generate = p.input(AssignmentPromptSchema).mutation(async ({ input,
   };
   const res = await doc.save();
   // TODO: Make generation request to AGI
+  requestGeneration(user.id)
+    .then((res) => res.json())
+    .then((json) => {
+      mAssignment.findOneAndUpdate(
+        { id: assignmentId },
+        {
+          name: json.name,
+          description: json.description,
+          readme: json.readme,
+          status: "READY",
+        },
+      );
+    });
   ctx.user.lastGeneratedAssignment = assignmentId;
   await ctx.user.save();
   const result = { ...res.toObject(), lastUpdated: (res.lastUpdated as Date).toISOString() };
