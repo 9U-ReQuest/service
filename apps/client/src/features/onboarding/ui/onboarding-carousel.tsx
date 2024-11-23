@@ -56,7 +56,7 @@ export default function OnboardingCarousel() {
             <Flex>
               {ONBOARDINGS.map((ONBOARDING, index) => (
                 // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-                <CarouselItem key={`onboarding-item-${index}`} className="self-end">
+                <CarouselItem key={`onboarding-item-${index}`} className="self-end rounded-3xl">
                   <Flex direction="col" alignItems="center" gap="10">
                     <Typography
                       as="p"

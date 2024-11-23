@@ -70,13 +70,13 @@ export default function InputField({
   };
 
   return (
-    <OnboardingLayout className="h-auto">
+    <OnboardingLayout>
       <Flex direction="col" gap="4" onKeyDown={handleKeyDown} tabIndex={0}>
-        <div className="w-full max-w-7xl min-w-[400px] px-4 py-8">
-          <Typography as="h2" size="xl" weight="bold">
+        <div className="w-full max-w-7xl min-w-[400px] px-4 py-2">
+          <Typography as="h2" size="lg" weight="bold">
             희망 직무를 선택해주세요
           </Typography>
-          <Typography size="base" weight="normal" className="text-muted-foreground">
+          <Typography size="sm" weight="normal" className="text-muted-foreground">
             최대 3개까지 선택 가능합니다.
           </Typography>
           <CategoryFilter

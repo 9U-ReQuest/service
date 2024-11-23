@@ -32,34 +32,36 @@ export default function InputGithub({
 
   return (
     <OnboardingLayout>
-      <Flex direction="col" gap="2">
-        <Typography as="h2" size="xl" weight="bold">
-          GitHub에서 사용하는 이메일 주소를 입력해주세요.
-        </Typography>
-        <Typography size="base" weight="normal" className="mb-2" whitespace="pre-line">
-          {"AI 코드리뷰 및 과제 생성을 위해 \n여러분의 GitHub 이메일이 필요해요!"}
-        </Typography>
-        <Label htmlFor="github-email">Github 이메일</Label>
-        <Input
-          id="github-email"
-          type="text"
-          placeholder="github 이메일을 입력해주세요."
-          value={github}
-          onChange={(e) => setGithub(e.target.value)}
-          className={error ? "border-red-500" : ""}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") handleNext();
-          }}
-        />
-        {error && (
-          <Typography size="sm" weight="normal" className="text-red-500 mt-1">
+      <Flex direction="col" gap="12">
+        <div className="space-y-2">
+          <Typography as="h2" size="lg" weight="bold">
+            GitHub에서 사용하는 이메일 주소를 입력해주세요.
+          </Typography>
+          <Typography size="sm" weight="normal" className="mb-2 h-10" whitespace="pre-line">
+            {"AI 코드리뷰 및 과제 생성을 위해 \n여러분의 GitHub 닉네임이 필요해요!"}
+          </Typography>
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="github-email">Github 닉네임</Label>
+          <Input
+            id="github-email"
+            type="text"
+            placeholder="github 닉네임을 입력해주세요."
+            value={github}
+            onChange={(e) => setGithub(e.target.value)}
+            className={error ? "border-red-500" : ""}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") handleNext();
+            }}
+          />
+          <Typography size="sm" weight="normal" className="text-red-500 mt-1 h-5">
             {error}
           </Typography>
-        )}
+        </div>
+        <Button type="button" className="w-full" onClick={handleNext}>
+          다음으로
+        </Button>
       </Flex>
-      <Button type="button" className="w-full" onClick={handleNext}>
-        다음으로
-      </Button>
     </OnboardingLayout>
   );
 }

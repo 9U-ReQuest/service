@@ -32,14 +32,14 @@ export default function OnboardingSuccess(props: OnboardingSuccessProps) {
         className="text-center max-w-[676px]"
       >
         <Flex direction="col" alignItems="center" gap="4">
-          <Image src={logo} alt="ReQuest Logo" width={300} height={100} />
-          <Typography size="4xl" weight="semibold" align="center" whitespace="pre-line">
+          <Image src={logo} alt="ReQuest Logo" width={200} height={100} />
+          <Typography size="2xl" weight="semibold" align="center" whitespace="pre-line">
             {"이제 ReQuest와 함께 \n기업 과제를 완벽하게 준비해보세요!"}
           </Typography>
           <Image
             src={onboarding_success}
             alt="Cartoon character"
-            width={460}
+            width={360}
             height={305}
             className="my-4"
           />

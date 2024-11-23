@@ -46,13 +46,15 @@ export default function AssignmentCard({ assignment }: AssignmentCardProps) {
         </CardHeader>
         <CardContent className="px-0 py-4">
           <div className="space-y-2">
-            <Typography as="p" size="sm" weight="medium">
-              {combinePrompt(prompt.fields)} / {combinePrompt(prompt.companies)}
-            </Typography>
-            <Typography as="h3" size="lg" weight="medium" lineClamp="1">
-              {name}
-            </Typography>
-            <Typography as="p" size="base" weight="medium">
+            <div className="space-y-1">
+              <Typography as="p" size="sm" weight="medium">
+                {combinePrompt(prompt.fields)} / {combinePrompt(prompt.companies)}
+              </Typography>
+              <Typography as="h3" size="xl" weight="bold" lineClamp="1">
+                {name}
+              </Typography>
+            </div>
+            <Typography as="p" size="xs" weight="medium">
               {new Date(lastUpdated).toLocaleDateString()}
             </Typography>
           </div>

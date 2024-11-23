@@ -11,7 +11,7 @@ import { Label } from "@/shared/ui/label";
 import Flex from "@/shared/ui/wrapper/flex/flex";
 import SelectItem from "@/widgets/ui/select-item";
 import { X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { z } from "zod";
 import OnboardingLayout from "./onboarding-layout";
 
@@ -74,14 +74,25 @@ export default function InputTechAndCompany({
     );
   };
 
+  useEffect(() => {
+    if (tech.length > 0) {
+      setTechError(null);
+    }
+  }, [tech]);
+
+  useEffect(() => {
+    if (company.length > 0) {
+      setCompanyError(null);
+    }
+  }, [company]);
+
   return (
     <OnboardingLayout>
-      <Flex direction="col" gap="3">
-        <Typography as="h2" size="xl" weight="bold">
+      <Flex direction="col" gap="6">
+        <Typography as="h2" size="lg" weight="bold" className="mb-10">
           관심 기술 및 기업을 선택해주세요.
         </Typography>
-
-        <Flex direction="col" gap="2" className="mb-8">
+        <Flex direction="col" gap="2">
           <Label htmlFor="tech">관심 기술을 선택해주세요. (최대 3개)</Label>
           <SelectItem
             placeholder="검색어를 입력하여 관심 기술을 선택해주세요."
@@ -89,24 +100,25 @@ export default function InputTechAndCompany({
             value={tech}
             setValue={setTech}
           />
-          {techError && (
-            <Typography size="sm" weight="normal" className="text-red-500 mt-1">
+          {techError ? (
+            <Typography size="sm" weight="normal" className="text-red-500 h-9">
               {techError}
             </Typography>
+          ) : (
+            <Flex direction="row" gap="2" className="h-9">
+              {tech.map((filter) => (
+                <Button
+                  key={filter}
+                  variant="secondary"
+                  className="my-1 rounded-full whitespace-nowrap"
+                  onClick={() => handleRemoveFilter(setTech, filter)}
+                >
+                  {filter}
+                  <X className="ml-2 h-4 w-4 cursor-pointer" />
+                </Button>
+              ))}
+            </Flex>
           )}
-          <Flex direction="row" gap="2" className="h-9">
-            {tech.map((filter) => (
-              <Button
-                key={filter}
-                variant="secondary"
-                className="my-1 rounded-full whitespace-nowrap"
-                onClick={() => handleRemoveFilter(setTech, filter)}
-              >
-                {filter}
-                <X className="ml-2 h-4 w-4 cursor-pointer" />
-              </Button>
-            ))}
-          </Flex>
         </Flex>
 
         <Flex direction="col" gap="2">
@@ -117,24 +129,25 @@ export default function InputTechAndCompany({
             value={company}
             setValue={setCompany}
           />
-          {companyError && (
-            <Typography size="sm" weight="normal" className="text-red-500 mt-1">
+          {companyError ? (
+            <Typography size="sm" weight="normal" className="text-red-500 h-9">
               {companyError}
             </Typography>
+          ) : (
+            <Flex direction="row" gap="2" className="h-9">
+              {company.map((filter) => (
+                <Button
+                  key={filter}
+                  variant="secondary"
+                  className="rounded-full whitespace-nowrap"
+                  onClick={() => handleRemoveFilter(setCompany, filter)}
+                >
+                  {filter}
+                  <X className="my-1 ml-2 h-4 w-4 cursor-pointer" />
+                </Button>
+              ))}
+            </Flex>
           )}
-          <Flex direction="row" gap="2" className="h-9">
-            {company.map((filter) => (
-              <Button
-                key={filter}
-                variant="secondary"
-                className="rounded-full whitespace-nowrap"
-                onClick={() => handleRemoveFilter(setCompany, filter)}
-              >
-                {filter}
-                <X className="my-1 ml-2 h-4 w-4 cursor-pointer" />
-              </Button>
-            ))}
-          </Flex>
         </Flex>
       </Flex>
       <Button type="button" className="w-full" onClick={handleNext}>

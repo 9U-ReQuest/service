@@ -32,33 +32,35 @@ export default function InputName({
 
   return (
     <OnboardingLayout>
-      <Flex direction="col" gap="2">
-        <Typography as="h2" size="xl" weight="bold">
-          ReQuest에서는 여러분의 이름이 필요해요!
-        </Typography>
-        <Typography size="base" weight="normal" className="mb-2">
-          서비스 시작 전, 이름을 입력해주세요.
-        </Typography>
-        <Label htmlFor="github-email">이름</Label>
-        <Input
-          type="text"
-          placeholder="이름을 입력해주세요."
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") handleNext();
-          }}
-          className={error ? "border-red-500" : ""}
-        />
-        {error && (
-          <Typography size="sm" weight="normal" className="text-red-500 mt-1">
+      <Flex direction="col" gap="12">
+        <div className="space-y-2">
+          <Typography as="h2" size="lg" weight="bold">
+            ReQuest에서는 여러분의 이름이 필요해요!
+          </Typography>
+          <Typography size="sm" weight="normal" className="mb-2 h-10">
+            서비스 시작 전, 이름을 입력해주세요.
+          </Typography>
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="github-email">이름</Label>
+          <Input
+            type="text"
+            placeholder="이름을 입력해주세요."
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") handleNext();
+            }}
+            className={error ? "border-red-500" : ""}
+          />
+          <Typography size="sm" weight="normal" className="text-red-500 mt-1 h-5">
             {error}
           </Typography>
-        )}
+        </div>
+        <Button type="button" className="w-full" onClick={handleNext}>
+          다음으로
+        </Button>
       </Flex>
-      <Button type="button" className="w-full" onClick={handleNext}>
-        다음으로
-      </Button>
     </OnboardingLayout>
   );
 }

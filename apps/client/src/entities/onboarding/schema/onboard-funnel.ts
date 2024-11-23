@@ -6,7 +6,8 @@ export const OnboardingSchema = z
       .string()
       .min(2, "이름은 최소 2글자 이상이어야 합니다.")
       .max(10, "이름은 최대 10글자 이하이어야 합니다."),
-    github: z.string().email("GitHub 주소는 유효한 이메일 형식이어야 합니다."),
+    // 깃허브 닉네임에 가능한 것으로 검증좀 해줘.
+    github: z.string().min(1, "깃허브 닉네임은 필수 입력 항목입니다."),
     field: z.array(z.string()).min(1, "직군을 최소 1개 이상 입력해야 합니다."),
     tech: z.array(z.string()).min(1, "기술 스택을 최소 1개 이상 입력해야 합니다."),
     company: z.array(z.string()).min(1, "회사를 최소 1개 이상 입력해야 합니다."),

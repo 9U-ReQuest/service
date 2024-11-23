@@ -20,12 +20,12 @@ export default function OnboardingLayout({
         className={cn("max-w-[1200px] w-full", className || "h-fit-height")}
         justifyContent="center"
       >
-        <Flex direction="row" className="px-4 py-8" justifyContent="center" wrap="wrap">
+        <Flex direction="row" className="px-4 py-4 gap-52" justifyContent="center" wrap="wrap">
           <Flex
             direction="col"
             justifyContent="center"
             alignItems="center"
-            className="flex-[0_0_40%]"
+            className="flex-[0_0_30%]"
           >
             <Image
               src={InputImage}

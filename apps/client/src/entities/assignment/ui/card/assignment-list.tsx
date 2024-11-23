@@ -40,7 +40,7 @@ const AssignmentList: React.FC<AssignmentListProps> = ({
   return (
     <section className="w-full py-12">
       <Flex alignItems="center" justifyContent="between" className="w-full mb-16">
-        <Typography as="h2" size="xl" weight="semibold">
+        <Typography as="h2" size="xl" weight="bold">
           {headerTitle}{" "}
           <Typography as="span" size="xl" weight="bold" color="primary">
             ({total})

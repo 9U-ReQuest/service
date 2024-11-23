@@ -1,8 +1,10 @@
+import { ROUTES } from "@/shared/constant/url";
 import { cn } from "@/shared/lib/utils";
 import { Card } from "@/shared/ui/card";
 import Typography from "@/shared/ui/common/typography/typography";
 import Flex from "@/shared/ui/wrapper/flex/flex";
 import type { Assignment } from "@request/specs";
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 type PopularCardProps = {
@@ -14,27 +16,32 @@ const PopularCard = ({ assignment, isSelected }: PopularCardProps) => {
   return (
     <Card
       className={cn(
-        "transition-all duration-500 ease-in-out",
+        "transition-all duration-500 ease-in-out border-none",
         isSelected ? "flex-[0_0_60%]" : "flex-[0_0_20%]",
       )}
     >
       <Flex
         direction="col"
         justifyContent="between"
-        className={cn("h-[400px] p-8 relative rounded-lg bg-[#3F457B]")}
+        className={cn("h-[400px] rounded-3xl p-8 relative bg-[#3F457B]")}
       >
-        <div className="space-y-2">
-          <Typography as="h3" size="sm" weight="semibold" color="white">
-            {assignment.name}
+        <div className="space-y-5">
+          <Typography as="h3" size="xs" weight="semibold" color="white">
+            {/* {assignment.name} */}
+            {assignment.prompt.companies.map((company) => company).join(" / ")}
           </Typography>
-          <Typography as="p" size="base" color="white">
-            {assignment.description}
+          <Typography as="p" size="2xl" color="white" whitespace="pre-line">
+            {assignment.prompt.techs.map((tech) => tech).join("\n")}
           </Typography>
         </div>
-        <Link href={`/assignment/${assignment.id}`}>
+        <Link
+          href={`${ROUTES.ASSIGNMENT_BUSINESS}/${assignment.id}`}
+          className="flex gap-1 white items-center"
+        >
           <Typography size="base" weight="semibold" color="white">
             자세히보기
           </Typography>
+          <ArrowRight size={20} color="white" />
         </Link>
       </Flex>
     </Card>

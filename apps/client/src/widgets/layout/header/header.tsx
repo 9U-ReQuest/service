@@ -65,7 +65,7 @@ function Nav(): JSX.Element {
           key={item.href}
           href={item.href}
           className={cn(
-            "text-base font-bold transition-colors hover:text-primary",
+            "text-sm font-bold transition-colors hover:text-primary",
             item.href === activeHref && "text-primary",
           )}
         >
@@ -198,7 +198,7 @@ function MyPageMenu({ name, email }: MyPageMenuProps): JSX.Element {
     <Menubar className="border-none shadow-none">
       <MenubarMenu>
         <MenubarTrigger className="cursor-pointer">
-          <Image src={mypage} alt="마이페이지" width={44} height={44} />
+          <Image src={mypage} alt="마이페이지" width={36} height={36} />
         </MenubarTrigger>
         <MenubarContent className="w-[320px] p-0" align="end">
           <div className="border-b p-4">

@@ -15,7 +15,7 @@ const CarouselIndicators = ({ total, selectedIndex, onSelect }: CarouselIndicato
         type="button"
         className={cn(
           "w-2 h-2 rounded-full transition-all",
-          index === selectedIndex ? "bg-[#787878]" : "bg-gray-300",
+          index === selectedIndex ? "bg-primary" : "bg-gray-300",
         )}
         onClick={() => onSelect?.(index)}
       />

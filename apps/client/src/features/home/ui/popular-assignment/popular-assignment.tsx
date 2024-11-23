@@ -21,7 +21,7 @@ const PopularAssignment = () => {
       <div className="relative mt-8">
         <div className="overflow-hidden" ref={emblaRef}>
           <div className="flex gap-8">
-            {assignments.map((assignment, index) => (
+            {assignments.slice(0, 5).map((assignment, index) => (
               <PopularCard
                 key={assignment.id}
                 assignment={assignment}

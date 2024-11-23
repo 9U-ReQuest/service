@@ -10,7 +10,7 @@ export default function NotificationIcon({
 
   return (
     <div className="relative inline-flex">
-      <Image src={notification} alt="Notification" width={24} height={24} className="h-6 w-6" />
+      <Image src={notification} alt="Notification" width={26} height={26} className="w-7 h-7" />
       {count > 0 && (
         <div className="absolute -right-2 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-500 px-1 text-xs text-white">
           {displayCount}
