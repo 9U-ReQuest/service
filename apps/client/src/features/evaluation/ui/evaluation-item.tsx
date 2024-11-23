@@ -39,7 +39,7 @@ export default function EvaluationItem(props: EvaluationItemProps) {
         <Typography size="xs">{getDate(props.lastUpdated)}</Typography>
       </div>
       <div className="space-y-2">
-        <Typography size="sm">과제 점수: 50</Typography>
+        {/* <Typography size="sm">과제 점수: 50</Typography> */}
         <Button
           variant="link"
           className={`w-[calc(100%)] self-center bg-[#8A1B22] py-6 rounded-lg hover:no-underline text-white font-bold text-sm flex items-center ${isReviewing && "bg-[#C3CCD5] text-black"}`}

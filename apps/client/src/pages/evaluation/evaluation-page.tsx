@@ -9,28 +9,30 @@ import Flex from "@/shared/ui/wrapper/flex/flex";
 const EvaluationPage = () => {
   const { data: listData } = trpc.v1.submission.list.useQuery(undefined, { refetchInterval: 3000 });
   const { data: assignmentList } = trpc.v1.asgmt.list.useQuery({});
-  const ongoingAssignments = listData?.filter(
+  const ongoingSubmissions = listData?.filter(
     (submission) => submission.status === "PREPARING" || submission.status === "STARTED",
   )[0];
-  const restAssignments = listData?.filter(
+  const restSubmissions = listData?.filter(
     (submission) => submission.status !== "PREPARING" && submission.status !== "STARTED",
   );
   const { data: assignmentData } = trpc.v1.asgmt.get.useQuery(
-    { id: ongoingAssignments?.assignmentId as string },
-    { enabled: typeof ongoingAssignments !== "undefined" },
+    { id: ongoingSubmissions?.assignmentId as string },
+    { enabled: typeof ongoingSubmissions !== "undefined" },
   );
   const ongoingData = {
-    status: ongoingAssignments?.status,
-    repoUrl: ongoingAssignments?.repoUrl,
+    status: ongoingSubmissions?.status,
+    repoUrl: ongoingSubmissions?.repoUrl,
     prompt: assignmentData?.prompt,
     name: assignmentData?.name,
     lastUpdated: assignmentData?.lastUpdated,
   };
   const filteredRestAssignments = assignmentList?.data.filter((assignment, idx) => {
-    if (restAssignments?.some((rest) => rest.assignmentId === assignment.id)) {
+    const find = restSubmissions?.find((rest) => rest.assignmentId === assignment.id);
+    if (find) {
       return {
         ...assignmentList.data[idx],
         status: assignment.status,
+        submissionId: find.id,
       };
     }
   });
@@ -62,7 +64,7 @@ const EvaluationPage = () => {
         <Typography as="p" size="lg" weight="semibold">
           평가중{" "}
           <Typography as="span" size="lg" weight="bold" color="primary">
-            &#40;{restAssignments?.length || 0}&#41;
+            &#40;{restSubmissions?.length || 0}&#41;
           </Typography>
         </Typography>
         <Flex
