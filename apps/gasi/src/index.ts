@@ -36,7 +36,7 @@ server.get("/github/webhook", async (_, res) => {
 
 const start = async () => {
   try {
-    await server.listen({ port: 8080 });
+    await server.listen({ host: '0.0.0.0', port: 8080 });
     console.log("Server is running on port 8080");
   } catch (err) {
     server.log.error(err);
