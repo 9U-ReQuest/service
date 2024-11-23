@@ -21,6 +21,7 @@ import { humanId } from "human-id";
 import { z } from "zod";
 import { checkRegistered } from "../auth/token.js";
 import { makeRepository } from "../docker.js";
+import { server } from "../index.js";
 import { mAssignment, mReview, mReviewEntry, mSubmission } from "../model/index.js";
 import { p } from "../trpc.js";
 
@@ -28,11 +29,11 @@ export const init = p
   .input(SubmissionInitSchema)
   .mutation(async ({ input, ctx }): Promise<Submission> => {
     const user = checkRegistered(ctx.user);
-    const ongoingSubmission = await mSubmission.findOne({
+    const ongoingSubmission = await mSubmission.find({
       userId: user.id,
       status: { $in: ["PREPARING", "STARTED", "SUBMITTED", "REVIEWING"] },
     });
-    if (ongoingSubmission)
+    if (ongoingSubmission.length > 0)
       throw new TRPCError({
         code: "TOO_MANY_REQUESTS",
         message:
@@ -53,6 +54,7 @@ export const init = p
     const docObj = newDoc.toObject();
     const res = {
       ...docObj,
+      userId: user.id,
       lastUpdated: docObj.lastUpdated.toISOString(),
       expiredAt: docObj.expiredAt?.toISOString() ?? null,
     };
