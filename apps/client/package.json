@@ -65,8 +65,6 @@
     "typescript": "^5"
   },
   "msw": {
-    "workerDirectory": [
-      "public"
-    ]
+    "workerDirectory": ["public"]
   }
 }
