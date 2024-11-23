@@ -17,7 +17,7 @@ import { z } from "zod";
 import { checkRegistered } from "../auth/token.js";
 import { mReview, mReviewEntry, mSubmission } from "../model/index.js";
 import { p } from "../trpc.js";
-import {makeRepository} from "../docker.js";
+import { makeRepository } from "../docker.js";
 
 export const init = p
   .input(SubmissionInitSchema)
@@ -36,8 +36,8 @@ export const init = p
     if (!user.email)
       throw new TRPCError({
         code: "FORBIDDEN",
-        message: "GitHub 계정이 연결되지 않았습니다."
-      })
+        message: "GitHub 계정이 연결되지 않았습니다.",
+      });
     const newDoc = new mSubmission();
     const submissionId = humanId({ separator: "-", capitalize: false });
     newDoc.id = submissionId;

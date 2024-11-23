@@ -30,13 +30,14 @@ if (process.env.CHANNEL === "local") {
   });
 }
 
-server.post("/github/webhook", async (_, res) => {
-  server.log.info(res);
+server.post("/github/webhook", async (req, res) => {
+  const json = req.body as { ref: string };
+  console.log(json.ref);
 });
 
 const start = async () => {
   try {
-    await server.listen({ host: '0.0.0.0', port: 8080 });
+    await server.listen({ host: "0.0.0.0", port: 8080 });
     console.log("Server is running on port 8080");
   } catch (err) {
     server.log.error(err);
@@ -44,9 +45,11 @@ const start = async () => {
   }
 };
 
-export const docker = process.env.DOCKER_SOCK ? new Docker({socketPath: process.env.DOCKER_SOCK}) : null;
+export const docker = process.env.DOCKER_SOCK
+  ? new Docker({ socketPath: process.env.DOCKER_SOCK })
+  : null;
 
-if(docker) {
+if (docker) {
   console.log("Dockerode Initiated.");
 }
 start();

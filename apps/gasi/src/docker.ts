@@ -1,5 +1,5 @@
-import {docker} from "./index.js";
-import {TRPCError} from "@trpc/server";
+import { docker } from "./index.js";
+import { TRPCError } from "@trpc/server";
 
 const ECR_REPOSITORY_URL = process.env.ECR_REPOSITORY_URL;
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
@@ -10,7 +10,11 @@ const ASSIGNMENT_BUCKET_ID = process.env.ASSIGNMENT_BUCKET_ID;
 const SUBMISSION_BUCKET_ID = process.env.SUBMISSION_BUCKET_ID;
 
 export function makeRepository(userName: string, assignmentId: string, submissionId: string) {
-  if(!docker) throw new TRPCError({ code: "SERVICE_UNAVAILABLE", message: "이 서버에서는 github 작업을 지원하지 않습니다." });
+  if (!docker)
+    throw new TRPCError({
+      code: "SERVICE_UNAVAILABLE",
+      message: "이 서버에서는 github 작업을 지원하지 않습니다.",
+    });
   const imageName = `${ECR_REPOSITORY_URL}:make-repo`;
   docker.createContainer({
     Tty: true,
@@ -27,11 +31,15 @@ export function makeRepository(userName: string, assignmentId: string, submissio
     ],
     HostConfig: {
       NetworkMode: "host",
-    }
-  })
+    },
+  });
 }
 export function submitRepository(submissionId: string) {
-  if(!docker) throw new TRPCError({ code: "SERVICE_UNAVAILABLE", message: "이 서버에서는 github 작업을 지원하지 않습니다." });
+  if (!docker)
+    throw new TRPCError({
+      code: "SERVICE_UNAVAILABLE",
+      message: "이 서버에서는 github 작업을 지원하지 않습니다.",
+    });
   const imageName = `${ECR_REPOSITORY_URL}:submit-repo`;
   docker.createContainer({
     Tty: true,
@@ -45,6 +53,6 @@ export function submitRepository(submissionId: string) {
     ],
     HostConfig: {
       NetworkMode: "host",
-    }
-  })
+    },
+  });
 }

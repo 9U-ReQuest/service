@@ -12,7 +12,7 @@ const baseNextConfig = {
       {
         source: "/github/:api*",
         destination: `${process.env.PRIVATE_GASI_API_URL ?? "http://gasi.request.internal:8080"}/github/:api*`,
-      }
+      },
     ];
   },
   output: "standalone",
