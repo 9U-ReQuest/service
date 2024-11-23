@@ -1,8 +1,8 @@
 "use client";
 import {
   CreateAssignmentSchema,
-  type 생성중,
-} from "@/features/assignment/create/hooks/use-create-assignment-funnel";
+  type InProgress,
+} from "@/entities/assignment/create/schema/create-assignment-funnel";
 import { Button } from "@/shared/ui/button";
 import { Card } from "@/shared/ui/card";
 import Typography from "@/shared/ui/common/typography/typography";
@@ -14,7 +14,7 @@ import { z } from "zod";
 import CreateAssignmentLayout from "./create-assignment-layout";
 
 interface ConfirmUserInfoProps {
-  onNext: (branch: "유저정보입력후생성" | "생성중", filedProps?: 생성중) => void;
+  onNext: (filedProps?: InProgress) => void;
 }
 
 export default function InputUserInfo({ onNext }: ConfirmUserInfoProps) {
@@ -40,7 +40,7 @@ export default function InputUserInfo({ onNext }: ConfirmUserInfoProps) {
     try {
       CreateAssignmentSchema.parse({ field: fields, tech, company });
       setError(null);
-      onNext("생성중", { field: fields, tech, company });
+      onNext({ field: fields, tech, company });
     } catch (err) {
       if (err instanceof z.ZodError) {
         setError(err.errors[0].message);

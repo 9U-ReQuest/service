@@ -1,5 +1,5 @@
 "use client";
-import type { 생성중 } from "@/features/assignment/create/hooks/use-create-assignment-funnel";
+import type { InProgress } from "@/entities/assignment/create/schema/create-assignment-funnel";
 import { Button } from "@/shared/ui/button";
 import { Card } from "@/shared/ui/card";
 import Typography from "@/shared/ui/common/typography/typography";
@@ -9,7 +9,7 @@ import { useState } from "react";
 import CreateAssignmentLayout from "./create-assignment-layout";
 
 interface ConfirmUserInfoProps {
-  onNext: (branch: "유저정보입력후생성" | "생성중", filedProps?: 생성중) => void;
+  onNext: (branch: "InputUserInfo" | "InProgress", filedProps?: InProgress) => void;
 }
 
 export default function SelectionForm({ onNext }: ConfirmUserInfoProps) {
@@ -108,7 +108,7 @@ export default function SelectionForm({ onNext }: ConfirmUserInfoProps) {
           <Button
             className="w-full py-6"
             onClick={() =>
-              onNext("생성중", {
+              onNext("InProgress", {
                 field: fields,
                 tech,
                 company,
@@ -122,7 +122,7 @@ export default function SelectionForm({ onNext }: ConfirmUserInfoProps) {
           <Button
             variant="secondary"
             className="w-full py-6"
-            onClick={() => onNext("유저정보입력후생성")}
+            onClick={() => onNext("InputUserInfo")}
           >
             <Typography size="base" weight="semibold" color="primary">
               정보 새로 입력하기
