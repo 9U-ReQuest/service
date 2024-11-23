@@ -140,8 +140,6 @@ export const reviewEntries = p
   .input(ReviewFilterSchema)
   .query(async ({ input, ctx }): Promise<ReviewEntry[]> => {
     const user = checkRegistered(ctx.user);
-    if (!user.submissions.includes(input.id))
-      throw new TRPCError({ code: "NOT_FOUND", message: "제출물을 찾을 수 없습니다." });
     const reviewEntries = await mReviewEntry.find({ ...input });
     const result: ReviewEntry[] = reviewEntries.map((doc) => doc.toObject());
     return z.array(ReviewEntrySchema).parse(result);
