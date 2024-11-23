@@ -30,7 +30,7 @@ if (process.env.CHANNEL === "local") {
   });
 }
 
-server.get("/github/webhook", async (_, res) => {
+server.post("/github/webhook", async (_, res) => {
   server.log.info(res);
 });
 
