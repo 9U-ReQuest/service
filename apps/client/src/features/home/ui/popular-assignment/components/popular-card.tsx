@@ -23,14 +23,19 @@ const PopularCard = ({ assignment, isSelected }: PopularCardProps) => {
       <Flex
         direction="col"
         justifyContent="between"
-        className={cn("h-[400px] rounded-3xl p-8 relative bg-[#3F457B]")}
+        className={cn("h-[400px] rounded-3xl px-16 py-10 relative bg-[#3F457B]")}
       >
         <div className="space-y-5">
-          <Typography as="h3" size="xs" weight="semibold" color="white">
-            {/* {assignment.name} */}
+          <Typography as="h3" size={isSelected ? "sm" : "xs"} weight="semibold" color="white">
             {assignment.prompt.companies.map((company) => company).join(" / ")}
           </Typography>
-          <Typography as="p" size="2xl" color="white" whitespace="pre-line">
+          <Typography
+            as="p"
+            size={isSelected ? "4xl" : "2xl"}
+            weight={isSelected ? "bold" : "semibold"}
+            color="white"
+            whitespace="pre-line"
+          >
             {assignment.prompt.techs.map((tech) => tech).join("\n")}
           </Typography>
         </div>

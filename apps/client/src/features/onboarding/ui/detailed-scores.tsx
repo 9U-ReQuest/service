@@ -1,5 +1,6 @@
 import { cn } from "@/shared/lib/utils";
 import { Card, CardContent } from "@/shared/ui/card";
+import Typography from "@/shared/ui/common/typography/typography";
 import * as React from "react";
 import CircularProgress from "./circular-progress";
 
@@ -25,7 +26,9 @@ export default function DetailedScores({
 }: Record<"detailScores", DetailedScoresProps[]>) {
   return (
     <div className="space-y-3 max-w-2xl self-center w-screen px-24">
-      <h2 className="text-xl font-bold">상세 점수</h2>
+      <Typography as="h2" size="xl" weight="bold">
+        상세 점수
+      </Typography>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
         {detailScores.length === 0 || undefined ? (
           <div>준비 중입니다.</div>

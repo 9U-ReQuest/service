@@ -10,7 +10,7 @@ const EvaluationResultInfo = () => {
   return (
     <>
       <div>
-        <Typography as="p" className="text-xl">
+        <Typography as="p" size="xs">
           {category || "과제 카테고리"}
         </Typography>
         <Typography as="p" className="text-2xl font-bold">
@@ -18,12 +18,10 @@ const EvaluationResultInfo = () => {
         </Typography>
       </div>
       <div className="space-y-3">
-        <Typography as="p" className="font-extrabold text-xl">
+        <Typography as="p" size="xl" className="font-extrabold">
           과제 설명
         </Typography>
-        <Typography as="p" className="bg-primary rounded-3xl py-7 pl-6 text-white font-extrabold">
-          설명 : {assginmentData?.description || "과제 설명란"}
-        </Typography>
+        <Typography as="p">{assginmentData?.description || "과제 설명란"}</Typography>
       </div>
     </>
   );

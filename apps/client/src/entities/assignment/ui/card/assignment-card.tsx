@@ -1,6 +1,7 @@
 "use client";
 
 import defaultImage from "@/assets/images/lotte.png";
+import { type Company, companyImages } from "@/shared/constant/company";
 import { combinePrompt } from "@/shared/lib/utils";
 // 추후 데이터 반영해서 상수 업데이트 해놓기
 // import { companyInfoMap } from "@/shared/constant/company";
@@ -28,7 +29,7 @@ export default function AssignmentCard({ assignment }: AssignmentCardProps) {
         <CardHeader className="p-0">
           <div className="w-full relative overflow-hidden aspect-[3/2]">
             <Image
-              src={defaultImage}
+              src={companyImages[combinePrompt(prompt.companies) as Company] || defaultImage}
               alt={`${combinePrompt(prompt.companies) || "기본"} 로고`}
               fill
               className="object-cover rounded-3xl border"

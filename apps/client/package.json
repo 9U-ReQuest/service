@@ -10,6 +10,7 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
+    "@lottiefiles/dotlottie-react": "^0.10.0",
     "@mdx-js/loader": "^3.1.0",
     "@mdx-js/react": "^3.1.0",
     "@next/mdx": "^15.0.3",
@@ -33,6 +34,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "1.0.0",
+    "dotlottie-react": "link:@types/@lottiefiles/dotlottie-react",
     "embla-carousel": "^8.4.0",
     "embla-carousel-autoplay": "^8.4.0",
     "embla-carousel-react": "^8.4.0",
@@ -63,6 +65,8 @@
     "typescript": "^5"
   },
   "msw": {
-    "workerDirectory": ["public"]
+    "workerDirectory": [
+      "public"
+    ]
   }
 }
