@@ -1,7 +1,14 @@
-import type { ReviewFileTree, User } from "@request/specs";
 import { generate, get, list } from "./routes/asgmt.js";
 import { kakao, register } from "./routes/auth.js";
-import { cancel, file, files, init, review, reviewEntries } from "./routes/submission.js";
+import {
+  cancel,
+  file,
+  files,
+  init,
+  review,
+  reviewEntries,
+  list as submissionList,
+} from "./routes/submission.js";
 import { me } from "./routes/user.js";
 import { t } from "./trpc.js";
 
@@ -39,6 +46,8 @@ export const appRouter = t.router({
       reviewEntries,
       // 리뷰의 기본 정보를 반환합니다.
       review,
+      // 과제 시도 목록
+      list: submissionList,
     },
   },
 });

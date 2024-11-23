@@ -214,6 +214,7 @@ export const TestSchema = z.object({ name: z.string(), });`,
           ],
         }),
       ),
+      list: p.query((): Submission[] => []),
     },
   },
 });
