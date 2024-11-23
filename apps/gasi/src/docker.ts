@@ -15,7 +15,7 @@ export function makeRepository(userName: string, assignmentId: string, submissio
       code: "SERVICE_UNAVAILABLE",
       message: "이 서버에서는 github 작업을 지원하지 않습니다.",
     });
-  const imageName = `${ECR_REPOSITORY_URL}:make-repo`;
+  const imageName = "make-repo:latest";
   docker.createContainer({
     Tty: true,
     Image: imageName,
@@ -40,7 +40,7 @@ export function submitRepository(submissionId: string) {
       code: "SERVICE_UNAVAILABLE",
       message: "이 서버에서는 github 작업을 지원하지 않습니다.",
     });
-  const imageName = `${ECR_REPOSITORY_URL}:submit-repo`;
+  const imageName = "submit-repo:latest";
   docker.createContainer({
     Tty: true,
     Image: imageName,
