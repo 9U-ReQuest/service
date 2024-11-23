@@ -24,3 +24,4 @@ git clone "https://github.com/ReQuest-members/${SUBMISSION_ID}"
 aws s3 cp "./${SUBMISSION_ID}" "s3://${BUCKET_ID}/${SUBMISSION_ID}" --recursive
 
 # TODO: Make request to gasi for submission is ready to review
+curl -X POST -H "Content-Type: application/json" -d "{\"id\": \"${SUBMISSION_ID}\", \"status\": \"SUBMITTED\"}" http://gasi.request.internal:8080/submission/update

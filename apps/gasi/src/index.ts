@@ -54,6 +54,9 @@ server.post("/submission/update", async (req, res) => {
   }
   doc.status = status;
   await doc.save();
+  if (status === "SUBMITTED") {
+    // TODO: Send request to CARI
+  }
   return;
 });
 
