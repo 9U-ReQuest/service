@@ -10,6 +10,9 @@ env:
   AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
   ECR_OUTPUTS: ${{ secrets.container_registry_outputs_dev }}
   CODEDEPLOY_OUTPUTS: ${{ secrets.codedeploy_outputs_dev }}
+  AGI_OUTPUTS: ${{ secrets.agi_outputs_dev }}
+  CARI_OUTPUTS: ${{ secrets.cari_outputs_dev }}
+
 jobs:
   docker-build:
     name: Build Docker images
@@ -87,6 +90,13 @@ jobs:
           echo "DATABASE_URI=${{ secrets.DATABASE_URI }}" >> .env.gasi
           echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env.gasi
           echo "KAKAO_REST_API_KEY=${{ secrets.KAKAO_REST_API_KEY }}" >> .env.gasi
+          echo "ECR_REPOSITORY_URL=${{ fromJson(env.ECR_OUTPUTS).repository_url.value }}" >> .env.gasi
+          echo "GITHUB_TOKEN=${{ secrets.members_github_token }}" >> .env.gasi
+          echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> .env.gasi
+          echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> .env.gasi
+          echo "REQUEST_ENDPOINT=https://dev-re-quest.eatsteak.dev" >> .env.gasi
+          echo "ASSIGNMENT_BUCKET_ID=${{ fromJson(env.AGI_OUTPUTS).assignment_bucket.value }}" >> .env.gasi
+          echo "SUBMISSION_BUCKET_ID=${{ fromJson(env.CARI_OUTPUTS).submission_bucket.value }}" >> .env.gasi
 
       - name: Generate SSL Cetificate
         working-directory: ./codedeploy/cert
