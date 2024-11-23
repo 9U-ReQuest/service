@@ -38,7 +38,7 @@ export default function CircularProgress({ value, max, size, strokeWidth }: Circ
         transform={`rotate(-90 ${size / 2} ${size / 2})`}
       />
       <circle
-        className={cn("stroke-primary", badValue && "stroke-[#C7C7C7]")}
+        className={cn("stroke-primary", badValue ? "stroke-inactive" : "stroke-secondary")}
         strokeWidth={strokeWidth}
         strokeDasharray={circumference}
         strokeDashoffset={offset}
@@ -54,9 +54,9 @@ export default function CircularProgress({ value, max, size, strokeWidth }: Circ
         y="50%"
         textAnchor="middle"
         dy=".3em"
-        className="fill-foreground text-3xl font-black"
+        className={cn("fill-foreground text-3xl", badValue ? "font-black" : "font-secondary")}
       >
-        {value}
+        {value}점
       </text>
     </svg>
   );

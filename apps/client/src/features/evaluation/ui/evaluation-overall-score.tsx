@@ -25,18 +25,18 @@ const EvaluationOverallScore = () => {
   return (
     <>
       <Typography as="p" className="text-xl font-bold">
-        내 과제 종합 점수는 <span className="text-primary">{overallScore}점</span> 이에요
+        내 과제 종합 점수는 <span className="text-primary">{overallScore || 0}점</span> 이에요
       </Typography>
       <Typography as="p" size="lg" weight="semibold" className="text-[#939393]">
-        {commentByScore(overallScore as number)}
+        {commentByScore(overallScore || 0)}
       </Typography>
       <div className="bg-[#E4E4E4] w-full text-[#B7B7B7] py-2 px-4 text-right rounded-full relative font-bold">
         100
         <div
           className="bg-primary text-white py-2 px-4 text-right rounded-full absolute top-0 left-0"
-          style={{ width: `${overallScore}%` }}
+          style={{ width: `${overallScore || 0}%` }}
         >
-          {overallScore}
+          {overallScore || 0}
         </div>
       </div>
     </>

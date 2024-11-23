@@ -13,6 +13,8 @@ const config: Config = {
         selected: "#787878",
         "not-selected": "#D9D9D9",
         primary: "#8A1B22",
+        secondary: "#5A85AD",
+        inactive: "#ADBED0",
       },
       fontSize: {
         caption: "8px",

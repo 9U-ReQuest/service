@@ -7,6 +7,7 @@ import Typography from "@/shared/ui/common/typography/typography";
 
 const EvaluationComment = () => {
   const { data: reviewEntriesData } = trpc.v1.submission.reviewEntries.useQuery({ id: "1" });
+  const { data: userData } = trpc.v1.user.me.useQuery();
   const detailScores = reviewEntriesData
     ?.filter((entry) => entry.scenario === "summary")
     .map((entry) => ({
@@ -20,7 +21,7 @@ const EvaluationComment = () => {
       <section className="self-center w-full max-w-2xl px-24 mt-24 mb-10">
         <div className="mb-7">
           <Typography as="p" className="text-xl font-bold">
-            AI가 분석한 홍길동님의 과제에 대한 코멘트에요!
+            AI가 분석한 {userData?.name || "ReQuest"}님의 과제에 대한 코멘트에요!
           </Typography>
           <Typography as="p" className="text-[#939393]">
             분석 코멘트는 아래와 같은 기준에 따라 작성되었어요.
