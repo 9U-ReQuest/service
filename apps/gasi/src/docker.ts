@@ -30,7 +30,7 @@ export function makeRepository(userName: string, assignmentId: string, submissio
       `SUBMISSION_ID=${submissionId}`,
     ],
     HostConfig: {
-      NetworkMode: "host",
+      NetworkMode: "gasi",
     },
   });
 }
@@ -52,7 +52,7 @@ export function submitRepository(submissionId: string) {
       `SUBMISSION_ID=${submissionId}`,
     ],
     HostConfig: {
-      NetworkMode: "host",
+      NetworkMode: "gasi",
     },
   });
 }
