@@ -31,16 +31,14 @@ const EvaluationComment = () => {
             분석 코멘트는 아래와 같은 기준에 따라 작성되었어요.
           </Typography>
         </div>
-        <div className="space-y-10">
+        {/* <div className="space-y-10">
           <div className="p-12 border border-[#DEDEDE] rounded-3xl">
-            <Markdown source={`# ${reviewEntriesData?.[0].name}` || ""} />
-          </div>
-          {/* <div className="p-12 border border-[#DEDEDE] rounded-3xl"></div> */}
-          <div className="p-12 bg-primary rounded-3xl text-white">
             <Markdown source={`# ${reviewData?.summary}` || ""} />
-            {/* <Markdown source={`# ${reviewEntriesData?.[0].name}` || ""} /> */}
           </div>
-        </div>
+          <div className="p-12 bg-primary rounded-3xl text-white">
+            <Markdown source={reviewData?.summary || ""} />
+          </div>
+        </div> */}
       </section>
     </>
   );
