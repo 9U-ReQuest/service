@@ -7,11 +7,11 @@ const baseNextConfig = {
     return [
       {
         source: "/trpc/:api*",
-        destination: `${process.env.PRIVATE_GASI_API_URL ?? "http://localhost:8080"}/trpc/:api*`,
+        destination: `${process.env.PRIVATE_GASI_API_URL ?? "http://gasi.request.internal:8080"}/trpc/:api*`,
       },
       {
         source: "/github/:api*",
-        destination: `${process.env.PRIVATE_GASI_API_URL ?? "http://localhost:8080"}/github/:api*`,
+        destination: `${process.env.PRIVATE_GASI_API_URL ?? "http://gasi.request.internal:8080"}/github/:api*`,
       }
     ];
   },
