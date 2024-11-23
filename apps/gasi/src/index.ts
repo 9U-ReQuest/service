@@ -42,4 +42,7 @@ const start = async () => {
 
 export const docker = process.env.DOCKER_SOCK ? new Docker({socketPath: process.env.DOCKER_SOCK}) : null;
 
+if(docker) {
+  console.log("Dockerode Initiated.");
+}
 start();
