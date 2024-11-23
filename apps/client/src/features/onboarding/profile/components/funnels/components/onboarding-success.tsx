@@ -8,7 +8,7 @@ import Link from "next/link";
 
 export default function OnboardingSuccess() {
   return (
-    <Flex justifyContent="center" className="w-full py-24">
+    <Flex justifyContent="center" className="w-full h-fit-height">
       <Flex direction="col" alignItems="center" className="text-center max-w-[676px]">
         <Flex direction="col" alignItems="center" gap="4">
           <Image src={logo} alt="ReQuest Logo" width={300} height={100} />

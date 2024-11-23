@@ -22,7 +22,7 @@ const Flex: FlexComponent = <C extends ElementType = "div">({
   as,
   direction = "row",
   justifyContent = "start",
-  alignItems = "stretch",
+  alignItems,
   wrap = "nowrap",
   gap = "0",
   className,

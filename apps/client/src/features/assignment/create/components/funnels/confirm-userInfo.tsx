@@ -41,7 +41,7 @@ export default function SelectionForm({ onNext }: ConfirmUserInfoProps) {
 
   return (
     <CreateAssignmentLayout>
-      <Flex direction="col" className="w-full max-w-2xl mx-auto p-4">
+      <Flex direction="col" className="w-full max-w-2xl p-4">
         <Typography as="h3" size="lg" weight="semibold" className="mb-4">
           과제 생성 전, 생성을 위한 기본 정보가 필요해요!
         </Typography>

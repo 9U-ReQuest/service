@@ -1,6 +1,10 @@
 "use client";
 
+import type { InputTechAndCompany as InputTechAndCompanyType } from "@/entities/onboarding/schema/onboard-funnel";
 import { OnboardingSchema } from "@/entities/onboarding/schema/onboard-funnel";
+import { trpc } from "@/shared/api/trpc";
+import { companies } from "@/shared/constant/company";
+import { techStack } from "@/shared/constant/tech";
 import { Button } from "@/shared/ui/button";
 import Typography from "@/shared/ui/common/typography/typography";
 import { Label } from "@/shared/ui/label";
@@ -12,10 +16,14 @@ import { z } from "zod";
 import OnboardingLayout from "./onboarding-layout";
 
 export default function InputTechAndCompany({
+  context,
   onNext,
 }: {
+  context: InputTechAndCompanyType;
   onNext: (tech: string[], company: string[]) => void;
 }) {
+  const mutation = trpc.v1.auth.register.useMutation();
+
   const [tech, setTech] = useState<string[]>([]);
   const [company, setCompany] = useState<string[]>([]);
 
@@ -48,7 +56,24 @@ export default function InputTechAndCompany({
       }
     }
 
-    onNext(tech, company);
+    // api mutation
+    console.log(context);
+    mutation.mutate(
+      {
+        name: context.name,
+        email: context.github,
+        prompt: {
+          fields: context.field,
+          techs: tech,
+          companies: company,
+        },
+      },
+      {
+        onSuccess: () => {
+          onNext(tech, company);
+        },
+      },
+    );
   };
 
   return (
@@ -60,7 +85,18 @@ export default function InputTechAndCompany({
 
         <Flex direction="col" gap="2" className="mb-8">
           <Label htmlFor="tech">관심 기술을 선택해주세요. (최대 3개)</Label>
-          <Flex direction="row" gap="2">
+          <SelectItem
+            placeholder="검색어를 입력하여 관심 기술을 선택해주세요."
+            items={techStack}
+            value={tech}
+            setValue={setTech}
+          />
+          {techError && (
+            <Typography size="sm" weight="normal" className="text-red-500 mt-1">
+              {techError}
+            </Typography>
+          )}
+          <Flex direction="row" gap="2" className="h-9">
             {tech.map((filter) => (
               <Button
                 key={filter}
@@ -73,26 +109,22 @@ export default function InputTechAndCompany({
               </Button>
             ))}
           </Flex>
-          <SelectItem
-            items={[
-              { value: "react", label: "React" },
-              { value: "vue", label: "Vue" },
-              { value: "angular", label: "Angular" },
-              { value: "svelte", label: "Svelte" },
-            ]}
-            value={tech}
-            setValue={setTech}
-          />
-          {techError && (
-            <Typography size="sm" weight="normal" className="text-red-500 mt-1">
-              {techError}
-            </Typography>
-          )}
         </Flex>
 
         <Flex direction="col" gap="2">
           <Label htmlFor="company">관심 기업을 선택해주세요. (최대 3개)</Label>
-          <Flex direction="row" gap="2" wrap="wrap">
+          <SelectItem
+            placeholder="검색어를 입력하여 관심 기업을 선택해주세요."
+            items={companies}
+            value={company}
+            setValue={setCompany}
+          />
+          {companyError && (
+            <Typography size="sm" weight="normal" className="text-red-500 mt-1">
+              {companyError}
+            </Typography>
+          )}
+          <Flex direction="row" gap="2" className="h-9">
             {company.map((filter) => (
               <Button
                 key={filter}
@@ -105,21 +137,6 @@ export default function InputTechAndCompany({
               </Button>
             ))}
           </Flex>
-          <SelectItem
-            items={[
-              { value: "google", label: "Google" },
-              { value: "apple", label: "Apple" },
-              { value: "amazon", label: "Amazon" },
-              { value: "meta", label: "Meta" },
-            ]}
-            value={company}
-            setValue={setCompany}
-          />
-          {companyError && (
-            <Typography size="sm" weight="normal" className="text-red-500 mt-1">
-              {companyError}
-            </Typography>
-          )}
         </Flex>
       </Flex>
       <Button type="button" className="w-full" onClick={handleNext}>

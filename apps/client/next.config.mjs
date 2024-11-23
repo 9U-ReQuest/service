@@ -9,6 +9,10 @@ const baseNextConfig = {
         source: "/trpc",
         destination: `${process.env.PRIVATE_GASI_API_URL ?? "http://localhost:8080"}/trpc`,
       },
+      {
+        source: "/github",
+        destination: `${process.env.PRIVATE_GASI_API_URL ?? "http://localhost:8080"}/github`,
+      },
     ];
   },
   output: "standalone",

@@ -15,15 +15,19 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/shared/ui/popover";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { useState } from "react";
 
-export default function SelectItem({
-  items,
-  value,
-  setValue,
-}: {
+interface SelectItemProps {
+  placeholder?: string;
   items: { value: string; label: string }[];
   value: string[];
   setValue: (value: string[]) => void;
-}) {
+}
+
+export default function SelectItem({
+  placeholder = "아이템을 골라주세요",
+  items,
+  value,
+  setValue,
+}: SelectItemProps) {
   const [open, setOpen] = useState(false);
 
   const handleSelect = (currentValue: string) => {
@@ -44,7 +48,7 @@ export default function SelectItem({
           // biome-ignore lint/a11y/useSemanticElements: <explanation>
           role="combobox"
           aria-expanded={open}
-          className="w-[200px] justify-between"
+          className="w-[350px] justify-between"
         >
           {/* overflow: hidden;
           white-space: nowrap; */}
@@ -55,14 +59,14 @@ export default function SelectItem({
           >
             {value.length > 0
               ? value.map((val) => items.find((item) => item.value === val)?.label || "").join(", ")
-              : "Select frameworks..."}
+              : placeholder}
           </Typography>
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">
         <Command>
-          <CommandInput placeholder="Search framework..." />
+          <CommandInput placeholder={placeholder} />
           <CommandList>
             <CommandEmpty>No framework found.</CommandEmpty>
             <CommandGroup className="overflow-hidden">

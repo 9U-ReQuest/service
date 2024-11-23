@@ -9,6 +9,7 @@ import { useState } from "react";
 import FilterButton from "./category-filter-button";
 
 interface CategoryFilterProps {
+  showSelectedFilters?: boolean;
   selectedFilters: string[];
   onFilterToggle: (filter: string) => void;
   onFilterRemove: (filter: string) => void;
@@ -17,6 +18,7 @@ interface CategoryFilterProps {
 }
 
 export default function CategoryFilter({
+  showSelectedFilters = true,
   selectedFilters,
   onFilterToggle,
   onFilterRemove,
@@ -29,17 +31,18 @@ export default function CategoryFilter({
   return (
     <Flex direction="col" className={cn("space-y-6 min-w-[400px]")}>
       <Flex wrap="wrap" alignItems="center" gap="2" className="max-w-[1300px]">
-        {selectedFilters.map((filter) => (
-          <FilterButton
-            key={filter}
-            filter={filter}
-            isSelected={true}
-            onClick={() => onFilterRemove(filter)}
-            onRemove={(event) => onFilterRemove(filter)}
-            isRemovable={true}
-            className="rounded-full whitespace-nowrap"
-          />
-        ))}
+        {showSelectedFilters &&
+          selectedFilters.map((filter) => (
+            <FilterButton
+              key={filter}
+              filter={filter}
+              isSelected={true}
+              onClick={() => onFilterRemove(filter)}
+              onRemove={(event) => onFilterRemove(filter)}
+              isRemovable={true}
+              className="rounded-full whitespace-nowrap"
+            />
+          ))}
       </Flex>
 
       <Flex alignItems="center" justifyContent="between">

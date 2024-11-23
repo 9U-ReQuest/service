@@ -45,6 +45,9 @@ export default function InputName({
           placeholder="이름을 입력해주세요."
           value={name}
           onChange={(e) => setName(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") handleNext();
+          }}
           className={error ? "border-red-500" : ""}
         />
         {error && (

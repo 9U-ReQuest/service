@@ -5,8 +5,9 @@ import InputGithub from "@/features/onboarding/profile/components/funnels/input-
 import InputName from "@/features/onboarding/profile/components/funnels/input-name";
 import InputTechAndCompany from "@/features/onboarding/profile/components/funnels/input-tech-and-company";
 import useOnboardingFunnel from "@/features/onboarding/profile/hooks/use-onboarding-funnel";
+import { trpc } from "@/shared/api/trpc";
 
-export default function OnboardingProfilePage() {
+export default trpc.withTRPC(function OnboardingProfilePage() {
   const funnel = useOnboardingFunnel();
 
   return (
@@ -20,8 +21,9 @@ export default function OnboardingProfilePage() {
       SelectJob={({ history }) => (
         <InputField onNext={(field) => history.push("InputTechAndCompany", { field })} />
       )}
-      InputTechAndCompany={({ history }) => (
+      InputTechAndCompany={({ history, context }) => (
         <InputTechAndCompany
+          context={context}
           onNext={(tech, company) =>
             history.push("Complete", {
               tech,
@@ -39,4 +41,4 @@ export default function OnboardingProfilePage() {
       Complete={() => <OnboardingSuccess />}
     />
   );
-}
+});

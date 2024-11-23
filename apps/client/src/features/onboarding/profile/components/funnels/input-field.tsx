@@ -62,22 +62,25 @@ export default function InputField({
   };
 
   const handleNext = () => {
-    if (selectedFilters.length > 0) {
-      onNext(selectedFilters);
-    }
+    if (selectedFilters.length > 0) onNext(selectedFilters);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") handleNext();
   };
 
   return (
-    <OnboardingLayout>
-      <Flex direction="col" gap="4">
-        <div className="w-full max-w-7xl mx-auto px-4 py-8">
+    <OnboardingLayout className="h-auto">
+      <Flex direction="col" gap="4" onKeyDown={handleKeyDown} tabIndex={0}>
+        <div className="w-full max-w-7xl min-w-[400px] px-4 py-8">
           <Typography as="h2" size="xl" weight="bold">
             희망 직무를 선택해주세요
           </Typography>
           <Typography size="base" weight="normal" className="text-muted-foreground">
-            4년 이상의 경력 기술 분야
+            최대 3개까지 선택 가능합니다.
           </Typography>
           <CategoryFilter
+            showSelectedFilters={false}
             selectedFilters={selectedFilters}
             onFilterToggle={handleFilterToggle}
             onFilterRemove={handleFilterRemove}

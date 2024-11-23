@@ -47,6 +47,9 @@ export default function InputGithub({
           value={github}
           onChange={(e) => setGithub(e.target.value)}
           className={error ? "border-red-500" : ""}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") handleNext();
+          }}
         />
         {error && (
           <Typography size="sm" weight="normal" className="text-red-500 mt-1">
