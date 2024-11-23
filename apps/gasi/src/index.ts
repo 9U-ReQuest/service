@@ -1,12 +1,12 @@
 import dotenvx from "@dotenvx/dotenvx";
 import fastifyCors from "@fastify/cors";
 import { fastifyTRPCPlugin } from "@trpc/server/adapters/fastify";
+import Docker from "dockerode";
 import Fastify from "fastify";
 import mongoose from "mongoose";
 import { renderTrpcPanel } from "trpc-ui";
 import { createContext } from "./context.js";
 import { appRouter } from "./router.js";
-import Docker from "dockerode";
 
 dotenvx.config();
 
@@ -31,8 +31,8 @@ if (process.env.CHANNEL === "local") {
 }
 
 server.post("/github/webhook", async (req, res) => {
-  const json = req.body as { ref: string };
-  console.log(json.ref);
+  const json = req.body as { payload: string };
+  console.log(json.payload);
 });
 
 const start = async () => {

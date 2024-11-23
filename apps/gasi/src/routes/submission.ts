@@ -15,9 +15,9 @@ import { TRPCError } from "@trpc/server";
 import { humanId } from "human-id";
 import { z } from "zod";
 import { checkRegistered } from "../auth/token.js";
+import { makeRepository } from "../docker.js";
 import { mReview, mReviewEntry, mSubmission } from "../model/index.js";
 import { p } from "../trpc.js";
-import { makeRepository } from "../docker.js";
 
 export const init = p
   .input(SubmissionInitSchema)
