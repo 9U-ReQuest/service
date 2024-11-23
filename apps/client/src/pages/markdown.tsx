@@ -27,6 +27,7 @@ function Markdown({ source }: MarkdownProps) {
     }
   }, []);
 
+
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (mdRef.current) {
