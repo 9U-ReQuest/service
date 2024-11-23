@@ -1,9 +1,4 @@
 import {
-  type Assignment,
-  AssignmentFilterSchema,
-  type AssignmentListResponse,
-  AssignmentListResponseSchema,
-  AssignmentSchema,
   type Review,
   type ReviewEntry,
   ReviewEntrySchema,
@@ -21,8 +16,7 @@ import { humanId } from "human-id";
 import { z } from "zod";
 import { checkRegistered } from "../auth/token.js";
 import { makeRepository } from "../docker.js";
-import { server } from "../index.js";
-import { mAssignment, mReview, mReviewEntry, mSubmission } from "../model/index.js";
+import { mReview, mReviewEntry, mSubmission } from "../model/index.js";
 import { p } from "../trpc.js";
 
 export const init = p
@@ -91,8 +85,9 @@ export const list = p.query(async ({ ctx }): Promise<Submission[]> => {
   const submissions = await mSubmission.find({ userId: user.id });
   const result = submissions.map((doc) => ({
     ...doc.toObject(),
+    userId: doc.userId,
     lastUpdated: (doc.lastUpdated as Date).toISOString(),
-    ...(doc.expiredAt && { expiredAt: (doc.expiredAt as Date).toISOString() }),
+    expiredAt: doc.expiredAt ? (doc.expiredAt as Date).toISOString() : null,
   }));
   return z.array(SubmissionSchema).parse(result);
 });
