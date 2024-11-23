@@ -6,6 +6,7 @@ import Fastify from "fastify";
 import mongoose from "mongoose";
 import { renderTrpcPanel } from "trpc-ui";
 import { createContext } from "./context.js";
+import { submitRepository } from "./docker.js";
 import { appRouter } from "./router.js";
 
 dotenvx.config();
@@ -31,8 +32,14 @@ if (process.env.CHANNEL === "local") {
 }
 
 server.post("/github/webhook", async (req, res) => {
-  const json = req.body as { payload: string };
-  console.log(JSON.parse(json.payload));
+  const body = req.body as { payload: string };
+  const json = JSON.parse(body.payload);
+  if (!json.ref.endsWith("/submit")) {
+    res.send();
+    return;
+  }
+  server.log.info(`[GITHUB/WEBHOOK] Received submit webhook: ${json.repository.name}`);
+  submitRepository(json.repository.name);
 });
 
 const start = async () => {
