@@ -65,3 +65,4 @@ gh api \
    -f "permission=push"
 
 # TODO: Make request to gasi for submission is ready to start.
+curl -X POST -H "Content-Type: application/json" -d "{\"id\": \"${SUBMISSION_ID}\", \"status\": \"STARTED\"}" http://gasi.request.internal:8080/submission/update
