@@ -7,21 +7,25 @@ interface MarkdownProps {
   source?: string;
 }
 
-function isSpace(code: number) {
-  switch (code) {
-    case 0x09:
-    case 0x20:
-      return true;
-  }
-  return false;
-}
-
-window.isSpace = isSpace;
-
 function Markdown({ source }: MarkdownProps) {
   const mdRef = useRef<HTMLDivElement>(null);
   const md = MarkdownIt();
   const result = md.render(source || "");
+
+  useEffect(() => {
+    function isSpace(code: number) {
+      switch (code) {
+        case 0x09:
+        case 0x20:
+          return true;
+      }
+      return false;
+    }
+
+    if (window) {
+      window.isSpace = isSpace;
+    }
+  }, []);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
