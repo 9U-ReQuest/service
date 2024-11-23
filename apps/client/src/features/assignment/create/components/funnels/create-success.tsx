@@ -1,6 +1,8 @@
 "use client";
 
 import SuccessImage from "@/assets/images/create-success.png";
+import { trpc } from "@/shared/api/trpc";
+import { ROUTES } from "@/shared/constant/url";
 import { Badge } from "@/shared/ui/badge";
 import { Button } from "@/shared/ui/button";
 import { Card } from "@/shared/ui/card";
@@ -11,6 +13,24 @@ import Link from "next/link";
 import CreateAssignmentLayout from "./create-assignment-layout";
 
 export default function CreateSuccess() {
+  const { data: user } = trpc.v1.user.me.useQuery();
+  const { data: assignment } = trpc.v1.asgmt.get.useQuery(
+    { id: user?.lastGeneratedAssignment as string },
+    {
+      enabled: !!user?.lastGeneratedAssignment,
+      refetchInterval: 3000,
+    },
+  );
+
+  if (!assignment) {
+    return null;
+  }
+  console.log(assignment);
+
+  const company = assignment.prompt.companies.join(" / ");
+  const tech = assignment.prompt.techs.join(" / ");
+  const field = assignment.prompt.fields.join(" / ");
+
   return (
     <CreateAssignmentLayout>
       <Flex direction="col" alignItems="center" justifyContent="center" className="p-4 bg-white">
@@ -38,20 +58,19 @@ export default function CreateSuccess() {
 
             <div>
               <Typography size="base" color="muted" align="center">
-                관심기업의 [넷마블]과 관심 기술의 [AI]을 접목하여
+                {`관심기업의 [${company}]과 관심 기술의 [${tech}]을 접목하여`}
               </Typography>
 
               <Typography size="base" color="muted" align="center">
-                넷마블에서 진행한{" "}
                 <Typography as="span" color="primary" weight="bold">
-                  2022년도 프론트엔드 과제전형을 기반으로 하여 생성
+                  {`[${field}] 직무`}
                 </Typography>{" "}
-                하였습니다.
+                에 대한 과제를 생성하였습니다.
               </Typography>
             </div>
 
             <Flex wrap="wrap" gap="2" className="mt-4" justifyContent="center">
-              {["프론트엔드", "AI서비스", "App", "넷마블"].map((keyword) => (
+              {[...company.split(" / "), ...tech.split(" / ")].map((keyword) => (
                 <Badge key={keyword} variant="outline" className="border-[#862E2A] text-[#862E2A]">
                   {keyword}
                 </Badge>
@@ -60,13 +79,10 @@ export default function CreateSuccess() {
           </Flex>
         </Card>
 
-        <Link href="/" className="w-full">
-          <Button
-            className="w-full text-white py-6 rounded-3xl"
-            onClick={() => window.open("https://github.com", "_blank")}
-          >
+        <Link href={ROUTES.EVALUATOIN} className="w-full">
+          <Button className="w-full text-white py-6 rounded-3xl">
             <Typography as="span" size="sm" weight="extrabold" color="white">
-              Github로 이동하기
+              과제 확인하기
             </Typography>
           </Button>
         </Link>

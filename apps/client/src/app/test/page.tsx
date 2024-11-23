@@ -1,5 +1,7 @@
-import OnboardingSuccess from "@/features/onboarding/profile/components/funnels/components/onboarding-success";
+"use client";
+import CreateSuccess from "@/features/assignment/create/components/funnels/create-success";
+import { trpc } from "@/shared/api/trpc";
 
-export default function Page() {
-  return <OnboardingSuccess />;
-}
+export default trpc.withTRPC(function Page() {
+  return <CreateSuccess />;
+});

@@ -88,8 +88,8 @@ export default function InputTechAndCompany({
 
   return (
     <OnboardingLayout>
-      <Flex direction="col" gap="6">
-        <Typography as="h2" size="lg" weight="bold" className="mb-10">
+      <Flex direction="col" gap="6" className="mb-3">
+        <Typography as="h2" size="lg" weight="bold" className="mb-1">
           관심 기술 및 기업을 선택해주세요.
         </Typography>
         <Flex direction="col" gap="2">

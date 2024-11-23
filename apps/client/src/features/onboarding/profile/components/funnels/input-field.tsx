@@ -71,7 +71,7 @@ export default function InputField({
 
   return (
     <OnboardingLayout>
-      <Flex direction="col" gap="4" onKeyDown={handleKeyDown} tabIndex={0}>
+      <Flex direction="col" gap="3" onKeyDown={handleKeyDown} tabIndex={0}>
         <div className="w-full max-w-7xl min-w-[400px] px-4 py-2">
           <Typography as="h2" size="lg" weight="bold">
             희망 직무를 선택해주세요

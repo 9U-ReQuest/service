@@ -46,7 +46,7 @@ export default function SelectionForm({ onNext }: ConfirmUserInfoProps) {
         <Card className="p-8">
           <Flex direction="col" gap="8">
             <Flex direction="col" gap="4">
-              <Typography as="h2" size="lg" weight="medium">
+              <Typography as="h2" size="base" weight="medium">
                 1. 희망 직무를 확인해주세요
               </Typography>
               <Flex wrap="wrap" gap="2">
@@ -64,7 +64,7 @@ export default function SelectionForm({ onNext }: ConfirmUserInfoProps) {
             </Flex>
 
             <Flex direction="col" gap="4">
-              <Typography as="h2" size="lg" weight="medium">
+              <Typography as="h2" size="base" weight="medium">
                 2. 관심 기술을 확인해주세요
               </Typography>
               <Flex wrap="wrap" gap="2">
@@ -82,7 +82,7 @@ export default function SelectionForm({ onNext }: ConfirmUserInfoProps) {
             </Flex>
 
             <Flex direction="col" gap="4">
-              <Typography as="h2" size="lg" weight="medium">
+              <Typography as="h2" size="base" weight="medium">
                 3. 관심 기업을 확인해주세요
               </Typography>
               <Flex wrap="wrap" gap="2">
