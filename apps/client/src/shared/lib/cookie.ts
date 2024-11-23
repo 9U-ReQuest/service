@@ -7,3 +7,8 @@ export const setCookie = async (key: string, value: string, options?: NextApiReq
   const cookieStore = await cookies();
   cookieStore.set(key, value, options);
 };
+
+export const clearCookie = async () => {
+  const cookieStore = await cookies();
+  cookieStore.delete("accessToken");
+};

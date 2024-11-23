@@ -52,7 +52,7 @@ export default function CreateSuccess() {
 
         <Card className="w-full max-w-2xl p-6 mb-8">
           <Flex direction="col" gap="4">
-            <Typography as="h2" size="lg" weight="semibold" align="center">
+            <Typography as="h2" size="lg" weight="bold" align="center">
               제목 : 게임 내 이벤트 추천 시스템
             </Typography>
 

@@ -49,7 +49,7 @@ const EvaluationPage = () => {
               분석하여 개발자가 더 나은 코드를 작성할 수 있도록 돕습니다.`}
             </Typography>
           </section>
-          <section className="space-y-3">
+          <section className="space-y-4">
             <Typography as="p" size="lg" weight="semibold">
               진행중인 과제
             </Typography>

@@ -1,3 +1,4 @@
+import { cn } from "@/shared/lib/utils";
 import type { PropsWithChildren, Ref } from "react";
 
 interface BannerProps {
@@ -15,7 +16,7 @@ export default function Banner({
   return (
     <div
       ref={ref}
-      className={`relative h-[456px] w-full bg-cover bg-center flex flex-col ${className}`}
+      className={cn(`relative h-[456px] w-full bg-cover bg-center flex flex-col ${className}`)}
       style={{ backgroundImage: `url(${backgroundImage})` }}
       {...props}
     >

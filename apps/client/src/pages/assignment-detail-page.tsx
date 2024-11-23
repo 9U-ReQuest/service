@@ -84,7 +84,7 @@ const AssignmentDetailPage = () => {
       >
         <div className="space-y-10">
           <Typography as="p" size="3xl" weight="extrabold">
-            과제 설명
+            과제 개요 및 설명
           </Typography>
           <Typography
             as="p"

@@ -4,7 +4,7 @@ import Banner from "@/widgets/ui/banner";
 
 export default function AssignmentBanner() {
   return (
-    <Banner backgroundImage={banner.src} className="justify-end py-14 px-24 gap-6">
+    <Banner backgroundImage={banner.src} className="justify-end py-14 px-24 gap-6 h-[350px]">
       <Typography as="p" size="3xl" weight="extrabold" color="white">
         AI과제생성을 통해 기업 과제 연습해보세요!
       </Typography>

@@ -4,6 +4,7 @@ import logo from "@/assets/icons/logo.svg";
 import mypage from "@/assets/icons/mypage.svg";
 import pencil from "@/assets/icons/pencil.svg";
 import { ROUTES } from "@/shared/constant/url";
+import { clearCookie } from "@/shared/lib/cookie";
 import { cn } from "@/shared/lib/utils";
 import Typography from "@/shared/ui/common/typography/typography";
 import {
@@ -190,7 +191,7 @@ const MENUBAR_ITEMS = [
   { title: "서비스 기본 설정", onClick: preventEvent },
   { title: "나의 대시보드", onClick: preventEvent },
   { title: "나의 포인트 현황", onClick: preventEvent },
-  { title: "로그아웃", onClick: preventEvent },
+  { title: "로그아웃", onClick: clearCookie },
 ];
 
 function MyPageMenu({ name, email }: MyPageMenuProps): JSX.Element {

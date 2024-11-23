@@ -26,7 +26,7 @@ export default function CategoryFilter({
   expanded = true,
 }: CategoryFilterProps) {
   const [isExpanded, setIsExpanded] = useState(false);
-  const initialVisibleCount = expanded ? 10 : allFilters.length;
+  const initialVisibleCount = expanded ? 9 : allFilters.length;
 
   return (
     <Flex direction="col" className={cn("space-y-6 min-w-[400px]")}>
@@ -51,6 +51,7 @@ export default function CategoryFilter({
             "w-full flex gap-2 flex-wrap",
             !isExpanded ? `${className || "h-10"} overflow-y-hidden` : "",
             expanded ? "" : "overflow-none!",
+            className,
           )}
         >
           {allFilters.map((filter, index) => (

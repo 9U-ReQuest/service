@@ -43,7 +43,7 @@ export default function OngoingAssignment(props: OngoingAssignmentProps) {
               {props?.name || "과제 이름"}
             </Typography>
           </div>
-          <Typography size="xs">{new Date(getDate()).toLocaleDateString()}</Typography>
+          <Typography size="sm">{new Date(getDate()).toLocaleDateString()}</Typography>
         </div>
         <Button
           variant="link"

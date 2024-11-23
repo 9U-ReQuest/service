@@ -1,7 +1,7 @@
 "use client";
-import CreateSuccess from "@/features/assignment/create/components/funnels/create-success";
+import InputUserInfo from "@/features/assignment/create/components/funnels/input-userinfo";
 import { trpc } from "@/shared/api/trpc";
 
 export default trpc.withTRPC(function Page() {
-  return <CreateSuccess />;
+  return <InputUserInfo onNext={() => {}} />;
 });

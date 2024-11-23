@@ -3,12 +3,15 @@ import {
   CreateAssignmentSchema,
   type InProgress,
 } from "@/entities/assignment/create/schema/create-assignment-schema";
+import { companies } from "@/shared/constant/company";
+import { techStack } from "@/shared/constant/tech";
 import { Button } from "@/shared/ui/button";
 import { Card } from "@/shared/ui/card";
 import Typography from "@/shared/ui/common/typography/typography";
 import Flex from "@/shared/ui/wrapper/flex/flex";
 import CategoryFilter from "@/widgets/ui/category-filter/category-filter";
 import SelectItem from "@/widgets/ui/select-item";
+import { X } from "lucide-react";
 import { useState } from "react";
 import { z } from "zod";
 import CreateAssignmentLayout from "./create-assignment-layout";
@@ -19,14 +22,24 @@ interface ConfirmUserInfoProps {
 
 export default function InputUserInfo({ onNext }: ConfirmUserInfoProps) {
   // 유저 정보 가져와서 fields, tech, company로 보여줌
-  const [fields, setFields] = useState<string[]>(["안드로이드", "프론트엔드", "QA"]);
+  const [fields, setFields] = useState<string[]>([]);
+  const handleFilterFields = (filter: string) => {
+    setFields((prev) => (prev.length < 3 ? [...prev, filter] : prev));
+  };
+  const handleRemoveFields = (filter: string) => {
+    setFields((prev) => prev.filter((f) => f !== filter));
+  };
+
   const [tech, setTech] = useState<string[]>([]);
   const [company, setCompany] = useState<string[]>([]);
 
   const [error, setError] = useState<string | null>(null);
 
+  console.log(fields, tech, company);
+
   // 삭제 버튼 누르면 없애야 함.
   const handleRemoveField = (field: string, type: "fields" | "tech" | "company") => {
+    console.log(field, type);
     if (type === "fields") {
       setFields((prev) => prev.filter((f) => f !== field));
     } else if (type === "tech") {
@@ -48,6 +61,13 @@ export default function InputUserInfo({ onNext }: ConfirmUserInfoProps) {
     }
   };
 
+  const handleRemoveFilter = (
+    setFilter: React.Dispatch<React.SetStateAction<string[]>>,
+    value: string,
+  ) => {
+    setFilter((prev) => prev.filter((item) => item !== value));
+  };
+
   return (
     <CreateAssignmentLayout className="h-auto py-10">
       <Flex direction="col" className="w-full max-w-2xl mx-auto p-4">
@@ -63,56 +83,74 @@ export default function InputUserInfo({ onNext }: ConfirmUserInfoProps) {
               </Typography>
               <Flex wrap="wrap" gap="2">
                 <CategoryFilter
+                  showSelectedFilters={false}
                   selectedFilters={fields}
-                  onFilterToggle={(filter) => fields.length < 3 && setFields([...fields, filter])}
-                  onFilterRemove={(filter) => handleRemoveField(filter, "fields")}
+                  onFilterToggle={handleFilterFields}
+                  onFilterRemove={handleRemoveFields}
+                  expanded={false}
+                  className="h-full"
                 />
               </Flex>
             </Flex>
 
             <Flex direction="col" gap="4">
               <Typography as="h2" size="lg" weight="medium">
-                2. 관심 기술을 선택해주세요
+                2. 관심 기술을 선택해주세요 (최대 3개)
               </Typography>
-              <Flex wrap="wrap" gap="2">
+              <Flex direction="col" gap="2">
                 <SelectItem
-                  items={[
-                    { value: "Rest API", label: "Rest API" },
-                    { value: "Adobe Photoshop", label: "Adobe Photoshop" },
-                    { value: "Axios", label: "Axios" },
-                  ]}
+                  items={techStack}
                   value={tech}
                   setValue={(value) => (value.length <= 3 ? setTech(value) : setTech(tech))}
                 />
+                <Flex direction="row" gap="2" className="h-9">
+                  {tech.map((filter) => (
+                    <Button
+                      key={filter}
+                      variant="secondary"
+                      className="rounded-full whitespace-nowrap"
+                      onClick={() => handleRemoveFilter(setTech, filter)}
+                    >
+                      {filter}
+                      <X className="my-1 ml-2 h-4 w-4 cursor-pointer" />
+                    </Button>
+                  ))}
+                </Flex>
               </Flex>
             </Flex>
 
             <Flex direction="col" gap="4">
               <Typography as="h2" size="lg" weight="medium">
-                3. 관심 기업을 선택해주세요
+                3. 관심 기업을 선택해주세요 (최대 3개)
               </Typography>
-              <Flex wrap="wrap" gap="2">
+              <Flex direction="col" wrap="wrap" gap="2">
                 <SelectItem
-                  items={[
-                    { value: "Kakao", label: "Kakao" },
-                    { value: "Naver", label: "Naver" },
-                    { value: "Google", label: "Google" },
-                  ]}
+                  items={companies}
                   value={company}
                   setValue={(value) =>
                     value.length <= 3 ? setCompany(value) : setCompany(company)
                   }
                 />
+                <Flex direction="row" gap="2" className="h-9">
+                  {company.map((filter) => (
+                    <Button
+                      key={filter}
+                      variant="secondary"
+                      className="rounded-full whitespace-nowrap"
+                      onClick={() => handleRemoveFilter(setCompany, filter)}
+                    >
+                      {filter}
+                      <X className="my-1 ml-2 h-4 w-4 cursor-pointer" />
+                    </Button>
+                  ))}
+                </Flex>
               </Flex>
             </Flex>
           </Flex>
         </Card>
-
-        {error && (
-          <Typography size="sm" weight="normal" className="text-red-500 mt-2">
-            {error}
-          </Typography>
-        )}
+        <Typography size="sm" weight="normal" className="text-red-500 mt-2">
+          {error}
+        </Typography>
 
         <Flex direction="col" gap="4" className="mt-8">
           <Button className="w-full py-6" onClick={handleNext}>

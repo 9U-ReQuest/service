@@ -69,7 +69,7 @@ export default function CreatingAssignment({ createProps, onNext }: CreatingAssi
   return (
     <CreateAssignmentLayout>
       <Flex direction="col" alignItems="center" justifyContent="center" className="p-4 bg-white">
-        <Flex direction="col" alignItems="center" gap="2" className="mb-12">
+        <Flex direction="col" alignItems="center" gap="2" className="mb-6">
           <Typography as="h1" size="lg" weight="semibold" align="center">
             현재 아래 키워드를 활용해 과제 생성하고 있어요!
           </Typography>
@@ -78,7 +78,7 @@ export default function CreatingAssignment({ createProps, onNext }: CreatingAssi
           </Typography>
         </Flex>
 
-        <div className="relative mb-16">
+        <div className="relative mb-8">
           <Image src={monitor} alt="creating-assignment" width={609} height={300} />
           <div className="absolute inset-0 flex items-center justify-center">
             {/* biome-ignore lint/style/useSelfClosingElements: <explanation> */}
@@ -88,7 +88,7 @@ export default function CreatingAssignment({ createProps, onNext }: CreatingAssi
 
         <Flex wrap="wrap" gap="6" alignItems="center" justifyContent="center" className="max-w-2xl">
           {entries.map((keyword) => (
-            <Badge key={keyword} className="bg-[#862E2A] py-2 px-5 rounded-3xl">
+            <Badge key={keyword} className="bg-[#862E2A] py-1 px-3 rounded-3xl">
               <Typography as="span" size="sm" weight="semibold" color="white">
                 {keyword}
               </Typography>
