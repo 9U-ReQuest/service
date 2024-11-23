@@ -23,6 +23,7 @@ export const ReviewScenarioSchema = z.object({
 });
 
 export const ReviewEntrySchema = z.object({
+  submissionId: z.string(),
   name: z.string(),
   result: ReviewResultSchema,
   score: z.number().max(100).optional(),
@@ -41,7 +42,7 @@ export const ReviewSchema = z.object({
 
 export const ReviewFilterSchema = z.object({
   id: z.string(),
-  scenario: z.string().default("summary"),
+  scenario: z.string().optional().default("summary"),
   path: z.string().optional(),
 });
 

@@ -16,13 +16,17 @@ export const SubmissionStatusSchema = z.enum([
 
 export const SubmissionSchema = z.object({
   id: z.string(),
+  userId: z.string(),
   assignmentId: z.string(),
   status: SubmissionStatusSchema,
   lastUpdated: z.string().datetime(),
+  repoUrl: z.string().optional(),
   expiredAt: z.string().datetime().nullable(),
 });
 
-export const SubmissionInitSchema = z.object({});
+export const SubmissionInitSchema = z.object({
+  assignmentId: z.string(),
+});
 
 export const SubmissionFileRequestSchema = z.object({
   id: z.string(),

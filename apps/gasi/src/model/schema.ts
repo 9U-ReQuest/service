@@ -31,11 +31,15 @@ export const mAssignmentSchema = new Schema<Assignment & { lastUpdated: any }>({
   lastUpdated: { type: Date, required: true, default: Date.now },
 });
 
-// biome-ignore lint/suspicious/noExplicitAny: no support native date type in mongoose
-export const mSubmissionSchema = new Schema<Submission & { lastUpdated: any; expiredAt: any }>({
+export const mSubmissionSchema = new Schema<
+  // biome-ignore lint/suspicious/noExplicitAny: no support native date type in mongoose
+  Submission & { userId: any; lastUpdated: any; expiredAt: any }
+>({
   id: { type: String, unique: true, required: true, index: true },
+  userId: { type: Schema.Types.ObjectId, ref: "User", required: true, index: true },
   assignmentId: { type: String, required: true, index: true },
   status: { type: String, default: "PREPARING" },
+  repoUrl: { type: String },
   lastUpdated: { type: Date, required: true, default: Date.now },
   expiredAt: { type: Date },
 });
@@ -71,6 +75,6 @@ export const mUserSchema = new Schema<User & { token: string }>({
   registered: { type: Boolean, default: false },
   providers: { type: Map, of: mAuthProviderSchema },
   lastGeneratedAssignment: { type: String },
-  submissions: { type: [{ type: Schema.Types.ObjectId, ref: "Submission" }] },
+  submissions: { type: [{ type: String, ref: "Submission" }] },
   prompt: { type: mAssignmentPromptSchema },
 });

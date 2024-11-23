@@ -1,31 +1,75 @@
 import {
   type Review,
   type ReviewEntry,
+  ReviewEntrySchema,
   type ReviewFile,
   type ReviewFileTree,
   ReviewFilterSchema,
+  ReviewSchema,
   type Submission,
   SubmissionFileRequestSchema,
   SubmissionInitSchema,
+  SubmissionSchema,
 } from "@request/specs";
+import { TRPCError } from "@trpc/server";
 import { humanId } from "human-id";
 import { z } from "zod";
-import { createMockReviewEntry } from "../mockUtils.js";
+import { checkRegistered } from "../auth/token.js";
+import { mReview, mReviewEntry, mSubmission } from "../model/index.js";
 import { p } from "../trpc.js";
 
-export const init = p.input(SubmissionInitSchema).mutation(
-  (): Submission => ({
-    id: humanId({ separator: "-", capitalize: false }),
-    assignmentId: humanId({ separator: "-", capitalize: false }),
-    status: "PREPARING",
-    lastUpdated: new Date().toISOString(),
-    expiredAt: null,
-  }),
-);
+export const init = p
+  .input(SubmissionInitSchema)
+  .mutation(async ({ input, ctx }): Promise<Submission> => {
+    const user = checkRegistered(ctx.user);
+    const ongoingSubmission = await mSubmission.findOne({
+      userId: user.id,
+      status: { $in: ["PREPARING", "STARTED", "SUBMITTED", "REVIEWING"] },
+    });
+    if (ongoingSubmission)
+      throw new TRPCError({
+        code: "TOO_MANY_REQUESTS",
+        message:
+          "이미 진행중인 제출물이 있습니다. 과제 제출 및 채점을 완료하거나 취소한 뒤 다시 시도하세요.",
+      });
+    const newDoc = new mSubmission();
+    newDoc.id = humanId({ separator: "-", capitalize: false });
+    newDoc.userId = user.id;
+    newDoc.assignmentId = input.assignmentId;
+    newDoc.lastUpdated = new Date();
+    await newDoc.save();
+    const docObj = newDoc.toObject();
+    const res = {
+      ...docObj,
+      lastUpdated: docObj.lastUpdated.toISOString(),
+      expiredAt: docObj.expiredAt?.toISOString() ?? null,
+    };
+    return SubmissionSchema.parse(res);
+  });
 
-export const cancel = p.input(z.object({ id: z.string() })).mutation((): string => {
-  return humanId({ separator: "-", capitalize: false });
-});
+export const cancel = p
+  .input(z.object({ id: z.string() }))
+  .mutation(async ({ input, ctx }): Promise<string> => {
+    const user = checkRegistered(ctx.user);
+    if (!user.submissions.includes(input.id))
+      throw new TRPCError({ code: "NOT_FOUND", message: "제출물을 찾을 수 없습니다." });
+    const ongoingSubmission = await mSubmission.findOneAndUpdate(
+      {
+        userId: user.id,
+        status: { $in: ["PREPARING", "STARTED", "SUBMITTED", "REVIEWING"] },
+      },
+      {
+        status: "CANCELED",
+      },
+    );
+    if (!ongoingSubmission)
+      throw new TRPCError({
+        code: "BAD_REQUEST",
+        message: `주어진 id ${input.id}가 진행중인 제출물이 아닙니다.`,
+      });
+    // TODO: Inform related services(GitHub, AGI) that user canceled submission
+    return ongoingSubmission.id;
+  });
 
 export const files = p.input(z.object({ id: z.string() })).query((): ReviewFileTree[] => [
   {
@@ -57,32 +101,29 @@ export const TestSchema = z.object({ name: z.string(), });`,
   }),
 );
 
-export const reviewEntries = p.input(ReviewFilterSchema).query((): ReviewEntry[] => {
-  return [
-    ...Array(5)
-      .fill(1)
-      .map((_, i) => createMockReviewEntry(`${i}번 채점 항목`, "summary", undefined, undefined)),
-    createMockReviewEntry("파일 채점 항목", "lint", "src/index.js", undefined),
-    createMockReviewEntry("라인 채점 항목", "lint", "src/index.js", [10, 13]),
-  ];
-});
+export const review = p
+  .input(z.object({ id: z.string() }))
+  .query(async ({ input, ctx }): Promise<Omit<Review, "entries">> => {
+    const user = checkRegistered(ctx.user);
+    if (!user.submissions.includes(input.id))
+      throw new TRPCError({ code: "NOT_FOUND", message: "제출물을 찾을 수 없습니다." });
+    const review = await mReview.findOne({ id: input.id });
+    if (!review)
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: "리뷰 데이터를 찾을 수 없습니다. 제출물의 상태를 확인하세요.",
+      });
+    const res = review.toObject();
+    return ReviewSchema.omit({ entries: true }).parse(res);
+  });
 
-export const review = p.input(z.object({ id: z.string() })).query(
-  ({ input }): Omit<Review, "entries"> => ({
-    id: input.id,
-    status: "DONE",
-    scenarios: [
-      {
-        id: "summary",
-        name: "종합 점수",
-        result: "GOOD",
-        score: 83,
-      },
-      {
-        id: "lint",
-        name: "기본 코드 스타일",
-        result: "FAIL",
-      },
-    ],
-  }),
-);
+export const reviewEntries = p
+  .input(ReviewFilterSchema)
+  .query(async ({ input, ctx }): Promise<ReviewEntry[]> => {
+    const user = checkRegistered(ctx.user);
+    if (!user.submissions.includes(input.id))
+      throw new TRPCError({ code: "NOT_FOUND", message: "제출물을 찾을 수 없습니다." });
+    const reviewEntries = await mReviewEntry.find({ ...input });
+    const result: ReviewEntry[] = reviewEntries.map((doc) => doc.toObject());
+    return z.array(ReviewEntrySchema).parse(result);
+  });
