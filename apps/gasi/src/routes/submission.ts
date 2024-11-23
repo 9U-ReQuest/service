@@ -85,7 +85,7 @@ export const list = p.query(async ({ ctx }): Promise<Submission[]> => {
   const submissions = await mSubmission.find({ userId: user.id });
   const result = submissions.map((doc) => ({
     ...doc.toObject(),
-    userId: doc.userId,
+    userId: user.id,
     lastUpdated: (doc.lastUpdated as Date).toISOString(),
     expiredAt: doc.expiredAt ? (doc.expiredAt as Date).toISOString() : null,
   }));
@@ -126,8 +126,6 @@ export const review = p
   .input(z.object({ id: z.string() }))
   .query(async ({ input, ctx }): Promise<Omit<Review, "entries">> => {
     const user = checkRegistered(ctx.user);
-    if (!user.submissions.includes(input.id))
-      throw new TRPCError({ code: "NOT_FOUND", message: "제출물을 찾을 수 없습니다." });
     const review = await mReview.findOne({ id: input.id });
     if (!review)
       throw new TRPCError({
@@ -135,7 +133,7 @@ export const review = p
         message: "리뷰 데이터를 찾을 수 없습니다. 제출물의 상태를 확인하세요.",
       });
     const res = review.toObject();
-    return ReviewSchema.omit({ entries: true }).parse(res);
+    return ReviewSchema.parse(res);
   });
 
 export const reviewEntries = p

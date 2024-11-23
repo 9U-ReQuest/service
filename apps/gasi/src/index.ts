@@ -6,6 +6,7 @@ import Docker from "dockerode";
 import Fastify from "fastify";
 import mongoose from "mongoose";
 import { renderTrpcPanel } from "trpc-ui";
+import { requestReview, requestReviewEntry } from "./ari.js";
 import { createContext } from "./context.js";
 import { submitRepository } from "./docker.js";
 import { mSubmission } from "./model/index.js";
@@ -34,14 +35,13 @@ if (process.env.CHANNEL === "local") {
 }
 
 server.post("/github/webhook", async (req, res) => {
-  const body = req.body as { payload: string };
-  const json = JSON.parse(body.payload);
+  const json = req.body as { ref: string; repository: { name: string } };
   if (!json.ref.endsWith("/submit")) {
     res.send();
     return;
   }
   server.log.info(`[GITHUB/WEBHOOK] Received submit webhook: ${json.repository.name}`);
-  submitRepository(json.repository.name);
+  await submitRepository(json.repository.name);
   return;
 });
 
@@ -53,9 +53,16 @@ server.post("/submission/update", async (req, res) => {
     return;
   }
   doc.status = status;
+  if (status === "STARTED") doc.repoUrl = `https://github.com/ReQuest-members/${id}`;
   await doc.save();
   if (status === "SUBMITTED") {
     // TODO: Send request to CARI
+    await requestReviewEntry(id, "accuracy");
+    await requestReviewEntry(id, "logic");
+    await requestReviewEntry(id, "efficiency");
+    await requestReviewEntry(id, "consistency");
+    requestReview(id);
+    return;
   }
   return;
 });

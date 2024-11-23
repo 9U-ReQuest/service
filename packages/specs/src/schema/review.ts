@@ -36,8 +36,13 @@ export const ReviewEntrySchema = z.object({
 export const ReviewSchema = z.object({
   id: z.string(),
   status: ReviewStatusSchema,
-  scenarios: z.array(ReviewScenarioSchema),
-  entries: z.array(ReviewEntrySchema),
+  summary: z.string(),
+  scores: z.object({
+    accuracy: z.number(),
+    logic: z.number(),
+    efficiency: z.number(),
+    consistency: z.number(),
+  }),
 });
 
 export const ReviewFilterSchema = z.object({

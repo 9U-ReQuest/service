@@ -117,6 +117,11 @@ jobs:
           touch scripts/deploy.sh
           echo "aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin ${{ fromJson(env.ECR_OUTPUTS).repository_url.value }}" >> scripts/deploy.sh
           echo "docker image prune -a -f" >> scripts/deploy.sh
+          echo "docker image pull ${{ fromJson(env.ECR_OUTPUTS).repository_url.value }}:make-repo" >> scripts/deploy.sh
+          echo "docker image pull ${{ fromJson(env.ECR_OUTPUTS).repository_url.value }}:submit-repo" >> scripts/deploy.sh
+          echo "docker image tag ${{ fromJson(env.ECR_OUTPUTS).repository_url.value }}:make-repo make-repo:latest" >> scripts/deploy.sh
+          echo "docker image tag ${{ fromJson(env.ECR_OUTPUTS).repository_url.value }}:submit-repo submit-repo:latest" >> scripts/deploy.sh
+          echo "cd /var/deployment && docker-compose down" >> scripts/deploy.sh
           echo "docker-compose -f /var/deployment/docker-compose.yml up -d" >> scripts/deploy.sh
           echo "cd /var/deployment && docker-compose restart nginx" >> scripts/deploy.sh
           zip -r ${{ github.sha }}.zip .
