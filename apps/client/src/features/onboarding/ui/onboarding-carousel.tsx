@@ -17,7 +17,7 @@ import { ONBOARDINGS } from "../constants";
 export default function OnboardingCarousel() {
   const [current, setCurrent] = useState(0);
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [Autoplay({ delay: 3000 })] as any);
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [Autoplay({ delay: 5000 })] as any);
 
   const scrollPrev = () => {
     if (!emblaApi) return;
@@ -46,7 +46,7 @@ export default function OnboardingCarousel() {
       <Flex gap="14">
         <Button
           variant="link"
-          className="p-0 aspect-square rounded-full bg-[#EAEAEA] self-end"
+          className="p-0 aspect-square rounded-full bg-[#f7f6f6] self-end"
           onClick={scrollPrev}
         >
           <Image src={arrowLeftSvg} alt="이전 온보딩" width={28} height={28} />
@@ -60,10 +60,11 @@ export default function OnboardingCarousel() {
                   <Flex direction="col" alignItems="center" gap="10">
                     <Typography
                       as="p"
-                      size="xl"
-                      weight="semibold"
+                      size="base"
+                      weight="bold"
                       align="center"
                       whitespace="pre-line"
+                      className="leading-5"
                     >
                       {ONBOARDING.description}
                     </Typography>
@@ -82,7 +83,7 @@ export default function OnboardingCarousel() {
         </Carousel>
         <Button
           variant="link"
-          className="p-0 aspect-square rounded-full bg-[#EAEAEA] self-end"
+          className="p-0 aspect-square rounded-full bg-[#f7f6f6] self-end"
           onClick={scrollNext}
         >
           <Image src={arrowRightSvg} alt="다음 온보딩" width={28} height={28} />

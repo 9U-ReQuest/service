@@ -1,44 +1,41 @@
-import EvaluationItem from "@/features/evaluation/ui/evaluation-item";
+"use client";
+
+import EvaluationItem, { type EvaluationItemProps } from "@/features/evaluation/ui/evaluation-item";
 import OngoingAssignment from "@/features/evaluation/ui/ongoing-assignment";
+import { trpc } from "@/shared/api/trpc";
 import Typography from "@/shared/ui/common/typography/typography";
 import Flex from "@/shared/ui/wrapper/flex/flex";
 
-const EVALUATIONS = [
-  {
-    id: 1,
-    category: "웹사이트 제작 / 쿠팡 / API",
-    title: "오픈 API를 활용한 웹사이트 만들기",
-    date: "2024/07/11",
-    score: 92,
-    status: "DONE",
-  },
-  {
-    id: 2,
-    category: "App / kakao / AI",
-    title: "인공지능을 접목한 카카오톡",
-    date: "2024/06/22",
-    score: 88,
-    status: "DONE",
-  },
-  {
-    id: 3,
-    category: "자유주제 / 현대자동차, LG / AI",
-    title: "AI를 활용하여 자유주제로 APP 서비스 제작하기",
-    date: "2024/06/13",
-    score: 36,
-    status: "DONE",
-  },
-  {
-    id: 4,
-    category: "웹사이트 / SK 홈쇼핑 / FE",
-    title: "홈쇼핑 웹사이트 만들기",
-    date: "2024/10/29",
-    score: 84,
-    status: "PENDING",
-  },
-];
+const EvaluationPage = () => {
+  const { data: listData } = trpc.v1.submission.list.useQuery(undefined, { refetchInterval: 3000 });
+  const { data: assignmentList } = trpc.v1.asgmt.list.useQuery({});
+  const ongoingAssignments = listData?.filter(
+    (submission) => submission.status === "PREPARING" || submission.status === "STARTED",
+  )[0];
+  const restAssignments = listData?.filter(
+    (submission) => submission.status !== "PREPARING" && submission.status !== "STARTED",
+  );
+  const { data: assignmentData } = trpc.v1.asgmt.get.useQuery(
+    { id: ongoingAssignments?.assignmentId as string },
+    { enabled: typeof ongoingAssignments !== "undefined" },
+  );
+  const ongoingData = {
+    status: ongoingAssignments?.status,
+    repoUrl: ongoingAssignments?.repoUrl,
+    prompt: assignmentData?.prompt,
+    name: assignmentData?.name,
+    lastUpdated: assignmentData?.lastUpdated,
+  };
+  // console.log(assignmentList);
+  const filteredRestAssignments = assignmentList?.data.filter((assignment, idx) => {
+    if (restAssignments?.some((rest) => rest.assignmentId === assignment.id)) {
+      return {
+        ...assignmentList.data[idx],
+        status: assignment.status,
+      };
+    }
+  });
 
-export default function EvaluationPage() {
   return (
     <Flex as="main" direction="col" className="w-full p-24">
       <Flex as="section" direction="col" alignItems="center">
@@ -48,16 +45,16 @@ export default function EvaluationPage() {
               AI 과제 평가
             </Typography>
             <Typography as="p" size="sm" weight="medium" whitespace="pre-line">
-              Re_Quest의 AI는 개발자가 작성한 코드에 대해 실시간으로 평가와 피드백을 제공합니다.
+              {`Re_Quest의 AI는 개발자가 작성한 코드에 대해 실시간으로 평가와 피드백을 제공합니다.
               단순히 정답 여부를 확인하는 것을 넘어, 작성된 코드의 완성도와 효율성을 다각도로
-              분석하여 개발자가 더 나은 코드를 작성할 수 있도록 돕습니다.
+              분석하여 개발자가 더 나은 코드를 작성할 수 있도록 돕습니다.`}
             </Typography>
           </section>
           <section className="space-y-3">
             <Typography as="p" size="lg" weight="semibold">
               진행중인 과제
             </Typography>
-            <OngoingAssignment />
+            <OngoingAssignment {...ongoingData} />
           </section>
         </Flex>
       </Flex>
@@ -66,18 +63,26 @@ export default function EvaluationPage() {
         <Typography as="p" size="lg" weight="semibold">
           평가중{" "}
           <Typography as="span" size="lg" weight="bold" color="primary">
-            &#40;{EVALUATIONS.length}&#41;
+            &#40;{restAssignments?.length || 0}&#41;
           </Typography>
         </Typography>
         <Flex
           className="grid gap-8"
           style={{ gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))" }}
         >
-          {EVALUATIONS.map((evaluation) => (
-            <EvaluationItem key={evaluation.id} {...evaluation} />
-          ))}
+          {filteredRestAssignments?.length === 0 ? (
+            <Typography as="p" align="center">
+              시도한 과제가 없습니다.
+            </Typography>
+          ) : (
+            filteredRestAssignments?.map((evaluation) => (
+              <EvaluationItem key={evaluation.id} {...(evaluation as EvaluationItemProps)} />
+            ))
+          )}
         </Flex>
       </section>
     </Flex>
   );
-}
+};
+
+export default trpc.withTRPC(EvaluationPage);

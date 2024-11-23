@@ -2,56 +2,57 @@
 
 import arrowRightSvg from "@/assets/icons/arrow-right-white.svg";
 import pendingSvg from "@/assets/icons/pending.svg";
+import { combinePrompt, getDate } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
+import Typography from "@/shared/ui/common/typography/typography";
+import type { Assignment, SubmissionStatus } from "@request/specs";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-interface EvaluationItemProps {
-  id: number;
-  category: string;
-  title: string;
-  date: string;
-  score: number;
-  status: string;
+export interface EvaluationItemProps extends Omit<Assignment, "status"> {
+  status: SubmissionStatus;
 }
 
-export default function EvaluationItem({
-  id,
-  category,
-  title,
-  date,
-  score,
-  status,
-}: EvaluationItemProps) {
-  const isPending = status === "PENDING";
+export default function EvaluationItem(props: EvaluationItemProps) {
+  const isReviewing = props?.status === "REVIEWING";
   const router = useRouter();
 
+  const allPrompts = [
+    ...(props?.prompt?.fields || []),
+    ...(props?.prompt?.techs || []),
+    ...(props?.prompt?.companies || []),
+  ];
+
   const handleRouteToResult = () => {
-    router.push(`/evaluation/${id}`);
+    router.push(`/evaluation/${props?.id}`);
   };
 
   return (
     <div
-      className={`py-5 px-9 border-[2.5px] rounded-[20px] leading-6 flex flex-col justify-between w-[300px] h-[216px] bg-white ${isPending ? "pending" : "border-[#8A1B22]"} `}
+      className={`py-5 px-9 border-[2.5px] rounded-[20px] leading-6 flex flex-col justify-between h-[216px] bg-white ${isReviewing ? "pending" : "border-[#8A1B22]"} `}
     >
       <div className="space-y-0.5">
-        <p className="text-xs">{category}</p>
-        <p className="text-sm font-bold line-clamp-2">{title}</p>
-        <p className="text-[10px]">{date}</p>
+        <Typography size="xs">{combinePrompt(allPrompts || ["과제 정보"])}</Typography>
+        <Typography size="sm" weight="bold" lineClamp="2">
+          {props?.name || "과제 이름"}
+        </Typography>
+        <Typography size="xs">{getDate(props.lastUpdated)}</Typography>
       </div>
       <div className="space-y-2">
-        <p className="text-sm">과제 점수: {score}</p>
+        <Typography size="sm">과제 점수: 50</Typography>
         <Button
           variant="link"
-          className={`w-full bg-[#8A1B22] py-6 rounded-lg hover:no-underline text-white font-bold text-sm flex items-center ${isPending && "bg-[#F0F0F0] text-black"}`}
+          className={`w-[calc(100%)] self-center bg-[#8A1B22] py-6 rounded-lg hover:no-underline text-white font-bold text-sm flex items-center ${isReviewing && "bg-[#C3CCD5] text-black"}`}
           onClick={handleRouteToResult}
         >
           <div className="flex-1" />
-          <p className="flex-1">{isPending ? "AI 채점중" : "AI 리뷰 결과 확인하기"}</p>
+          <Typography weight="bold" size="xs" color={isReviewing ? "black" : "white"}>
+            {isReviewing ? "AI 채점중" : "AI 리뷰 결과 확인하기"}
+          </Typography>
           <Image
-            src={isPending ? pendingSvg : arrowRightSvg}
-            alt={isPending ? "AI 채점중" : "AI 리뷰 결과 확인하기"}
-            className={`flex-1 ${isPending && "w-4 h-4"}`}
+            src={isReviewing ? pendingSvg : arrowRightSvg}
+            alt={isReviewing ? "AI 채점중" : "AI 리뷰 결과 확인하기"}
+            className={`flex-1 ${isReviewing && "w-4 h-4"}`}
           />
         </Button>
       </div>
