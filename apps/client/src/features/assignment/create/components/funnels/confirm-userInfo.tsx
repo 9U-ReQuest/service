@@ -1,5 +1,5 @@
 "use client";
-import type { InProgress } from "@/entities/assignment/create/schema/create-assignment-funnel";
+import type { InProgress } from "@/entities/assignment/create/schema/create-assignment-schema";
 import { Button } from "@/shared/ui/button";
 import { Card } from "@/shared/ui/card";
 import Typography from "@/shared/ui/common/typography/typography";
@@ -113,7 +113,7 @@ export default function SelectionForm({ onNext }: ConfirmUserInfoProps) {
             }
           >
             <Typography size="base" weight="semibold" color="white">
-              AI과제 생성하기
+              AI 과제 생성하기
             </Typography>
           </Button>
           <Button

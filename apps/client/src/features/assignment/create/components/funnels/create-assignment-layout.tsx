@@ -11,11 +11,13 @@ export default function CreateAssignmentLayout({
   className,
 }: PropsWithChildren<CreateAssignmentLayoutProps>) {
   return (
-    <Flex direction="col" alignItems="center" justifyContent="center" className="w-full">
-      <Flex
-        justifyContent="center"
-        className={cn("max-w-[800px] w-full", className || "h-fit-height")}
-      >
+    <Flex
+      direction="col"
+      alignItems="center"
+      justifyContent="center"
+      className={cn("w-full", className || "h-fit-height")}
+    >
+      <Flex alignItems="center" justifyContent="center" className={cn("max-w-[800px] w-full")}>
         {children}
       </Flex>
     </Flex>

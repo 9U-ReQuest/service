@@ -1,5 +1,5 @@
 "use client";
-import type { InProgress } from "@/entities/assignment/create/schema/create-assignment-funnel";
+import type { InProgress } from "@/entities/assignment/create/schema/create-assignment-schema";
 import ConfirmUserInfo from "@/features/assignment/create/components/funnels/confirm-userInfo";
 import CreateSuccess from "@/features/assignment/create/components/funnels/create-success";
 import CreatingAssignment from "@/features/assignment/create/components/funnels/creating-assignment";

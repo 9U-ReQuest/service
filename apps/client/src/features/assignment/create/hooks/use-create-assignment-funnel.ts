@@ -3,7 +3,7 @@ import {
   CreateAssignmentSchema,
   type InProgress,
   InProgressSchema,
-} from "@/entities/assignment/create/schema/create-assignment-funnel";
+} from "@/entities/assignment/create/schema/create-assignment-schema";
 import { useFunnel } from "@use-funnel/browser";
 
 export default function useCreateAssignmentFunnel() {

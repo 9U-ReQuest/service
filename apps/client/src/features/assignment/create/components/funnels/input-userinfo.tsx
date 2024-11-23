@@ -2,7 +2,7 @@
 import {
   CreateAssignmentSchema,
   type InProgress,
-} from "@/entities/assignment/create/schema/create-assignment-funnel";
+} from "@/entities/assignment/create/schema/create-assignment-schema";
 import { Button } from "@/shared/ui/button";
 import { Card } from "@/shared/ui/card";
 import Typography from "@/shared/ui/common/typography/typography";

@@ -16,7 +16,7 @@ export default function HomeBanner() {
           AI기반 맞춤형 과제 생성과 객관적인 평가를 통해 내 수행능력을 파악할 수 있어요
         </Typography>
         <Link
-          href={ROUTES.HOME}
+          href={ROUTES.ASSIGNMENT_CREATE}
           className="rounded-[40px] bg-white hover:bg-white/90 border-[#D9D9D9] px-6 py-2 transition-colors"
         >
           <Typography size="xs" weight="semibold" color="black">
