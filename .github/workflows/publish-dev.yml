@@ -49,6 +49,11 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           provenance: false
+          build-args: |
+            PRIVATE_GASI_API_URL=gasi.request.internal:8080
+            NEXT_PUBLIC_KAKAO_CLIENT_ID=${{ secrets.KAKAO_REST_API_KEY }}
+            NEXT_PUBLIC_KAKAO_REDIRECT_URI=https://dev-re-quest.eatsteak.dev/callback
+            NEXT_PUBLIC_BASE_URI=https://dev-re-quest.eatsteak.dev
 
   codedeploy:
     name: Deploy to CodeDeploy
@@ -80,10 +85,6 @@ jobs:
         run: |
           touch .env.client
           echo "CHANNEL=${{ env.CHANNEL }}" >> .env.client
-          echo "PRIVATE_GASI_API_URL=gasi.request.internal:8080" >> .env.client
-          echo "NEXT_PUBLIC_KAKAO_CLIENT_ID=${{ secrets.KAKAO_REST_API_KEY }}" >> .env.client
-          echo "NEXT_PUBLIC_KAKAO_REDIRECT_URI=https://dev-re-quest.eatsteak.dev/callback" >> .env.client
-          echo "NEXT_PUBLIC_BASE_URI=https://dev-re-quest.eatsteak.dev" >> .env.client
 
       - name: Create gasi dotenv
         working-directory: ./codedeploy
