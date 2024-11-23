@@ -35,6 +35,7 @@ export async function makeRepository(userName: string, assignmentId: string, sub
       NetworkMode: "gasi",
     },
   });
+  await container.start();
   server.log.info(`Docker container spawned: ${container.id}`);
 }
 export async function submitRepository(submissionId: string) {
@@ -58,5 +59,6 @@ export async function submitRepository(submissionId: string) {
       NetworkMode: "gasi",
     },
   });
+  await container.start();
   server.log.info(`Docker container spawned: ${container.id}`);
 }
