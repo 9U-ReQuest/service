@@ -44,17 +44,23 @@ export const mSubmissionSchema = new Schema<
   expiredAt: { type: Date },
 });
 
-export const mReviewScenarioSchema = new Schema<ReviewScenario>({
-  id: { type: String, required: true },
-  name: { type: String, required: true },
-  result: { type: String, required: true },
-  score: { type: Number },
+export const mReviewScoresSchema = new Schema<{
+  accuracy: number;
+  logic: number;
+  efficiency: number;
+  consistency: number;
+}>({
+  accuracy: { type: Number, required: true },
+  logic: { type: Number, required: true },
+  efficiency: { type: Number, required: true },
+  consistency: { type: Number, required: true },
 });
 
 export const mReviewSchema = new Schema<Review>({
   id: { type: String, unique: true, required: true, index: true },
   status: { type: String, required: true },
-  scenarios: { type: [mReviewScenarioSchema] },
+  summary: { type: String, required: true },
+  scores: { type: mReviewScoresSchema, required: true },
 });
 
 export const mReviewEntrySchema = new Schema<ReviewEntry & { submissionId: string }>({

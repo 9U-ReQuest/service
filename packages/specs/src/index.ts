@@ -199,19 +199,13 @@ export const TestSchema = z.object({ name: z.string(), });`,
         ({ input }): Omit<Review, "entries"> => ({
           id: input.id,
           status: "DONE",
-          scenarios: [
-            {
-              id: "summary",
-              name: "종합 점수",
-              result: "GOOD",
-              score: 83,
-            },
-            {
-              id: "lint",
-              name: "기본 코드 스타일",
-              result: "FAIL",
-            },
-          ],
+          summary: "",
+          scores: {
+            accuracy: 0,
+            logic: 1,
+            efficiency: 1,
+            consistency: 1,
+          },
         }),
       ),
       list: p.query((): Submission[] => []),
