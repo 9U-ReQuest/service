@@ -37,7 +37,7 @@ export const mSubmissionSchema = new Schema<
 >({
   id: { type: String, unique: true, required: true, index: true },
   userId: { type: Schema.Types.ObjectId, ref: "User", required: true, index: true },
-  assignmentId: { type: String, required: true, index: true },
+  assignmentId: { type: String, required: true },
   status: { type: String, default: "PREPARING" },
   repoUrl: { type: String },
   lastUpdated: { type: Date, required: true, default: Date.now },
