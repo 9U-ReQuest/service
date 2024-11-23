@@ -83,15 +83,17 @@ export const generate = p.input(AssignmentPromptSchema).mutation(async ({ input,
   requestGeneration(user.id)
     .then((res) => res.json())
     .then((json) => {
-      mAssignment.findOneAndUpdate(
-        { id: assignmentId },
-        {
-          name: json.name,
-          description: json.description,
-          readme: json.readme,
-          status: "READY",
-        },
-      );
+      mAssignment
+        .findOneAndUpdate(
+          { id: assignmentId },
+          {
+            name: json.name,
+            description: json.description,
+            readme: json.readme,
+            status: "READY",
+          },
+        )
+        .exec();
     });
   ctx.user.lastGeneratedAssignment = assignmentId;
   await ctx.user.save();
