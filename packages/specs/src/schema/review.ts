@@ -23,6 +23,7 @@ export const ReviewScenarioSchema = z.object({
 });
 
 export const ReviewEntrySchema = z.object({
+  submissionId: z.string(),
   name: z.string(),
   result: ReviewResultSchema,
   score: z.number().max(100).optional(),
