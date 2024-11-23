@@ -32,7 +32,7 @@ if (process.env.CHANNEL === "local") {
 
 server.post("/github/webhook", async (req, res) => {
   const json = req.body as { payload: string };
-  console.log(json.payload);
+  console.log(JSON.parse(json.payload));
 });
 
 const start = async () => {
