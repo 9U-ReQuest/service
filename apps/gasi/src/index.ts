@@ -9,7 +9,7 @@ import { renderTrpcPanel } from "trpc-ui";
 import { requestReview, requestReviewEntry } from "./ari.js";
 import { createContext } from "./context.js";
 import { submitRepository } from "./docker.js";
-import { mSubmission } from "./model/index.js";
+import { mSubmission, mUser } from "./model/index.js";
 import { appRouter } from "./router.js";
 
 dotenvx.config();
@@ -35,12 +35,14 @@ if (process.env.CHANNEL === "local") {
 }
 
 server.post("/github/webhook", async (req, res) => {
-  const json = req.body as { ref: string; repository: { name: string } };
-  if (!json.ref.endsWith("/submit")) {
+  const json = req.body as { ref: string; repository: { name: string }; pusher: { email: string } };
+  if (!json.ref.endsWith("/submit") || json.pusher.email === "requestunit.official@gmail.com") {
     res.send();
     return;
   }
-  server.log.info(`[GITHUB/WEBHOOK] Received submit webhook: ${json.repository.name}`);
+  server.log.info(
+    `[GITHUB/WEBHOOK] Received submit webhook: ${json.repository.name} by ${json.pusher.email}`,
+  );
   await submitRepository(json.repository.name);
   return;
 });
