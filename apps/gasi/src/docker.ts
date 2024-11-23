@@ -10,7 +10,7 @@ const ASSIGNMENT_BUCKET_ID = process.env.ASSIGNMENT_BUCKET_ID;
 const SUBMISSION_BUCKET_ID = process.env.SUBMISSION_BUCKET_ID;
 
 export function makeRepository(userName: string, assignmentId: string, submissionId: string) {
-  if (!docker)
+  if (!docker || !GITHUB_TOKEN || !ECR_REPOSITORY_URL)
     throw new TRPCError({
       code: "SERVICE_UNAVAILABLE",
       message: "이 서버에서는 github 작업을 지원하지 않습니다.",
