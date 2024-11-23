@@ -6,6 +6,7 @@ import Docker from "dockerode";
 import Fastify from "fastify";
 import mongoose from "mongoose";
 import { renderTrpcPanel } from "trpc-ui";
+import { requestReview, requestReviewEntry } from "./ari.js";
 import { createContext } from "./context.js";
 import { submitRepository } from "./docker.js";
 import { mSubmission } from "./model/index.js";
@@ -40,7 +41,7 @@ server.post("/github/webhook", async (req, res) => {
     return;
   }
   server.log.info(`[GITHUB/WEBHOOK] Received submit webhook: ${json.repository.name}`);
-  submitRepository(json.repository.name);
+  await submitRepository(json.repository.name);
   return;
 });
 
@@ -56,6 +57,12 @@ server.post("/submission/update", async (req, res) => {
   await doc.save();
   if (status === "SUBMITTED") {
     // TODO: Send request to CARI
+    await requestReviewEntry(id, "accuracy");
+    await requestReviewEntry(id, "logic");
+    await requestReviewEntry(id, "efficiency");
+    await requestReviewEntry(id, "consistency");
+    requestReview(id);
+    return;
   }
   return;
 });
