@@ -23,7 +23,10 @@ export function makeRepository(userName: string, assignmentId: string, submissio
       `USER_LOGIN=${userName}`,
       `ASSIGNMENT_ID=${assignmentId}`,
       `SUBMISSION_ID=${submissionId}`,
-    ]
+    ],
+    HostConfig: {
+      NetworkMode: "host",
+    }
   })
 }
 export function submitRepository(submissionId: string) {
@@ -38,6 +41,9 @@ export function submitRepository(submissionId: string) {
       `AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}`,
       `BUCKET_ID=${BUCKET_ID}`,
       `SUBMISSION_ID=${submissionId}`,
-    ]
+    ],
+    HostConfig: {
+      NetworkMode: "host",
+    }
   })
 }
