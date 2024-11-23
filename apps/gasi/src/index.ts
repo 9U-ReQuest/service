@@ -59,11 +59,11 @@ server.post("/submission/update", async (req, res) => {
   await doc.save();
   if (status === "SUBMITTED") {
     // TODO: Send request to CARI
+    requestReview(id);
     await requestReviewEntry(id, "accuracy");
     await requestReviewEntry(id, "logic");
     await requestReviewEntry(id, "efficiency");
     await requestReviewEntry(id, "consistency");
-    requestReview(id);
     return;
   }
   return;
