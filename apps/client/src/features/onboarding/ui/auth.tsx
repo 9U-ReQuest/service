@@ -1,44 +1,35 @@
-"use client";
-
 import kakaoSvg from "@/assets/icons/kakao-logo.svg";
-import { Button } from "@/shared/ui/button";
 import Typography from "@/shared/ui/common/typography/typography";
 import Flex from "@/shared/ui/wrapper/flex/flex";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function Auth() {
-  const navigate = useRouter();
-  const handleRoutetoHome = () => {
-    navigate.push("/");
-  };
+  const href = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}&response_type=code`;
 
-  const onClickKakaoLogin = () => {
-    window.Kakao.Auth.authorize({
-      redirectUri: process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI as string,
-    });
-  };
   return (
     <Flex direction="col" gap="2" alignItems="center" className="mt-5">
-      <Button
-        variant="link"
-        className="w-[389px] h-16 rounded-lg bg-[#F0F0F0] hover:no-underline"
-        onClick={handleRoutetoHome}
+      <Link
+        className="max-w-[300px] w-full py-3 px-10 rounded-lg bg-[#F0F0F0] hover:no-underline"
+        href="/"
       >
-        <Typography as="p" size="xl" weight="semibold" color="black">
-          로그인 없이 둘러보기
-        </Typography>
-      </Button>
-      <Button
-        variant="link"
-        className="w-[389px] h-16 rounded-lg bg-kakao hover:no-underline flex"
-        onClick={onClickKakaoLogin}
+        <Flex className="h-full" justifyContent="center" alignItems="center">
+          <Typography as="p" size="base" weight="semibold" color="black">
+            로그인 없이 둘러보기
+          </Typography>
+        </Flex>
+      </Link>
+      <Link
+        className="max-w-[300px] w-full py-3 px-10 rounded-lg bg-kakao hover:no-underline flex justify-center items-center"
+        href={href}
       >
-        <Image src={kakaoSvg} alt="카카오 로고" width={30} height={30} />
-        <Typography as="p" size="xl" weight="semibold" color="black">
-          kakao로 3초만에 시작하기
-        </Typography>
-      </Button>
+        <Flex className="h-full" justifyContent="center" alignItems="center" gap="3">
+          <Image src={kakaoSvg} alt="카카오 로고" width={24} height={24} />
+          <Typography as="p" size="base" weight="semibold" color="black">
+            kakao로 3초만에 시작하기
+          </Typography>
+        </Flex>
+      </Link>
     </Flex>
   );
 }

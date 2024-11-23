@@ -29,7 +29,6 @@ const Flex: FlexComponent = <C extends ElementType = "div">({
   children,
   ...props
 }: PolymorphicComponentProp<C, FlexProps>) => {
-  console.log("Flex", alignItems);
   const Component = as || "div";
 
   const flexClasses = [

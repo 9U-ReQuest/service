@@ -1,12 +1,21 @@
 "use client";
 
 import AssignmentList from "@/entities/assignment/ui/card/assignment-list";
-import { mockAssignments } from "@/shared/mocks/constant/assignment.mock";
+import { trpc } from "@/shared/api/trpc";
 import CategoryFilter from "@/widgets/ui/category-filter/category-filter";
+import type { Assignment } from "@request/specs";
 import { useState } from "react";
 
-export default function BusinessAssignmentPage() {
+const BusinessAssignmentPage = () => {
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
+  const { data } = trpc.v1.asgmt.list.useQuery({});
+  const assignments = (data?.data as Assignment[]) || [];
+  const filteredAssignments =
+    selectedFilters.length === 0
+      ? assignments
+      : assignments.filter((assignment) =>
+          assignment.prompt.fields.some((field) => selectedFilters.includes(field)),
+        );
 
   const handleFilterToggle = (filter: string) => {
     setSelectedFilters((prev) =>
@@ -37,11 +46,13 @@ export default function BusinessAssignmentPage() {
       </div>
       <div className="w-full px-24 mb-24">
         <AssignmentList
-          assignments={mockAssignments}
+          assignments={filteredAssignments}
           headerTitle="기업 과제"
           extraControls={undefined}
         />
       </div>
     </div>
   );
-}
+};
+
+export default trpc.withTRPC(BusinessAssignmentPage);

@@ -1,4 +1,5 @@
 "use client";
+
 import OnboardingSuccess from "@/features/onboarding/profile/components/funnels/components/onboarding-success";
 import InputField from "@/features/onboarding/profile/components/funnels/input-field";
 import InputGithub from "@/features/onboarding/profile/components/funnels/input-github";
@@ -38,7 +39,9 @@ export default trpc.withTRPC(function OnboardingProfilePage() {
       //     onNext={(education) => history.push("Complete", { education })}
       //   />
       // )}
-      Complete={() => <OnboardingSuccess />}
+      Complete={() => (
+        <OnboardingSuccess name={funnel.context.name} email={funnel.context.github} />
+      )}
     />
   );
 });

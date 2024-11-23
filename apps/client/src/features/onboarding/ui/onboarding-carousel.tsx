@@ -5,6 +5,8 @@ import arrowRightSvg from "@/assets/icons/arrow-right.svg";
 import CarouselIndicators from "@/features/home/ui/popular-assignment/components/carousel-indicator";
 import { Button } from "@/shared/ui/button";
 import { Carousel, CarouselContent, CarouselItem } from "@/shared/ui/carousel";
+import Typography from "@/shared/ui/common/typography/typography";
+import Flex from "@/shared/ui/wrapper/flex/flex";
 import type { EmblaCarouselType } from "embla-carousel";
 import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
@@ -41,33 +43,41 @@ export default function OnboardingCarousel() {
 
   return (
     <>
-      <div className="flex">
+      <Flex gap="14">
         <Button
           variant="link"
           className="p-0 aspect-square rounded-full bg-[#EAEAEA] self-end"
           onClick={scrollPrev}
         >
-          <Image src={arrowLeftSvg} alt="이전 온보딩" width={40} height={40} />
+          <Image src={arrowLeftSvg} alt="이전 온보딩" width={28} height={28} />
         </Button>
-        <Carousel className="w-[565px] overflow-hidden">
-          <CarouselContent ref={emblaRef} id="im emcon">
-            <div className="flex">
+        <Carousel className="max-w-[430px] overflow-hidden">
+          <CarouselContent ref={emblaRef}>
+            <Flex>
               {ONBOARDINGS.map((ONBOARDING, index) => (
                 // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-                <CarouselItem key={`onboarding-item-${index}`} id="im emit">
-                  <div className="font-semibold text-3xl text-center space-y-14 whitespace-pre-line">
-                    <p>{ONBOARDING.description}</p>
+                <CarouselItem key={`onboarding-item-${index}`} className="self-end">
+                  <Flex direction="col" alignItems="center" gap="10">
+                    <Typography
+                      as="p"
+                      size="xl"
+                      weight="semibold"
+                      align="center"
+                      whitespace="pre-line"
+                    >
+                      {ONBOARDING.description}
+                    </Typography>
                     <Image
                       src={ONBOARDING.src}
                       alt={`온보딩 이미지 ${index}`}
-                      width={ONBOARDING.width}
-                      height={ONBOARDING.height}
-                      className="mx-auto"
+                      width={300}
+                      height={300}
+                      className="m-0"
                     />
-                  </div>
+                  </Flex>
                 </CarouselItem>
               ))}
-            </div>
+            </Flex>
           </CarouselContent>
         </Carousel>
         <Button
@@ -75,9 +85,9 @@ export default function OnboardingCarousel() {
           className="p-0 aspect-square rounded-full bg-[#EAEAEA] self-end"
           onClick={scrollNext}
         >
-          <Image src={arrowRightSvg} alt="다음 온보딩" width={40} height={40} />
+          <Image src={arrowRightSvg} alt="다음 온보딩" width={28} height={28} />
         </Button>
-      </div>
+      </Flex>
       <CarouselIndicators total={4} selectedIndex={current} />
     </>
   );

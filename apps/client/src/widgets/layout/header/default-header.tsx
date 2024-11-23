@@ -1,29 +1,27 @@
 "use client";
-import { useState } from "react";
+
+import { trpc } from "@/shared/api/trpc";
+import { useUserStore } from "@/shared/lib/zustand/user";
 import Header from "./header";
 
-// TODO: Remove this mock data
-const MOCK_DEFAULT_USER = {
-  name: "홍길동",
-  githubId: "hongildong@gmail.com",
-  profileImageUrl: undefined,
-};
-
-export default function DefaultHeader() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+const DefaultHeader = () => {
+  const user = useUserStore((state) => state.user);
+  const isLogin = user?.name || false;
 
   return (
     <Header>
       <Header.Logo />
       <Header.Nav />
-      {isLoggedIn ? (
+      {isLogin ? (
         <div className="flex flex-1 justify-end items-center gap-4">
           <Header.NotificationMenu />
-          <Header.MyPageMenu {...MOCK_DEFAULT_USER} />
+          <Header.MyPageMenu name={user?.name} email={user?.email} />
         </div>
       ) : (
         <Header.LoginAndSignup />
       )}
     </Header>
   );
-}
+};
+
+export default trpc.withTRPC(DefaultHeader);

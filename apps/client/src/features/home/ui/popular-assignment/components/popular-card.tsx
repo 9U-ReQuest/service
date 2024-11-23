@@ -21,7 +21,7 @@ const PopularCard = ({ assignment, isSelected }: PopularCardProps) => {
       <Flex
         direction="col"
         justifyContent="between"
-        className={cn("h-[400px] p-8 relative rounded-lg bg-[#1a237e]")}
+        className={cn("h-[400px] p-8 relative rounded-lg bg-[#3F457B]")}
       >
         <div className="space-y-2">
           <Typography as="h3" size="sm" weight="semibold" color="white">

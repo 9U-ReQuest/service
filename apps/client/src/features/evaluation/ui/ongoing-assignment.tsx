@@ -1,10 +1,11 @@
 "use client";
 
 import baemin from "@/assets/images/baemin.png";
+import { trpc } from "@/shared/api/trpc";
 import { Button } from "@/shared/ui/button";
 import Image from "next/image";
 
-export default function OngoingAssignment() {
+const OngoingAssignment = () => {
   const handleRouteToAssignment = () => {
     // TODO: Route to assignment page
   };
@@ -31,4 +32,6 @@ export default function OngoingAssignment() {
       <Image src={baemin} alt="과제 이미지" width={1298} height={216} />
     </div>
   );
-}
+};
+
+export default trpc.withTRPC(OngoingAssignment);

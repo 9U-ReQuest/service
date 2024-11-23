@@ -79,7 +79,7 @@ function Nav(): JSX.Element {
 function LoginAndSignup(): JSX.Element {
   return (
     <Flex justifyContent="end" className="flex-1">
-      <Link href="/login" passHref legacyBehavior>
+      <Link href="/onboarding" passHref legacyBehavior>
         <Typography as="a" size="base" weight="semibold">
           로그인/회원가입
         </Typography>
@@ -178,9 +178,8 @@ function NotificationMenu(): JSX.Element {
 }
 
 interface MyPageMenuProps {
-  name: string;
-  githubId: string;
-  profileImageUrl?: string;
+  name?: string;
+  email?: string;
 }
 
 const preventEvent = () => alert("준비중입니다.");
@@ -194,7 +193,7 @@ const MENUBAR_ITEMS = [
   { title: "로그아웃", onClick: preventEvent },
 ];
 
-function MyPageMenu({ name, githubId, profileImageUrl }: MyPageMenuProps): JSX.Element {
+function MyPageMenu({ name, email }: MyPageMenuProps): JSX.Element {
   return (
     <Menubar className="border-none shadow-none">
       <MenubarMenu>
@@ -206,7 +205,7 @@ function MyPageMenu({ name, githubId, profileImageUrl }: MyPageMenuProps): JSX.E
             <div className="mb-3 flex items-start justify-between">
               <div className="w-full flex justify-between items-center gap-3">
                 <div className="flex items-center gap-2">
-                  <Image src={profileImageUrl || mypage} alt="Profile" width={44} height={44} />
+                  <Image src={mypage} alt="Profile" width={44} height={44} />
                   <div className="text-base">{name}님, 환영합니다!</div>
                 </div>
                 <button type="button" className="rounded-full p-1 hover:bg-gray-100">
@@ -216,7 +215,7 @@ function MyPageMenu({ name, githubId, profileImageUrl }: MyPageMenuProps): JSX.E
             </div>
             <div className="text-sm text-gray-500">
               <p className="text-sm">Github ID</p>
-              <p className="text-xs">{githubId}</p>
+              <p className="text-xs">{email}</p>
             </div>
           </div>
           <div className="py-1">
