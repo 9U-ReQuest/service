@@ -56,8 +56,6 @@ export default function InputTechAndCompany({
       }
     }
 
-    // api mutation
-    console.log(context);
     mutation.mutate(
       {
         name: context.name,
