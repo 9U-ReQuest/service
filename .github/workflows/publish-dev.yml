@@ -103,6 +103,8 @@ jobs:
           echo "ASSIGNMENT_BUCKET_ID=${{ fromJson(env.AGI_OUTPUTS).assignment_bucket.value }}" >> .env.gasi
           echo "SUBMISSION_BUCKET_ID=${{ fromJson(env.CARI_OUTPUTS).submission_bucket.value }}" >> .env.gasi
           echo "DOCKER_SOCK=/var/run/docker.sock" >> .env.gasi
+          echo "CARI_IP=${{ fromJson(env.CARI_OUTPUTS).public_ip.value }}" >> .env.gasi
+          echo "AGI_IP=${{ fromJson(env.AGI_OUTPUTS).public_ip.value }}" >> .env.gasi
 
       - name: Generate SSL Cetificate
         working-directory: ./codedeploy/cert
