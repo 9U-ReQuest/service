@@ -22,12 +22,7 @@ body {
   position: absolute;
   inset: 0;
   padding: 2.5px; /* border length  */
-  background: linear-gradient(
-    45deg,
-    #C3CCD5 0%,
-    rgba(255, 255, 255, 1) 50%,
-    #C3CCD5 100%
-  );
+  background: linear-gradient(45deg, #c3ccd5 0%, rgba(255, 255, 255, 1) 50%, #c3ccd5 100%);
   border-radius: inherit;
   mask: conic-gradient(#000 0 0) content-box exclude, conic-gradient(#000 0 0);
 }
