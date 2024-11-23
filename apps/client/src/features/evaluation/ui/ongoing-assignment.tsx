@@ -6,7 +6,6 @@ import { Button } from "@/shared/ui/button";
 import Typography from "@/shared/ui/common/typography/typography";
 import type { Assignment, SubmissionStatus } from "@request/specs";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 
 interface OngoingAssignmentProps
   extends Partial<Pick<Assignment, "prompt" | "lastUpdated" | "name">> {
@@ -15,7 +14,7 @@ interface OngoingAssignmentProps
 }
 
 export default function OngoingAssignment(props: OngoingAssignmentProps) {
-  const router = useRouter();
+  console.log(props);
 
   const isStarted = props?.status === "STARTED";
   const allPrompts = [
@@ -25,10 +24,7 @@ export default function OngoingAssignment(props: OngoingAssignmentProps) {
   ];
 
   const handleRouteToAssignment = () => {
-    if (isStarted) {
-      window.location.href = props.repoUrl || window.location.href;
-    }
-    // TODO: Route to assignment page
+    window.location.href = props.repoUrl || window.location.href;
   };
 
   const getDate = () => {
@@ -53,6 +49,7 @@ export default function OngoingAssignment(props: OngoingAssignmentProps) {
           variant="link"
           className="self-end font-bold bg-white text-black px-14 py-5 rounded-lg hover:no-underline"
           onClick={handleRouteToAssignment}
+          disabled={!isStarted}
         >
           {isStarted ? (
             "과제 확인하기"

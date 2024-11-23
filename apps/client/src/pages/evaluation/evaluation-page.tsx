@@ -26,7 +26,6 @@ const EvaluationPage = () => {
     name: assignmentData?.name,
     lastUpdated: assignmentData?.lastUpdated,
   };
-  // console.log(assignmentList);
   const filteredRestAssignments = assignmentList?.data.filter((assignment, idx) => {
     if (restAssignments?.some((rest) => rest.assignmentId === assignment.id)) {
       return {
@@ -37,7 +36,7 @@ const EvaluationPage = () => {
   });
 
   return (
-    <Flex as="main" direction="col" className="w-full p-24">
+    <Flex as="main" direction="col" className="w-full px-24 py-14">
       <Flex as="section" direction="col" alignItems="center">
         <Flex direction="col" gap="12">
           <section className="space-y-2">

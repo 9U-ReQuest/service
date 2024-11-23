@@ -7,6 +7,7 @@ import { Button } from "@/shared/ui/button";
 import { Carousel, CarouselContent, CarouselItem } from "@/shared/ui/carousel";
 import Typography from "@/shared/ui/common/typography/typography";
 import Flex from "@/shared/ui/wrapper/flex/flex";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import type { EmblaCarouselType } from "embla-carousel";
 import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
@@ -68,13 +69,14 @@ export default function OnboardingCarousel() {
                     >
                       {ONBOARDING.description}
                     </Typography>
-                    <Image
+                    {/* <Image
                       src={ONBOARDING.src}
                       alt={`온보딩 이미지 ${index}`}
                       width={300}
                       height={300}
                       className="m-0"
-                    />
+                    /> */}
+                    <DotLottieReact src={ONBOARDING.src} loop autoplay />
                   </Flex>
                 </CarouselItem>
               ))}

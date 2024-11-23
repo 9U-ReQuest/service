@@ -30,7 +30,7 @@ const BusinessAssignmentPage = () => {
   return (
     <div className="max-w-[1300px] w-full flex flex-col">
       <div className="space-y-6">
-        <div className="space-y-2 px-24 py-12">
+        <div className="space-y-2 px-24 py-14">
           <h1 className="text-2xl font-bold">기업과제</h1>
           <p className="text-muted-foreground">
             Re_Quest는 개발자들이 기업별 과제 전형을 탐색하고

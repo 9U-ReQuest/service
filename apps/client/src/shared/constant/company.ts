@@ -1,3 +1,8 @@
+import coupang from "@/assets/images/coupang.png";
+import kakao from "@/assets/images/kakao.png";
+import lg from "@/assets/images/lg.png";
+import toss from "@/assets/images/toss.png";
+
 export const companies = [
   { value: "구름", label: "구름" },
   { value: "로티파일", label: "로티파일" },
@@ -28,3 +33,14 @@ export const companies = [
   { value: "패스트파이브", label: "패스트파이브" },
   { value: "클래스101", label: "클래스101" },
 ];
+
+export const companyImages = {
+  카카오: kakao,
+  카카오모빌리티: kakao,
+  카카오게임즈: kakao,
+  쿠팡: coupang,
+  토스: toss,
+  LG전자: lg,
+};
+
+export type Company = keyof typeof companyImages;
