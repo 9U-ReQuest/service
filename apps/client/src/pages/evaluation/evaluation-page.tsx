@@ -41,7 +41,6 @@ const EvaluationPage = () => {
     })
     .filter((assignment) => assignment !== null);
 
-  console.log(filteredRestAssignments);
 
   return (
     <Flex as="main" direction="col" className="w-full px-24 py-14">
