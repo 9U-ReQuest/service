@@ -101,6 +101,7 @@ jobs:
           echo "REQUEST_ENDPOINT=https://dev-re-quest.eatsteak.dev" >> .env.gasi
           echo "ASSIGNMENT_BUCKET_ID=${{ fromJson(env.AGI_OUTPUTS).assignment_bucket.value }}" >> .env.gasi
           echo "SUBMISSION_BUCKET_ID=${{ fromJson(env.CARI_OUTPUTS).submission_bucket.value }}" >> .env.gasi
+          echo "DOCKER_SOCK=/var/run/docker.sock" >> .env.gasi
 
       - name: Generate SSL Cetificate
         working-directory: ./codedeploy/cert
