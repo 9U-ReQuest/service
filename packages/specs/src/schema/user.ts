@@ -14,7 +14,7 @@ export const AuthorizeResultSchema = z.object({
 export const UserSchema = z.object({
   id: z.string(),
   name: z.string().optional(),
-  email: z.string().email().optional(),
+  email: z.string().optional(),
   registered: z.boolean().default(false),
   providers: z.object({
     kakao: z
