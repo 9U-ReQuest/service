@@ -4,9 +4,13 @@ import DetailedScores from "@/features/onboarding/ui/detailed-scores";
 import Markdown from "@/pages/markdown";
 import { trpc } from "@/shared/api/trpc";
 import Typography from "@/shared/ui/common/typography/typography";
+import { useParams } from "next/navigation";
 
 const EvaluationComment = () => {
-  const { data: reviewEntriesData } = trpc.v1.submission.reviewEntries.useQuery({ id: "1" });
+  const parmas = useParams();
+  const id = (parmas?.id as string) || "1";
+  const { data: reviewData } = trpc.v1.submission.review.useQuery({ id });
+  const { data: reviewEntriesData } = trpc.v1.submission.reviewEntries.useQuery({ id });
   const { data: userData } = trpc.v1.user.me.useQuery();
   const detailScores = reviewEntriesData
     ?.filter((entry) => entry.scenario === "summary")
@@ -31,10 +35,9 @@ const EvaluationComment = () => {
           <div className="p-12 border border-[#DEDEDE] rounded-3xl">
             <Markdown source={`# ${reviewEntriesData?.[0].name}` || ""} />
           </div>
-          <div className="p-12 border border-[#DEDEDE] rounded-3xl">
-            {/* <Markdown source={`# ${reviewEntriesData?.[0].name}` || ""} /> */}
-          </div>
+          {/* <div className="p-12 border border-[#DEDEDE] rounded-3xl"></div> */}
           <div className="p-12 bg-primary rounded-3xl text-white">
+            <Markdown source={`# ${reviewData?.summary}` || ""} />
             {/* <Markdown source={`# ${reviewEntriesData?.[0].name}` || ""} /> */}
           </div>
         </div>

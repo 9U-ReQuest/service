@@ -2,10 +2,14 @@
 
 import { trpc } from "@/shared/api/trpc";
 import Typography from "@/shared/ui/common/typography/typography";
+import { useParams } from "next/navigation";
 
 const EvaluationOverallScore = () => {
-  const { data: reviewData } = trpc.v1.submission.review.useQuery({ id: "1" });
-  const overallScore = reviewData?.scenarios.filter((s) => s.id === "summary")[0].score;
+  const parmas = useParams();
+  const id = (parmas?.id as string) || "1";
+  const { data: reviewData } = trpc.v1.submission.review.useQuery({ id });
+  const overallScore =
+    Object.entries(reviewData?.scores ?? {}).reduce((sum, [_, value]) => sum + value, 0) / 4;
 
   const commentByScore = (score: number) => {
     if (score < 20) {
