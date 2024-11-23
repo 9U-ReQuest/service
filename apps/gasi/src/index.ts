@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 import { renderTrpcPanel } from "trpc-ui";
 import { createContext } from "./context.js";
 import { appRouter } from "./router.js";
+import Docker from "dockerode";
 
 dotenvx.config();
 
@@ -38,5 +39,7 @@ const start = async () => {
     process.exit(1);
   }
 };
+
+export const docker = process.env.DOCKER_SOCK ? new Docker({socketPath: process.env.DOCKER_SOCK}) : null;
 
 start();
