@@ -8,17 +8,22 @@ import Flex from "@/shared/ui/wrapper/flex/flex";
 
 const EvaluationPage = () => {
   const { data: listData } = trpc.v1.submission.list.useQuery(undefined, { refetchInterval: 3000 });
+  // console.log("listdata", listData);
   const { data: assignmentList } = trpc.v1.asgmt.list.useQuery({});
+  // console.log("assignmentList", assignmentList);
   const ongoingSubmissions = listData?.filter(
     (submission) => submission.status === "PREPARING" || submission.status === "STARTED",
   )[0];
+  // console.log("ongoingSubmissions", ongoingSubmissions);
   const restSubmissions = listData?.filter(
     (submission) => submission.status !== "PREPARING" && submission.status !== "STARTED",
   );
+  // console.log("restSubmissions", restSubmissions);
   const { data: assignmentData } = trpc.v1.asgmt.get.useQuery(
     { id: ongoingSubmissions?.assignmentId as string },
     { enabled: typeof ongoingSubmissions !== "undefined" },
   );
+  // console.log("assignmentData", assignmentData);
   const ongoingData = {
     status: ongoingSubmissions?.status,
     repoUrl: ongoingSubmissions?.repoUrl,
@@ -29,7 +34,6 @@ const EvaluationPage = () => {
   const filteredRestAssignments = assignmentList?.data
     .map((assignment, idx) => {
       const find = restSubmissions?.find((rest) => rest.assignmentId === assignment.id);
-      console.log(find);
       if (find) {
         return {
           ...assignmentList.data[idx],
@@ -40,6 +44,8 @@ const EvaluationPage = () => {
       return null;
     })
     .filter((assignment) => assignment !== null);
+
+  // console.log("filteredRestAssignments", filteredRestAssignments);
 
   return (
     <Flex as="main" direction="col" className="w-full px-24 py-14">
