@@ -25,7 +25,7 @@ export default function CreateSuccess() {
   if (!assignment) {
     return null;
   }
-  console.log(assignment);
+  // console.log(assignment);
 
   const company = assignment.prompt.companies.join(" / ");
   const tech = assignment.prompt.techs.join(" / ");

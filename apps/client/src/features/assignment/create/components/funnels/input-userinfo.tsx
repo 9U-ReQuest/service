@@ -35,7 +35,7 @@ export default function InputUserInfo({ onNext }: ConfirmUserInfoProps) {
 
   const [error, setError] = useState<string | null>(null);
 
-  console.log(fields, tech, company);
+  // console.log(fields, tech, company);
 
   // 삭제 버튼 누르면 없애야 함.
   const handleRemoveField = (field: string, type: "fields" | "tech" | "company") => {

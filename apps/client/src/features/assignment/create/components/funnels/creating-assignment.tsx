@@ -18,11 +18,25 @@ interface CreatingAssignmentProps {
   onNext: () => void;
 }
 
+const ASSIGNMENT_ID_KEY = "assignmentId";
+
 export default function CreatingAssignment({ createProps, onNext }: CreatingAssignmentProps) {
   const [pollingEnabled, setPollingEnabled] = useState(false);
 
+  const getStoredId = () => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem(ASSIGNMENT_ID_KEY);
+    }
+    return null;
+  };
+
+  const [assignmentId, setAssignmentId] = useState<string | null>(getStoredId());
+
   const generateMutation = trpc.v1.asgmt.generate.useMutation({
     onSuccess: (data) => {
+      const id = data.id;
+      setAssignmentId(id);
+      localStorage.setItem(ASSIGNMENT_ID_KEY, id);
       setPollingEnabled(true);
     },
     onError: (error) => {
@@ -31,40 +45,40 @@ export default function CreatingAssignment({ createProps, onNext }: CreatingAssi
     },
   });
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    generateMutation.mutate({
-      fields: createProps.field,
-      techs: createProps.tech,
-      companies: createProps.company,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const id = generateMutation.data?.id;
-
-  const { data: user } = trpc.v1.user.me.useQuery();
+  const { data: user } = trpc.v1.user.me.useQuery(undefined, {
+    enabled: !!assignmentId,
+  });
 
   const { data: assignment } = trpc.v1.asgmt.get.useQuery(
-    { id: id || (user?.lastGeneratedAssignment as string) },
+    { id: assignmentId || (user?.lastGeneratedAssignment as string) },
     {
-      enabled: pollingEnabled || !!id || !!user?.lastGeneratedAssignment,
+      enabled: pollingEnabled && !!(assignmentId || user?.lastGeneratedAssignment),
       refetchInterval: 3000,
     },
   );
 
-  // 과제 생성이 되면 다음 단계로 넘어가기
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    if (!assignmentId) {
+      generateMutation.mutate({
+        fields: createProps.field,
+        techs: createProps.tech,
+        companies: createProps.company,
+      });
+    } else {
+      setPollingEnabled(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   useEffect(() => {
     if (assignment?.status === "READY") {
       onNext();
+      localStorage.removeItem(ASSIGNMENT_ID_KEY);
     }
   }, [assignment?.status, onNext]);
 
-  const entries = Object.entries(createProps).reduce<string[]>(
-    // biome-ignore lint/performance/noAccumulatingSpread: <explanation>
-    (acc, [key, value]) => [...acc, ...value],
-    [],
-  );
+  const entries = Object.entries(createProps).flatMap(([_, value]) => value);
 
   return (
     <CreateAssignmentLayout>
