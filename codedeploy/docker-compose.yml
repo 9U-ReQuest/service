@@ -21,3 +21,5 @@ services:
       - "8080:8080"
     container_name: gasi.request.internal
     env_file: ./.env.gasi
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock

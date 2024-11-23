@@ -10,6 +10,9 @@ env:
   AWS_SECRET_ACCESS_KEY: ${{ secrets.aws_secret_access_key }}
   ECR_OUTPUTS: ${{ secrets.container_registry_outputs_dev }}
   CODEDEPLOY_OUTPUTS: ${{ secrets.codedeploy_outputs_dev }}
+  AGI_OUTPUTS: ${{ secrets.agi_outputs_dev }}
+  CARI_OUTPUTS: ${{ secrets.cari_outputs_dev }}
+
 jobs:
   docker-build:
     name: Build Docker images
@@ -46,6 +49,11 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           provenance: false
+          build-args: |
+            PRIVATE_GASI_API_URL=gasi.request.internal:8080
+            NEXT_PUBLIC_KAKAO_CLIENT_ID=${{ secrets.KAKAO_REST_API_KEY }}
+            NEXT_PUBLIC_KAKAO_REDIRECT_URI=https://dev-re-quest.eatsteak.dev/callback
+            NEXT_PUBLIC_BASE_URI=https://dev-re-quest.eatsteak.dev
 
   codedeploy:
     name: Deploy to CodeDeploy
@@ -87,6 +95,14 @@ jobs:
           echo "DATABASE_URI=${{ secrets.DATABASE_URI }}" >> .env.gasi
           echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env.gasi
           echo "KAKAO_REST_API_KEY=${{ secrets.KAKAO_REST_API_KEY }}" >> .env.gasi
+          echo "ECR_REPOSITORY_URL=${{ fromJson(env.ECR_OUTPUTS).repository_url.value }}" >> .env.gasi
+          echo "GITHUB_TOKEN=${{ secrets.members_github_token }}" >> .env.gasi
+          echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> .env.gasi
+          echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> .env.gasi
+          echo "REQUEST_ENDPOINT=https://dev-re-quest.eatsteak.dev" >> .env.gasi
+          echo "ASSIGNMENT_BUCKET_ID=${{ fromJson(env.AGI_OUTPUTS).assignment_bucket.value }}" >> .env.gasi
+          echo "SUBMISSION_BUCKET_ID=${{ fromJson(env.CARI_OUTPUTS).submission_bucket.value }}" >> .env.gasi
+          echo "DOCKER_SOCK=/var/run/docker.sock" >> .env.gasi
 
       - name: Generate SSL Cetificate
         working-directory: ./codedeploy/cert
@@ -114,3 +130,50 @@ jobs:
             --deployment-group-name ${{ fromJson(env.CODEDEPLOY_OUTPUTS).gasi_group_name.value }} \
             --deployment-config-name CodeDeployDefault.OneAtATime \
             --s3-location bucket=${{ fromJson(env.CODEDEPLOY_OUTPUTS).bucket.value }},bundleType=zip,key=${{ github.sha }}.zip
+
+  docker-github-image:
+    name: Build Docker images for repository administration
+    if: github.repository == '9U-ReQuest/service'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        image: [ "make-repo", "submit-repo" ]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          filters: |
+            ${{ matrix.image }}:
+              - 'apps/gasi/${{ matrix.image }}.Dockerfile'
+              - 'apps/gasi/${{ matrix.image }}.sh'
+
+      - name: Set up Docker Buildx
+        if: steps.changes.outputs[matrix.image] == 'true'
+        uses: docker/setup-buildx-action@v3
+
+      - name: Configure AWS credentials
+        if: steps.changes.outputs[matrix.image] == 'true'
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
+
+      - name: Login to Amazon ECR
+        if: steps.changes.outputs[matrix.image] == 'true'
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build and push
+        if: steps.changes.outputs[matrix.image] == 'true'
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: apps/gasi/${{ matrix.image }}.Dockerfile
+          push: true
+          tags: ${{ fromJson(env.ECR_OUTPUTS).repository_url.value }}:${{ matrix.image }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          provenance: false

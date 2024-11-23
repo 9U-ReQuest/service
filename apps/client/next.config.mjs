@@ -6,12 +6,12 @@ const baseNextConfig = {
   async rewrites() {
     return [
       {
-        source: "/trpc",
-        destination: `${process.env.PRIVATE_GASI_API_URL ?? "http://localhost:8080"}/trpc`,
+        source: "/trpc/:api*",
+        destination: `${process.env.PRIVATE_GASI_API_URL ?? "http://gasi.request.internal:8080"}/trpc/:api*`,
       },
       {
-        source: "/github",
-        destination: `${process.env.PRIVATE_GASI_API_URL ?? "http://localhost:8080"}/github`,
+        source: "/github/:api*",
+        destination: `${process.env.PRIVATE_GASI_API_URL ?? "http://gasi.request.internal:8080"}/github/:api*`,
       },
     ];
   },
