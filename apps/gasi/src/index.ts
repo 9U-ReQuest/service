@@ -1,5 +1,6 @@
 import dotenvx from "@dotenvx/dotenvx";
 import fastifyCors from "@fastify/cors";
+import type { SubmissionStatus } from "@request/specs";
 import { fastifyTRPCPlugin } from "@trpc/server/adapters/fastify";
 import Docker from "dockerode";
 import Fastify from "fastify";
@@ -7,6 +8,7 @@ import mongoose from "mongoose";
 import { renderTrpcPanel } from "trpc-ui";
 import { createContext } from "./context.js";
 import { submitRepository } from "./docker.js";
+import { mSubmission } from "./model/index.js";
 import { appRouter } from "./router.js";
 
 dotenvx.config();
@@ -40,6 +42,19 @@ server.post("/github/webhook", async (req, res) => {
   }
   server.log.info(`[GITHUB/WEBHOOK] Received submit webhook: ${json.repository.name}`);
   submitRepository(json.repository.name);
+  return;
+});
+
+server.post("/submission/update", async (req, res) => {
+  const { id, status } = req.body as { id: string; status: SubmissionStatus };
+  const doc = await mSubmission.findOne({ id });
+  if (!doc) {
+    res.code(404);
+    return;
+  }
+  doc.status = status;
+  await doc.save();
+  return;
 });
 
 const start = async () => {
