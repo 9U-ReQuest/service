@@ -1,5 +1,10 @@
 import CallbackPage from "@/pages/callback/callback-page";
+import { Suspense } from "react";
 
 export default function Callback() {
-  return <CallbackPage />;
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <CallbackPage />
+    </Suspense>
+  );
 }

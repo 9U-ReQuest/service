@@ -34,16 +34,16 @@ const EvaluationOverallScore = () => {
           <span className="text-primary">{Math.floor(overallScore) || 0}점</span> 이에요
         </Typography>
         <Typography as="p" weight="semibold" className="text-[#939393]">
-          {commentByScore(overallScore || 0)}
+          {commentByScore(Math.floor(overallScore) || 0)}
         </Typography>
       </div>
       <div className="bg-[#E4E4E4] w-full text-[#B7B7B7] py-2 px-4 text-right rounded-full relative font-bold">
         100
         <div
           className="bg-primary text-white py-2 px-4 text-right rounded-full absolute top-0 left-0"
-          style={{ width: `${overallScore || 0}%` }}
+          style={{ width: `${Math.floor(overallScore) || 0}%` }}
         >
-          {overallScore || 0}
+          {Math.floor(overallScore) || 0}
         </div>
       </div>
     </>
